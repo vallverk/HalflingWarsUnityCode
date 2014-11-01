@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 33: {fileID: 3300000}
+  - 23: {fileID: 2300000}
+  - 114: {fileID: 11400000}
+  m_Layer: 0
+  m_Name: AttackTimer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: .707106829, z: .707106829, w: 3.55271368e-15}
+  m_LocalPosition: {x: -80.121933, y: 3.08210826, z: 9.97923279}
+  m_LocalScale: {x: -.5, y: .5, z: .179999992}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!23 &2300000
+Renderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 2cb2b31f0e1fe487a863b8898d4a2ef1, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &3300000
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Mesh: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7188474b6efb48f48824ae74d1f456c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: 00:00:00
+  offsetZ: 0
+  characterSize: 1
+  characterSpacing: 1.14999998
+  lineSpacing: 1.10000002
+  anchor: 4
+  alignment: 0
+  tabSize: 4
+  font: {fileID: 4900000, guid: 5450d0b9361dd43f58e20365197b4151, type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  pixelPerfect: 0
+  maxWidth: 0
+  maxWidthInPixels: 0
+  multiline: 1
+  dynamicLength: 0
+  removeUnsupportedCharacters: 1
+  parseColorTags: 1
+  password: 0
+  maskingCharacter: '*'
+  isClone: 0
+  renderCamera: {fileID: 0}
+  pixelsPerUV: {x: 512, y: 512}
+  hideAtStart: 0
+  persistent: 0
+  ignoreClipping: 0
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1

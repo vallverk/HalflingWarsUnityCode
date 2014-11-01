@@ -1,0 +1,1467 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 33: {fileID: 3300000}
+  - 64: {fileID: 6400000}
+  - 23: {fileID: 2300000}
+  m_Layer: 8
+  m_Name: Questmenu_QuestLog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100002
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400002}
+  - 114: {fileID: 11400000}
+  - 33: {fileID: 3300002}
+  - 23: {fileID: 2300002}
+  m_Layer: 8
+  m_Name: Questmenu_DarklingMenu_btn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100004
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400004}
+  - 114: {fileID: 11400002}
+  - 33: {fileID: 3300004}
+  - 23: {fileID: 2300004}
+  m_Layer: 8
+  m_Name: Questmenu_HalflingMenu_btn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100006
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400006}
+  - 33: {fileID: 3300006}
+  - 64: {fileID: 6400002}
+  - 23: {fileID: 2300006}
+  m_Layer: 8
+  m_Name: Questmenu_HalflingMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400008}
+  m_Layer: 8
+  m_Name: task_list
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100010
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400010}
+  - 114: {fileID: 11400004}
+  - 33: {fileID: 3300008}
+  - 23: {fileID: 2300008}
+  m_Layer: 8
+  m_Name: cancel_Btn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100012
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400012}
+  - 114: {fileID: 11400006}
+  - 33: {fileID: 3300010}
+  - 23: {fileID: 2300010}
+  m_Layer: 8
+  m_Name: Questmenu_QuestLog_btn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400014}
+  m_Layer: 8
+  m_Name: Log_textures_and_buttons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100016
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400016}
+  - 33: {fileID: 3300012}
+  - 64: {fileID: 6400004}
+  - 23: {fileID: 2300012}
+  m_Layer: 8
+  m_Name: Questmenu_DarklingMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100018
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400018}
+  - 114: {fileID: 11400008}
+  - 33: {fileID: 3300014}
+  - 23: {fileID: 2300014}
+  m_Layer: 0
+  m_Name: PlayQuest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400014}
+  m_RootOrder: 5
+--- !u!4 &400002
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_LocalRotation: {x: 5.33850795e-08, y: .707106709, z: -.707106829, w: 5.33850724e-08}
+  m_LocalPosition: {x: -.0502753295, y: 9.9951947e-05, z: -4.01919699}
+  m_LocalScale: {x: .122000001, y: .174999997, z: .100000001}
+  m_Children: []
+  m_Father: {fileID: 400014}
+  m_RootOrder: 2
+--- !u!4 &400004
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_LocalRotation: {x: 5.33850795e-08, y: .707106709, z: -.707106829, w: 5.33850724e-08}
+  m_LocalPosition: {x: 2.623281, y: 9.9951947e-05, z: -4.01319313}
+  m_LocalScale: {x: .129999995, y: .174999997, z: .100000001}
+  m_Children: []
+  m_Father: {fileID: 400014}
+  m_RootOrder: 4
+--- !u!4 &400006
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400014}
+  m_RootOrder: 3
+--- !u!4 &400008
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100008}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -40, y: 11, z: 0}
+  m_LocalScale: {x: 8, y: 6.19232178, z: 6}
+  m_Children:
+  - {fileID: 400014}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!4 &400010
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100010}
+  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106709}
+  m_LocalPosition: {x: -4.44999981, y: .000100413978, z: -4.40000057}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400014}
+  m_RootOrder: 0
+--- !u!4 &400012
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100012}
+  m_LocalRotation: {x: 5.33850795e-08, y: .707106709, z: -.707106829, w: 5.33850724e-08}
+  m_LocalPosition: {x: -2.74722099, y: 9.9951947e-05, z: -4.02653885}
+  m_LocalScale: {x: .150000006, y: .174999997, z: .100000001}
+  m_Children: []
+  m_Father: {fileID: 400014}
+  m_RootOrder: 6
+--- !u!4 &400014
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100014}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 400010}
+  - {fileID: 400016}
+  - {fileID: 400002}
+  - {fileID: 400006}
+  - {fileID: 400004}
+  - {fileID: 400000}
+  - {fileID: 400012}
+  - {fileID: 400018}
+  m_Father: {fileID: 400008}
+  m_RootOrder: 0
+--- !u!4 &400016
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100016}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400014}
+  m_RootOrder: 1
+--- !u!4 &400018
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100018}
+  m_LocalRotation: {x: -1.15202326e-07, y: .707106709, z: -.707106829, w: -1.15202312e-07}
+  m_LocalPosition: {x: 1.79735851, y: 1.00000036, z: 2.54510641}
+  m_LocalScale: {x: .899999976, y: .899999976, z: .899999976}
+  m_Children: []
+  m_Father: {fileID: 400014}
+  m_RootOrder: 7
+--- !u!23 &2300000
+Renderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: a47f104bd09984247b46e86553168583, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!23 &2300002
+Renderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: eef1954c1ada740f4be1e00155ae26a9, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!23 &2300004
+Renderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: c3ffa70b3d449427f9977e927e7d4c33, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!23 &2300006
+Renderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 4daf804259c73461dba924dbea9c5d2c, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!23 &2300008
+Renderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100010}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 9ef4789909fab4cd0bf1e4a4a15e9f2a, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!23 &2300010
+Renderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100012}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 90caa59a63cd340c28dc0e980d5c0067, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!23 &2300012
+Renderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100016}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 6068cc618a18d4cf0886baf23386c5e8, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!23 &2300014
+Renderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100018}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 9ef4789909fab4cd0bf1e4a4a15e9f2a, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &3300000
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &3300002
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Mesh: {fileID: 0}
+--- !u!33 &3300004
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Mesh: {fileID: 0}
+--- !u!33 &3300006
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &3300008
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100010}
+  m_Mesh: {fileID: 0}
+--- !u!33 &3300010
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100012}
+  m_Mesh: {fileID: 0}
+--- !u!33 &3300012
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100016}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &3300014
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100018}
+  m_Mesh: {fileID: 0}
+--- !u!64 &6400000
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_SmoothSphereCollisions: 0
+  m_Convex: 0
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!64 &6400002
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_SmoothSphereCollisions: 0
+  m_Convex: 0
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!64 &6400004
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100016}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_SmoothSphereCollisions: 0
+  m_Convex: 0
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f54df2f3b80428e95cff7e9286559b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  managed: 0
+  manager: {fileID: 0}
+  drawLayer: 0
+  persistent: 0
+  plane: 0
+  winding: 1
+  width: 21.5625
+  height: 3.51999998
+  bleedCompensation: {x: 0, y: 0}
+  anchor: 9
+  pixelPerfect: 0
+  autoResize: 0
+  billboarded: 0
+  offset: {x: 0, y: 0, z: 0}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  renderCamera: {fileID: 0}
+  pixelsPerUV: {x: 512, y: 512}
+  hideAtStart: 0
+  ignoreClipping: 0
+  playAnimOnStart: 0
+  crossfadeFrames: 0
+  defaultAnim: 0
+  doNotTrimImages: 0
+  animations:
+  - name: Normal
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 0
+    onAnimEnd: 0
+  - name: Over
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 1
+    onAnimEnd: 0
+  - name: Active
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 2
+    onAnimEnd: 0
+  - name: Disabled
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 3
+    onAnimEnd: 0
+  text: 
+  spriteText: {fileID: 0}
+  textOffsetZ: -.100000001
+  includeTextInAutoCollider: 1
+  detargetOnDisable: 0
+  isDraggable: 0
+  dropMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  dragOffset: NaN
+  cancelDragEasing: -1
+  cancelDragDuration: -1
+  states:
+  - name: Normal
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs:
+    - 9c193c44987e14a6c964bb52209780eb
+    spriteFrames:
+    - uvs:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: .5390625
+        height: .0859375
+      scaleFactor: {x: .5, y: .534090936}
+      topLeftOffset: {x: -1, y: .872340441}
+      bottomRightOffset: {x: 1, y: -1}
+  - name: Over
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs: []
+    spriteFrames: []
+  - name: Active
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs: []
+    spriteFrames: []
+  - name: Disabled
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs: []
+    spriteFrames: []
+  transitions:
+  - list:
+    - name: From Over
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Active
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Disabled
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  - list:
+    - name: From Normal
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Active
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  - list:
+    - name: From Normal
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Over
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  - list:
+    - name: From Normal
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Over
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Active
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  stateLabels:
+  - '["]'
+  - '["]'
+  - '["]'
+  - '["]'
+  layers: []
+  scriptWithMethodToInvoke: {fileID: 0}
+  methodToInvoke: darklingMissionButton
+  whenToInvoke: 3
+  delay: 0
+  soundOnOver: {fileID: 0}
+  soundOnClick: {fileID: 0}
+  repeat: 0
+  alwaysFinishActiveTransition: 0
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f54df2f3b80428e95cff7e9286559b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  managed: 0
+  manager: {fileID: 0}
+  drawLayer: 0
+  persistent: 0
+  plane: 0
+  winding: 1
+  width: 20.4400005
+  height: 3.20000005
+  bleedCompensation: {x: 0, y: 0}
+  anchor: 9
+  pixelPerfect: 0
+  autoResize: 0
+  billboarded: 0
+  offset: {x: 0, y: 0, z: 0}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  renderCamera: {fileID: 0}
+  pixelsPerUV: {x: 512, y: 512}
+  hideAtStart: 0
+  ignoreClipping: 0
+  playAnimOnStart: 0
+  crossfadeFrames: 0
+  defaultAnim: 0
+  doNotTrimImages: 0
+  animations:
+  - name: Normal
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 0
+    onAnimEnd: 0
+  - name: Over
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 1
+    onAnimEnd: 0
+  - name: Active
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 2
+    onAnimEnd: 0
+  - name: Disabled
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 3
+    onAnimEnd: 0
+  text: 
+  spriteText: {fileID: 0}
+  textOffsetZ: -.100000001
+  includeTextInAutoCollider: 1
+  detargetOnDisable: 0
+  isDraggable: 0
+  dropMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  dragOffset: NaN
+  cancelDragEasing: -1
+  cancelDragDuration: -1
+  states:
+  - name: Normal
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs:
+    - 9c193c44987e14a6c964bb52209780eb
+    spriteFrames:
+    - uvs:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: .5390625
+        height: .0859375
+      scaleFactor: {x: .5, y: .534090936}
+      topLeftOffset: {x: -1, y: .872340441}
+      bottomRightOffset: {x: 1, y: -1}
+  - name: Over
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs: []
+    spriteFrames: []
+  - name: Active
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs: []
+    spriteFrames: []
+  - name: Disabled
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs: []
+    spriteFrames: []
+  transitions:
+  - list:
+    - name: From Over
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Active
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Disabled
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  - list:
+    - name: From Normal
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Active
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  - list:
+    - name: From Normal
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Over
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  - list:
+    - name: From Normal
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Over
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Active
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  stateLabels:
+  - '["]'
+  - '["]'
+  - '["]'
+  - '["]'
+  layers: []
+  scriptWithMethodToInvoke: {fileID: 0}
+  methodToInvoke: halflingMissionButton
+  whenToInvoke: 3
+  delay: 0
+  soundOnOver: {fileID: 0}
+  soundOnClick: {fileID: 0}
+  repeat: 0
+  alwaysFinishActiveTransition: 0
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f54df2f3b80428e95cff7e9286559b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  managed: 0
+  manager: {fileID: 0}
+  drawLayer: 0
+  persistent: 0
+  plane: 0
+  winding: 1
+  width: .349999994
+  height: .449999988
+  bleedCompensation: {x: 0, y: 0}
+  anchor: 9
+  pixelPerfect: 0
+  autoResize: 0
+  billboarded: 0
+  offset: {x: 0, y: 0, z: 0}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  renderCamera: {fileID: 0}
+  pixelsPerUV: {x: 512, y: 512}
+  hideAtStart: 0
+  ignoreClipping: 0
+  playAnimOnStart: 0
+  crossfadeFrames: 0
+  defaultAnim: 0
+  doNotTrimImages: 0
+  animations:
+  - name: Normal
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 0
+    onAnimEnd: 0
+  - name: Over
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 1
+    onAnimEnd: 0
+  - name: Active
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 2
+    onAnimEnd: 0
+  - name: Disabled
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 3
+    onAnimEnd: 0
+  text: 
+  spriteText: {fileID: 0}
+  textOffsetZ: -.100000001
+  includeTextInAutoCollider: 1
+  detargetOnDisable: 0
+  isDraggable: 0
+  dropMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  dragOffset: NaN
+  cancelDragEasing: -1
+  cancelDragDuration: -1
+  states:
+  - name: Normal
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs:
+    - f2303e981c0e643259a6f9477837a2a2
+    spriteFrames:
+    - uvs:
+        serializedVersion: 2
+        x: 0
+        y: .5546875
+        width: .125
+        height: .125
+      scaleFactor: {x: 1.09375, y: 1.09375}
+      topLeftOffset: {x: -.45714286, y: .428571433}
+      bottomRightOffset: {x: .45714286, y: -.485714287}
+  - name: Over
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs:
+    - 
+    spriteFrames:
+    - uvs:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 0
+        height: 0
+      scaleFactor: {x: 16, y: 16}
+      topLeftOffset: {x: -.03125, y: .03125}
+      bottomRightOffset: {x: .03125, y: -.03125}
+  - name: Active
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs:
+    - bbe100d4719f5476689101a1243e7b28
+    spriteFrames:
+    - uvs:
+        serializedVersion: 2
+        x: 0
+        y: .68359375
+        width: .125
+        height: .125
+      scaleFactor: {x: 1.09375, y: 1.09375}
+      topLeftOffset: {x: -.45714286, y: .428571433}
+      bottomRightOffset: {x: .45714286, y: -.485714287}
+  - name: Disabled
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs: []
+    spriteFrames: []
+  transitions:
+  - list:
+    - name: From Over
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Active
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Disabled
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  - list:
+    - name: From Normal
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Active
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  - list:
+    - name: From Normal
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Over
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  - list:
+    - name: From Normal
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Over
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Active
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  stateLabels:
+  - '["]'
+  - '["]'
+  - '["]'
+  - '["]'
+  layers: []
+  scriptWithMethodToInvoke: {fileID: 0}
+  methodToInvoke: cancleButton
+  whenToInvoke: 3
+  delay: 0
+  soundOnOver: {fileID: 0}
+  soundOnClick: {fileID: 0}
+  repeat: 0
+  alwaysFinishActiveTransition: 0
+--- !u!114 &11400006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f54df2f3b80428e95cff7e9286559b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  managed: 0
+  manager: {fileID: 0}
+  drawLayer: 0
+  persistent: 0
+  plane: 0
+  winding: 1
+  width: 18.125
+  height: 3.44000006
+  bleedCompensation: {x: 0, y: 0}
+  anchor: 9
+  pixelPerfect: 0
+  autoResize: 0
+  billboarded: 0
+  offset: {x: 0, y: 0, z: 0}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  renderCamera: {fileID: 0}
+  pixelsPerUV: {x: 256, y: 256}
+  hideAtStart: 0
+  ignoreClipping: 0
+  playAnimOnStart: 0
+  crossfadeFrames: 0
+  defaultAnim: 0
+  doNotTrimImages: 0
+  animations:
+  - name: Normal
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 0
+    onAnimEnd: 0
+  - name: Over
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 1
+    onAnimEnd: 0
+  - name: Active
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 2
+    onAnimEnd: 0
+  - name: Disabled
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 3
+    onAnimEnd: 0
+  text: 
+  spriteText: {fileID: 0}
+  textOffsetZ: -.100000001
+  includeTextInAutoCollider: 1
+  detargetOnDisable: 0
+  isDraggable: 0
+  dropMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  dragOffset: NaN
+  cancelDragEasing: -1
+  cancelDragDuration: -1
+  states:
+  - name: Normal
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs:
+    - bf3fe43f20ebd497999c5492bd9d3af6
+    spriteFrames:
+    - uvs:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: .90625
+        height: .171875
+      scaleFactor: {x: .5, y: .534090936}
+      topLeftOffset: {x: -1, y: .872340441}
+      bottomRightOffset: {x: 1, y: -1}
+  - name: Over
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs: []
+    spriteFrames: []
+  - name: Active
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs: []
+    spriteFrames: []
+  - name: Disabled
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs: []
+    spriteFrames: []
+  transitions:
+  - list:
+    - name: From Over
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Active
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Disabled
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  - list:
+    - name: From Normal
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Active
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  - list:
+    - name: From Normal
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Over
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  - list:
+    - name: From Normal
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Over
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Active
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  stateLabels:
+  - '["]'
+  - '["]'
+  - '["]'
+  - '["]'
+  layers: []
+  scriptWithMethodToInvoke: {fileID: 0}
+  methodToInvoke: questLogButton
+  whenToInvoke: 3
+  delay: 0
+  soundOnOver: {fileID: 0}
+  soundOnClick: {fileID: 0}
+  repeat: 0
+  alwaysFinishActiveTransition: 0
+--- !u!114 &11400008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f54df2f3b80428e95cff7e9286559b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  managed: 0
+  manager: {fileID: 0}
+  drawLayer: 0
+  persistent: 0
+  plane: 0
+  winding: 1
+  width: 2.5
+  height: 1
+  bleedCompensation: {x: 0, y: 0}
+  anchor: 9
+  pixelPerfect: 0
+  autoResize: 0
+  billboarded: 0
+  offset: {x: 0, y: 0, z: 0}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  renderCamera: {fileID: 0}
+  pixelsPerUV: {x: 256, y: 256}
+  hideAtStart: 0
+  ignoreClipping: 0
+  playAnimOnStart: 0
+  crossfadeFrames: 0
+  defaultAnim: 0
+  doNotTrimImages: 0
+  animations:
+  - name: Normal
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 0
+    onAnimEnd: 0
+  - name: Over
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 1
+    onAnimEnd: 0
+  - name: Active
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 2
+    onAnimEnd: 0
+  - name: Disabled
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    index: 3
+    onAnimEnd: 0
+  text: 
+  spriteText: {fileID: 0}
+  textOffsetZ: -.100000001
+  includeTextInAutoCollider: 1
+  detargetOnDisable: 0
+  isDraggable: 0
+  dropMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  dragOffset: NaN
+  cancelDragEasing: -1
+  cancelDragDuration: -1
+  states:
+  - name: Normal
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs:
+    - 4e488a15d5e234c46bee3f90757ab56e
+    spriteFrames:
+    - uvs:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: .96875
+        height: .2734375
+      scaleFactor: {x: .516129017, y: .571428597}
+      topLeftOffset: {x: -.96875, y: .875}
+      bottomRightOffset: {x: .96875, y: -.875}
+  - name: Over
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs: []
+    spriteFrames: []
+  - name: Active
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs:
+    - 8a319a82c4c1940118f8ed62c6899902
+    spriteFrames:
+    - uvs:
+        serializedVersion: 2
+        x: 0
+        y: .27734375
+        width: .96875
+        height: .2734375
+      scaleFactor: {x: .516129017, y: .571428597}
+      topLeftOffset: {x: -.96875, y: .875}
+      bottomRightOffset: {x: .96875, y: -.875}
+  - name: Disabled
+    loopCycles: 0
+    loopReverse: 0
+    framerate: 15
+    onAnimEnd: 0
+    framePaths: []
+    frameGUIDs: []
+    spriteFrames: []
+  transitions:
+  - list:
+    - name: From Over
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Active
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Disabled
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  - list:
+    - name: From Normal
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Active
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  - list:
+    - name: From Normal
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Over
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  - list:
+    - name: From Normal
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Over
+      animationTypes: 
+      animParams: []
+      initialized: 0
+    - name: From Active
+      animationTypes: 
+      animParams: []
+      initialized: 0
+  stateLabels:
+  - '["]'
+  - '["]'
+  - '["]'
+  - '["]'
+  layers: []
+  scriptWithMethodToInvoke: {fileID: 0}
+  methodToInvoke: playQuest
+  whenToInvoke: 3
+  delay: 0
+  soundOnOver: {fileID: 0}
+  soundOnClick: {fileID: 0}
+  repeat: 0
+  alwaysFinishActiveTransition: 0
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100008}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1

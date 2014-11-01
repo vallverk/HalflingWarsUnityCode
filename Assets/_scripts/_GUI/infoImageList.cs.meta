@@ -1,0 +1,42 @@
+fileFormatVersion: 2
+guid: 123b0003a8b934d548300897c78dafe1
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - earthTG_tex: {fileID: 2800000, guid: 31c7d9cbffe6049acbc596892481dc68, type: 1}
+  - plantTG_tex: {fileID: 2800000, guid: 450d01ae53ef14791a525c0cfa3b6fb6, type: 1}
+  - waterTG_tex: {fileID: 2800000, guid: 96588f78867054d6c9fe064e1d8fd054, type: 1}
+  - spwampTG_tex: {fileID: 2800000, guid: f6caf827cc0b942dd99594849dcdcd38, type: 1}
+  - dEarthTG_tex: {fileID: 2800000, guid: 60fcf10f1c2854782a86ea1283156a8c, type: 1}
+  - fireTG_tex: {instanceID: 0}
+  - hound_tex: {fileID: 2800000, guid: 43a3a3dde897a475580337ad07e6f23f, type: 1}
+  - barg_tex: {fileID: 2800000, guid: 327040a7607df4308a3939026a4c39dd, type: 1}
+  - cusith_tex: {instanceID: 0}
+  - sprout_tex: {fileID: 2800000, guid: eed5a9c31050642e0aa2410b159dc2b9, type: 1}
+  - nymph_tex: {instanceID: 0}
+  - dryad_tex: {instanceID: 0}
+  - nix_tex: {fileID: 2800000, guid: 46b1470991213417cabd7d25048ca0cc, type: 1}
+  - draug_tex: {instanceID: 0}
+  - dragon_tex: {instanceID: 0}
+  - leech_tex: {fileID: 2800000, guid: a34b1805f540447ee98b408d514eb35d, type: 1}
+  - dHound_tex: {instanceID: 0}
+  - hPlot_tex: {fileID: 2800000, guid: 62189a5f8eb7f42948f3288a9f1584be, type: 1}
+  - dPlot_tex: {fileID: 2800000, guid: 5540936da4ceb4eccb52f473938562b0, type: 1}
+  - inn01_tex: {fileID: 2800000, guid: bf1401bbefd7d49c782fe3687ed2d3f5, type: 1}
+  - inn02_tex: {instanceID: 0}
+  - stable_tex: {fileID: 2800000, guid: b6be90f11be6648f18f8b50efa902066, type: 1}
+  - dInn01_tex: {fileID: 2800000, guid: 059dea0919b344c77adb3d3311b580d8, type: 1}
+  - apothecary_tex: {instanceID: 0}
+  - dStable_tex: {fileID: 2800000, guid: abe360d586287430cb1757d76c170ff9, type: 1}
+  - dirtPath_tex: {fileID: 2800000, guid: 96fa098fc67fb4d459f82a21a86ad1b0, type: 1}
+  - fruitTree_tex: {fileID: 2800000, guid: 9b747b5046a6049d5819d9e7a0ba5da0, type: 1}
+  - lantern_tex: {instanceID: 0}
+  - wheelBurrow_tex: {instanceID: 0}
+  - shroomrey_tex: {instanceID: 0}
+  - barrel_tex: {instanceID: 0}
+  - dDirtPath_tex: {fileID: 2800000, guid: fc3da1681a41d4741bfae4c816c8abda, type: 1}
+  - dTree_tex: {fileID: 2800000, guid: 805b0a51ac00a4404b16869f4a815f60, type: 1}
+  - dWell_tex: {fileID: 2800000, guid: 35f50aceb7eec441f8896985513d4385, type: 1}
+  - dBog_tex: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}

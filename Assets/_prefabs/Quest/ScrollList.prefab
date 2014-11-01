@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 114: {fileID: 11400000}
+  m_Layer: 8
+  m_Name: ScrollList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
+  m_LocalPosition: {x: 24.635273, y: 12.1302109, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0846f57d1d1fe4d4a8abe2bc92107d48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchScroll: 1
+  scrollWheelFactor: 100
+  scrollDecelCoef: .0399999991
+  snap: 0
+  minSnapDuration: 1
+  snapEasing: 22
+  slider: {fileID: 0}
+  orientation: 1
+  direction: 0
+  alignment: 1
+  viewableArea: {x: 25, y: 35}
+  unitsInPixels: 0
+  renderCamera: {fileID: 0}
+  itemSpacing: 0
+  spacingAtEnds: 1
+  extraEndSpacing: 0
+  activateWhenAdding: 1
+  clipContents: 1
+  clipWhenMoving: 0
+  positionItemsImmediately: 1
+  dragThreshold: NaN
+  sceneItems: []
+  prefabItems: []
+  scriptWithMethodToInvoke: {fileID: 0}
+  methodToInvokeOnSelect: 
+  manager: {fileID: 0}
+  detargetOnDisable: 0
+  positionEasing: 22
+  positionEaseDuration: .5
+  positionEaseDelay: 0
+  blockInputWhileEasing: 1
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1

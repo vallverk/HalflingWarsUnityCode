@@ -1,0 +1,340 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 114: {fileID: 11400000}
+  m_Layer: 8
+  m_Name: InventoryItem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &100002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400002}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -49.0172615, y: -.03515625, z: 109.091003}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 400002}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!4 &400002
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.90115738, y: 11.0244141, z: -3.98020172}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400000}
+  m_RootOrder: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d95d5fdbd3348f886b81691308bbb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popUpInfoScript: {fileID: 0}
+  guiControlInfo: {fileID: 0}
+  inventoryui: {fileID: 0}
+  invCreatureBasePlate: {fileID: 0}
+  invPlantsBasePlate: {fileID: 0}
+  invPotionsBasePlate: {fileID: 0}
+  invRewardBasePlate: {fileID: 0}
+  CreatureHalflingBasePlate: {fileID: 0}
+  CreatureDarklingBasePlate: {fileID: 0}
+  PlantsHalflingBasePlate: {fileID: 0}
+  PlantsDarklingBasePlate: {fileID: 0}
+  PotionsHalflingBasePlate: {fileID: 0}
+  PotionsDarklingBasePlate: {fileID: 0}
+  RewardHalflingBasePlate: {fileID: 0}
+  RewardDarklingBasePlate: {fileID: 0}
+  CreatureHalflingInvScrollList: {fileID: 0}
+  Creature_Halfling_Hound: {fileID: 0}
+  Creature_Halfling_Barg: {fileID: 0}
+  Creature_Halfling_Cusith: {fileID: 0}
+  Creature_Halfling_Sprout: {fileID: 0}
+  Creature_Halfling_Nymph: {fileID: 0}
+  Creature_Halfling_Dryad: {fileID: 0}
+  Creature_Halfling_Nix: {fileID: 0}
+  Creature_Halfling_Draug: {fileID: 0}
+  Creature_Halfling_Dragon: {fileID: 0}
+  Creature_Halfling_Hound_Info_text: {fileID: 0}
+  Creature_Halfling_Barg_Info_text: {fileID: 0}
+  Creature_Halfling_Cusith_Info_text: {fileID: 0}
+  Creature_Halfling_Sprout_Info_text: {fileID: 0}
+  Creature_Halfling_Nymph_Info_text: {fileID: 0}
+  Creature_Halfling_Dryad_Info_text: {fileID: 0}
+  Creature_Halfling_Nix_Info_text: {fileID: 0}
+  Creature_Halfling_Draug_Info_text: {fileID: 0}
+  Creature_Halfling_Dragon_Info_text: {fileID: 0}
+  CreatureDarklingInvScrollList: {fileID: 0}
+  Creature_Darkling_Leech: {fileID: 0}
+  Creature_Darkling_DarkHound: {fileID: 0}
+  Creature_Darkling_Sprite: {fileID: 0}
+  Creature_Darkling_Leshy: {fileID: 0}
+  Creature_Darkling_Fenrir: {fileID: 0}
+  Creature_Darkling_Imp: {fileID: 0}
+  Creature_Darkling_Lurker: {fileID: 0}
+  Creature_Darkling_HellHound: {fileID: 0}
+  Creature_Darkling_Djinn: {fileID: 0}
+  Creature_Darkling_Leech_Info_text: {fileID: 0}
+  Creature_Darkling_DarkHound_Info_text: {fileID: 0}
+  Creature_Darkling_Sprite_Info_text: {fileID: 0}
+  Creature_Darkling_Leshy_Info_text: {fileID: 0}
+  Creature_Darkling_Fenrir_Info_text: {fileID: 0}
+  Creature_Darkling_Imp_Info_text: {fileID: 0}
+  Creature_Darkling_Lurker_Info_text: {fileID: 0}
+  Creature_Darkling_HellHound_Info_text: {fileID: 0}
+  Creature_Darkling_Djinn_Info_text: {fileID: 0}
+  PlantsHalflingInvScrollList: {fileID: 0}
+  Plants_Halfling_Pipeweed: {fileID: 0}
+  Plants_Halfling_Turnip: {fileID: 0}
+  Plants_Halfling_PumpkinHalf: {fileID: 0}
+  Plants_Halfling_Costmary: {fileID: 0}
+  Plants_Halfling_Potato: {fileID: 0}
+  Plants_Halfling_FairyLily: {fileID: 0}
+  Plants_Halfling_Sunflower: {fileID: 0}
+  Plants_Halfling_WaterCress: {fileID: 0}
+  Plants_Halfling_Vervain: {fileID: 0}
+  Plants_Halfling_Mandrake: {fileID: 0}
+  Plants_Halfling_Lotus: {fileID: 0}
+  Plants_Halfling_Carrot: {fileID: 0}
+  Plants_Halfling_BleedingHeart: {fileID: 0}
+  Plants_Halfling_FoxgloveBeardTongue: {fileID: 0}
+  Plants_Halfling_WaterCaltrop: {fileID: 0}
+  Plants_Halfling_Soapwart: {fileID: 0}
+  Plants_Halfling_BloodRoot: {fileID: 0}
+  Plants_Halfling_Strawberry: {fileID: 0}
+  Plants_Halfling_Taro: {fileID: 0}
+  Plants_Halfling_Pipeweed_Info_text: {fileID: 0}
+  Plants_Halfling_Turnip_Info_text: {fileID: 0}
+  Plants_Halfling_PumpkinHalf_Info_text: {fileID: 0}
+  Plants_Halfling_Costmary_Info_text: {fileID: 0}
+  Plants_Halfling_Potato_Info_text: {fileID: 0}
+  Plants_Halfling_FairyLily_Info_text: {fileID: 0}
+  Plants_Halfling_Sunflower_Info_text: {fileID: 0}
+  Plants_Halfling_WaterCress_Info_text: {fileID: 0}
+  Plants_Halfling_Vervain_Info_text: {fileID: 0}
+  Plants_Halfling_Mandrake_Info_text: {fileID: 0}
+  Plants_Halfling_Lotus_Info_text: {fileID: 0}
+  Plants_Halfling_Carrot_Info_text: {fileID: 0}
+  Plants_Halfling_BleedingHeart_Info_text: {fileID: 0}
+  Plants_Halfling_FoxgloveBeardTongue_Info_text: {fileID: 0}
+  Plants_Halfling_WaterCaltrop_Info_text: {fileID: 0}
+  Plants_Halfling_Soapwart_Info_text: {fileID: 0}
+  Plants_Halfling_BloodRoot_Info_text: {fileID: 0}
+  Plants_Halfling_Strawberry_Info_text: {fileID: 0}
+  Plants_Halfling_Taro_Info_text: {fileID: 0}
+  PlantsDarklingInvScrollList: {fileID: 0}
+  Plants_Darkling_PumpkinDark: {fileID: 0}
+  Plants_Darkling_Firepepper: {fileID: 0}
+  Plants_Darkling_Aven: {fileID: 0}
+  Plants_Darkling_Blackberry: {fileID: 0}
+  Plants_Darkling_Columbine: {fileID: 0}
+  Plants_Darkling_MoonFlower: {fileID: 0}
+  Plants_Darkling_BitterBrush: {fileID: 0}
+  Plants_Darkling_BogBean: {fileID: 0}
+  Plants_Darkling_WolfsBane: {fileID: 0}
+  Plants_Darkling_MulesEar: {fileID: 0}
+  Plants_Darkling_Truffle: {fileID: 0}
+  Plants_Darkling_LentLily: {fileID: 0}
+  Plants_Darkling_BitingStoneCrop: {fileID: 0}
+  Plants_Darkling_Fleabane: {fileID: 0}
+  Plants_Darkling_BloodRajah: {fileID: 0}
+  Plants_Darkling_RavenSwing: {fileID: 0}
+  Plants_Darkling_Mushroom: {fileID: 0}
+  Plants_Darkling_GasPlant: {fileID: 0}
+  Plants_Darkling_PumpkinDark_Info_text: {fileID: 0}
+  Plants_Darkling_Firepepper_Info_text: {fileID: 0}
+  Plants_Darkling_Aven_Info_text: {fileID: 0}
+  Plants_Darkling_Blackberry_Info_text: {fileID: 0}
+  Plants_Darkling_Columbine_Info_text: {fileID: 0}
+  Plants_Darkling_MoonFlower_Info_text: {fileID: 0}
+  Plants_Darkling_BitterBrush_Info_text: {fileID: 0}
+  Plants_Darkling_BogBean_Info_text: {fileID: 0}
+  Plants_Darkling_WolfsBane_Info_text: {fileID: 0}
+  Plants_Darkling_MulesEar_Info_text: {fileID: 0}
+  Plants_Darkling_Truffle_Info_text: {fileID: 0}
+  Plants_Darkling_LentLily_Info_text: {fileID: 0}
+  Plants_Darkling_BitingStoneCrop_Info_text: {fileID: 0}
+  Plants_Darkling_Fleabane_Info_text: {fileID: 0}
+  Plants_Darkling_BloodRajah_Info_text: {fileID: 0}
+  Plants_Darkling_RavenSwing_Info_text: {fileID: 0}
+  Plants_Darkling_Mushroom_Info_text: {fileID: 0}
+  Plants_Darkling_GasPlant_Info_text: {fileID: 0}
+  PotionsHalflingInvScrollList: {fileID: 0}
+  Potions_Halfling_PoppySnap: {fileID: 0}
+  Potions_Halfling_BitterRoot: {fileID: 0}
+  Potions_Halfling_VetchSpray: {fileID: 0}
+  Potions_Halfling_BoggleHorn: {fileID: 0}
+  Potions_Halfling_MossSalve: {fileID: 0}
+  Potions_Halfling_Seawhip: {fileID: 0}
+  Potions_Halfling_WolfTongue: {fileID: 0}
+  Potions_Halfling_GrubSprout: {fileID: 0}
+  Potions_Halfling_DwaleBile: {fileID: 0}
+  Potions_Halfling_PoppySnap_Info_text: {fileID: 0}
+  Potions_Halfling_BitterRoot_Info_text: {fileID: 0}
+  Potions_Halfling_VetchSpray_Info_text: {fileID: 0}
+  Potions_Halfling_BoggleHorn_Info_text: {fileID: 0}
+  Potions_Halfling_MossSalve_Info_text: {fileID: 0}
+  Potions_Halfling_Seawhip_Info_text: {fileID: 0}
+  Potions_Halfling_WolfTongue_Info_text: {fileID: 0}
+  Potions_Halfling_GrubSprout_Info_text: {fileID: 0}
+  Potions_Halfling_DwaleBile_Info_text: {fileID: 0}
+  Potions_Halfling_PoppySnap_Cnt_text: {fileID: 0}
+  Potions_Halfling_BitterRoot_Cnt_text: {fileID: 0}
+  Potions_Halfling_VetchSpray_Cnt_text: {fileID: 0}
+  Potions_Halfling_BoggleHorn_Cnt_text: {fileID: 0}
+  Potions_Halfling_MossSalve_Cnt_text: {fileID: 0}
+  Potions_Halfling_Seawhip_Cnt_text: {fileID: 0}
+  Potions_Halfling_WolfTongue_Cnt_text: {fileID: 0}
+  Potions_Halfling_GrubSprout_Cnt_text: {fileID: 0}
+  Potions_Halfling_DwaleBile_Cnt_text: {fileID: 0}
+  PotionsDarklingInvScrollList: {fileID: 0}
+  Potions_Darkling_SlugTonic: {fileID: 0}
+  Potions_Darkling_FeverPitch: {fileID: 0}
+  Potions_Darkling_MorrowDraught: {fileID: 0}
+  Potions_Darkling_MonkBlood: {fileID: 0}
+  Potions_Darkling_ScorchElixir: {fileID: 0}
+  Potions_Darkling_SpleenBite: {fileID: 0}
+  Potions_Darkling_Necrobane: {fileID: 0}
+  Potions_Darkling_DevilIchor: {fileID: 0}
+  Potions_Darkling_StunkMange: {fileID: 0}
+  Potions_Darkling_SlugTonic_Info_text: {fileID: 0}
+  Potions_Darkling_FeverPitch_Info_text: {fileID: 0}
+  Potions_Darkling_MorrowDraught_Info_text: {fileID: 0}
+  Potions_Darkling_MonkBlood_Info_text: {fileID: 0}
+  Potions_Darkling_ScorchElixir_Info_text: {fileID: 0}
+  Potions_Darkling_SpleenBite_Info_text: {fileID: 0}
+  Potions_Darkling_Necrobane_Info_text: {fileID: 0}
+  Potions_Darkling_DevilIchor_Info_text: {fileID: 0}
+  Potions_Darkling_StunkMange_Info_text: {fileID: 0}
+  Potions_Darkling_SlugTonic_Cnt_text: {fileID: 0}
+  Potions_Darkling_FeverPitch_Cnt_text: {fileID: 0}
+  Potions_Darkling_MorrowDraught_Cnt_text: {fileID: 0}
+  Potions_Darkling_MonkBlood_Cnt_text: {fileID: 0}
+  Potions_Darkling_ScorchElixir_Cnt_text: {fileID: 0}
+  Potions_Darkling_SpleenBite_Cnt_text: {fileID: 0}
+  Potions_Darkling_Necrobane_Cnt_text: {fileID: 0}
+  Potions_Darkling_DevilIchor_Cnt_text: {fileID: 0}
+  Potions_Darkling_StunkMange_Cnt_text: {fileID: 0}
+  RewardHalflingInvScrollList: {fileID: 0}
+  Reward_Halfling_BloodStoneTrinket: {fileID: 0}
+  Reward_Halfling_BloodStoneMedallion: {fileID: 0}
+  Reward_Halfling_BloodStoneAmulet: {fileID: 0}
+  Reward_Halfling_EmeraldTrinket: {fileID: 0}
+  Reward_Halfling_EmeraldMedallion: {fileID: 0}
+  Reward_Halfling_EmeraldAmulet: {fileID: 0}
+  Reward_Halfling_SapphireTrinket: {fileID: 0}
+  Reward_Halfling_SapphireMedallion: {fileID: 0}
+  Reward_Halfling_SapphireAmulet: {fileID: 0}
+  Reward_Halfling_BloodStoneTrinket_Info_text: {fileID: 0}
+  Reward_Halfling_BloodStoneMedallion_Info_text: {fileID: 0}
+  Reward_Halfling_BloodStoneAmulet_Info_text: {fileID: 0}
+  Reward_Halfling_EmeraldTrinket_Info_text: {fileID: 0}
+  Reward_Halfling_EmeraldMedallion_Info_text: {fileID: 0}
+  Reward_Halfling_EmeraldAmulet_Info_text: {fileID: 0}
+  Reward_Halfling_SapphireTrinket_Info_text: {fileID: 0}
+  Reward_Halfling_SapphireMedallion_Info_text: {fileID: 0}
+  Reward_Halfling_SapphireAmulet_Info_text: {fileID: 0}
+  Reward_Halfling_BloodStoneTrinket_Cnt_text: {fileID: 0}
+  Reward_Halfling_BloodStoneMedallion_Cnt_text: {fileID: 0}
+  Reward_Halfling_BloodStoneAmulet_Cnt_text: {fileID: 0}
+  Reward_Halfling_EmeraldTrinket_Cnt_text: {fileID: 0}
+  Reward_Halfling_EmeraldMedallion_Cnt_text: {fileID: 0}
+  Reward_Halfling_EmeraldAmulet_Cnt_text: {fileID: 0}
+  Reward_Halfling_SapphireTrinket_Cnt_text: {fileID: 0}
+  Reward_Halfling_SapphireMedallion_Cnt_text: {fileID: 0}
+  Reward_Halfling_SapphireAmulet_Cnt_text: {fileID: 0}
+  RewardDarklingInvScrollList: {fileID: 0}
+  Reward_Darkling_AmethystTrinket: {fileID: 0}
+  Reward_Darkling_AmethystMedallion: {fileID: 0}
+  Reward_Darkling_AmethystAmulet: {fileID: 0}
+  Reward_Darkling_RubyTrinket: {fileID: 0}
+  Reward_Darkling_RubyMedallion: {fileID: 0}
+  Reward_Darkling_RubyAmulet: {fileID: 0}
+  Reward_Darkling_OnyxTrinket: {fileID: 0}
+  Reward_Darkling_OnyxMedallion: {fileID: 0}
+  Reward_Darkling_OnyxAmulet: {fileID: 0}
+  Reward_Darkling_AmethystTrinket_Info_text: {fileID: 0}
+  Reward_Darkling_AmethystMedallion_Info_text: {fileID: 0}
+  Reward_Darkling_AmethystAmulet_Info_text: {fileID: 0}
+  Reward_Darkling_RubyTrinket_Info_text: {fileID: 0}
+  Reward_Darkling_RubyMedallion_Info_text: {fileID: 0}
+  Reward_Darkling_RubyAmulet_Info_text: {fileID: 0}
+  Reward_Darkling_OnyxTrinket_Info_text: {fileID: 0}
+  Reward_Darkling_OnyxMedallion_Info_text: {fileID: 0}
+  Reward_Darkling_OnyxAmulet_Info_text: {fileID: 0}
+  Reward_Darkling_AmethystTrinket_Cnt_text: {fileID: 0}
+  Reward_Darkling_AmethystMedallion_Cnt_text: {fileID: 0}
+  Reward_Darkling_AmethystAmulet_Cnt_text: {fileID: 0}
+  Reward_Darkling_RubyTrinket_Cnt_text: {fileID: 0}
+  Reward_Darkling_RubyMedallion_Cnt_text: {fileID: 0}
+  Reward_Darkling_RubyAmulet_Cnt_text: {fileID: 0}
+  Reward_Darkling_OnyxTrinket_Cnt_text: {fileID: 0}
+  Reward_Darkling_OnyxMedallion_Cnt_text: {fileID: 0}
+  Reward_Darkling_OnyxAmulet_Cnt_text: {fileID: 0}
+  CreatureHalflingInvScrollListInfo: {fileID: 0}
+  CreatureDarklingInvScrollListInfo: {fileID: 0}
+  RewardHalflingInvScrollListInfo: {fileID: 0}
+  RewardDarklingInvScrollListInfo: {fileID: 0}
+  PlantsHalflingInvScrollListInfo: {fileID: 0}
+  PlantsDarklingInvScrollListInfo: {fileID: 0}
+  PotionsHalflingInvScrollListInfo: {fileID: 0}
+  PotionsDarklingInvScrollListInfo: {fileID: 0}
+  CHbool: 0
+  CDbool: 0
+  RHbool: 0
+  RDbool: 0
+  PHbool: 0
+  PDbool: 0
+  PoHbool: 0
+  PoDbool: 0
+  Battle: {fileID: 0}
+  sfx: {fileID: 0}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1
