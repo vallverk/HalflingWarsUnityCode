@@ -3767,6 +3767,7 @@ public class LoadUserWorld : MonoBehaviour
 					hGC03.transform.FindChild("ProgressBar").gameObject.SetActiveRecursively(true);
 					GameObject rabbitButtenEff = hGC03.transform.FindChild("RabbtiButton").gameObject;
 					rabbitButtenEff.SetActiveRecursively(true);
+					if(rabbitButtenEff.GetComponent<buttonPulse>())
 					rabbitButtenEff.GetComponent<buttonPulse>().scaleAnim = false;						
 					
 					hGC03.transform.GetComponent<progressBar>().enabled = true;
@@ -4051,7 +4052,8 @@ public class LoadUserWorld : MonoBehaviour
 					hTH01.transform.FindChild("ProgressBar").gameObject.SetActiveRecursively(true);
 					GameObject rabbitButtenEff = hTH01.transform.FindChild("RabbtiButton").gameObject;
 					rabbitButtenEff.SetActiveRecursively(true);
-					rabbitButtenEff.GetComponent<buttonPulse>().scaleAnim = false;						
+					if(rabbitButtenEff.GetComponent<buttonPulse>())
+						rabbitButtenEff.GetComponent<buttonPulse>().scaleAnim = false;						
 					
 					hTH01.transform.GetComponent<progressBar>().enabled = true;
 					progressBar bar = hTH01.transform.GetComponent<progressBar>();
