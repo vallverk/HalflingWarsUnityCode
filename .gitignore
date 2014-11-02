@@ -41,7 +41,6 @@ x64/
 *.log
 *.vspscc
 *.vssscc
-*.dll
 .builds
 *.userprefs
 
