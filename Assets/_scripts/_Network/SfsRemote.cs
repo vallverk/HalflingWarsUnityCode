@@ -1208,994 +1208,384 @@ public class SfsRemote : MonoBehaviour {
 	public int burnObjid;
 	public long CurrentTimeSvr;
 	public bool isPlayTavernGame;
-	
-	public void ReceiveResponseforall(BaseEvent e)
-	{
-		//try
-		{
-			string cmd = (string)e.Params["cmd"];
-			ISFSObject obj = (SFSObject)e.Params["params"];
-		
-			GetSubCmd(obj);
-		    
-			Debug.Log("cmd : " + cmd + "   subcmd : "+subCmd+"     DUMP :" + obj.GetDump());
-			if(cmd == "5")
-			{
-				switch(int.Parse(subCmd))
-				{
 
-				case 1:
+    public void ReceiveResponseforall(BaseEvent e)
+    {
+        //try
+        {
+            string cmd = (string) e.Params["cmd"];
+            ISFSObject obj = (SFSObject) e.Params["params"];
 
-					RESET = currentStatus.RECEIVED;
-					
-					break;
-				case 21:
+            GetSubCmd(obj);
 
-					bgmScript.NewUserInfoManager(obj);
-					
-					break;
-					
-				case 22:								//get Creature List from server
+            Debug.Log("cmd : " + cmd + "   subcmd : " + subCmd + "     DUMP :" + obj.GetDump());
+            if (cmd == "5")
+            {
+                UpdateFightFromServer(obj);
 
-					int size = 0;
-					ISFSArray arr = null;
-					ISFSObject sfsObjCreatureList = null;
-					
-					arr = obj.GetSFSArray("creatureList");
-					size = arr.Count;
-					
+            }
 
-					
-					for(int i = 0 ;i<size;i++)
-					{
-						sfsObjCreatureList =arr.GetSFSObject(i);
-					}
-					
-					break;
+            switch (cmd)
+            {
+                case "100":
+                    HandleValuesFromServer(obj);
+                    break;
 
-					
-				case 23:
-				
-					if(PlayerPrefs.GetInt("isBattleFirstTime") == 2)
-					{
-						if(obj.GetBool("success"))
-						{
-					
-							fightuser = obj.GetUtfString("userId").ToString();
+                case "6":
+                    //MiniGame Handler
+                    HandleMiniGame(obj);
+                    break;
 
-///***							Debug.Log("Fight request successfully send to "+obj.GetUtfString("userId"));
-						}
-						if(fightuser == myName)
-						{
+                case "5":
+                    //Game request Handler
+                    //Debug.Log("RequestHandler >>>>>>> :" + obj.GetDump());
+                    HandleGameRequests(obj);
+                    break;
+                case "1":
+                    //User request Handler
 
-							fightRequestbool = true;
-														
-						}
+                    HandleUserRequests(obj);
+                    break;
 
-						GameManager.battleActiveBool = true;
-						
+                case "3":
+                    //Game Action Handler
 
-						bgmScript.FightRequestReceived(obj);
-					}
-					else
-						Debug.Log("first complete battle tutorals...");
-						
-					break;
-
-
-					
-				case 24:
-
-					//Debug.Log("----------FIGHT INVITE ACCEPT RESPONSE----------");
-					//Debug.Log(obj.GetDump());
-					
-					//if(PlayerPrefs.GetInt("isBattleFirstTime") == 2)
-					//{
-						if(obj.GetBool("success"))
-						{
-							bgmScript.BattleScreenCollider(true);
-							bgmScript.changeState();
-							bgmScript.FightAcceptInfo(obj);
-							getPotionList(); // Call this for Potion List
-						}
-					//}
-					//else
-						//Debug.Log("play first battle...");
-					
-					
-					
-					break;
-					
-					
-				case 25:
-					
-					// Get Scheduled task when connection is lost
-					
-					//Debug.Log(obj.GetDump());
-					
-					break;
-					
-				case 26:
-					
-					SendRequestforOrgAttacktask();
-					// Get Potion List
-					if(obj.GetBool("success"))
-					{
-					bgmScript.getFightPotionList(obj);
-					
-					}
-					else
-					{
-						//Debug.Log("No Potion List Found");
-						
-					}
-					break;
-					
-				case 27:
-					
-					// Update Fight Potion
-					
-					//Debug.Log(obj.GetDump());
-					
-					if(obj.GetBool("isOpponentOnline"))
-					{
-						
-						//Start Fight
-						
-					}
-					else 
-					{
-						bgmScript.PopupMessage("Fight cannot start\nYour opponent\nis not online.");
-						// Show Popup That user went offline
-						
-					}
-					
-					
-					
-					break;
-					
-				case 29:
-					
-					// Update Extra Power
-					
-					//Debug.Log(obj.GetDump());
-					
-					break;
-					
-				case 30 :
-					
-					SendRequestForDefenseTask();
-					SendRequestForQuestTask();
-					SendRequestForStoryLog();
-					
-					break;
-					
-				case 31:
-					
-					// Fight Rejected...
-					
-					//Debug.Log(obj.GetDump());
-					
-					break;
-					
-				case 100:
-					// Remaining Balance HUD
-
-					// inder change 3march
-//					GameManager.sparks = (int)obj.GetDouble("balance_spark");
-//					GameManager.coins = obj.GetDouble("balance_gold");
-//					GameManager.xp = (float)obj.GetDouble("currentLevelXp");
-					
-					scr_GuiControl.goldCoinScoreInfo.Text = ((int)obj.GetDouble("balance_gold")).ToString();
-					
-					scr_GuiControl.sparkScoreInfo.Text = ((int)obj.GetDouble("balance_spark")).ToString();
-					
-					//Debug.Log(obj.GetDump());
-					
-					
-					break;
-					
-				case 1000:
-					
-					// Fight Winner Message
-					
-					//Debug.Log("Winning msg at sfsRemote");
-					//Debug.Log(obj.GetDump());
-					
-					BattleGroundPlayer.isBattleOver = true;
-					
-					bgmScript.BattleWinnerResult(obj);
-					
-					break;
-					
-				case 2000:
-					
-					//Start Fight Message
-
-					
-					if(obj.GetBool("success"))
-					{
-						bgmScript.LoadFightScene();
-						startAnimationFightbool = true;
-						bgmScript.SetOtherGUIComponentOff();
-						
-						bgmScript.getFightDuration(obj.GetInt("battleDuration"));
-						
-						bgmScript.ShowBubbleMessage("Tap Bubbles to increase\nYour Creature Power!");
-						
-						bgmScript.BattleStartAudio();
-					}
-					
-					break;
-					
-					
-					case 28:
-					
-					//Json Test
-					
-					//Debug.Log(obj.GetDump());
-					
-					
-					
-					if(obj.GetBool("success"))
-					{
-						ISFSObject sfsObj = obj.GetSFSObject("custom");
-						
-						bgmScript.battleId = sfsObj.GetInt("battleId");
-						bgmScript.opponentId = sfsObj.GetUtfString("userId");
-						bgmScript.opponentBattleCreatureId = sfsObj.GetInt("user1CreatureId");
-						bgmScript.gotServerResponse = true;
-						
-						//Debug.Log("Battle Id Form Server "+sfsObj.GetUtfString("userId"));
-					}
-					
-					
-					break;
-
-				}			
-
-				}
-			
-			switch(cmd)
-			{
-				
-			case "100":
-				
-				Debug.Log("DUMP SCORE:" + obj.GetDump());
-				
-				
-				GameManager.food = obj.GetInt("food");
-				GameManager.plants = (int) obj.GetInt("food");
-				GameManager.coins = (int)(obj.GetDouble("balance_gold"));
-				GameManager.sparks = (int) obj.GetDouble("balance_spark");
-
-				UpdateText();
-				
-				break;	
-
-			case "6":
-				//MiniGame Handler
-				
-				switch(subCmd)
-				{
-			    	case "4":
-					
-					if(obj.GetBool("success"))
-					{
-						ISFSArray userHerbarray = obj.GetSFSArray("herbList");
-						
-						if(lst_HerbObjects.Count > 0)
-						{
-							lst_HerbObjects.Clear();
-						}
-						
-						for(int i=0 ; i < userHerbarray.Size() ; i++)
-						{
-							ISFSObject herb = userHerbarray.GetSFSObject(i);
-							AddHerbObjects(herb.GetUtfString("objectType"),
-								                herb.GetInt("objectId"),
-								                herb.GetInt("objectTypeId"));
-							
-							
-						}
-				     }
-					
-					     break;
-					
-					case "1":
-					
-					//Debug.Log("Tavern :" + obj.GetDump());
-					
-						break;
-						
-					case "2":
-						
-					//Debug.Log("Mini Game:" + obj.GetDump());
-					
-						break;
-						
-				       case "666":
-					
-					    tavernGameactive = obj.GetBool("success");
-					
-					    break;
-						
-					case "777":
-						
-					//Debug.Log("Opened :" + obj.GetDump());
-					
-					    potionGameactive = obj.GetBool("success");
-					
-						break;
-					
-				    case "5":
-					
-					//Debug.Log("Accelerate Mini :: " + obj.GetDump());
-					
-					if(GetminiGametask() == "TavernMiniGame")
-					{
-						tavernGameactive = true;
-					}
-					
-					if(GetminiGametask() == "ApothecaryMiniGame")
-					{
-						potionGameactive = true;
-					}
-					
-					break;
-					
-					case "6":
-						
-					
-					//Debug.Log("Mini :: " + obj.GetDump());
-					
-					isIdleCounttimer = true; 
-						
-					  getPotionList();
-					
-					    if(obj.GetBool("success"))
-					    {
-						    ISFSArray arrMinigameTimes = obj.GetSFSArray("miniGames");
-						    
-						    if(lst_miniGametimeInfo.Count > 0)
-						    {
-							   lst_miniGametimeInfo.Clear();
-						    }
-						
-						   for(int i= 0 ; i< arrMinigameTimes.Size(); i++)
-							{
-							    ISFSObject objTime = arrMinigameTimes.GetSFSObject(i);
-								
-								MiniGametimes timeInfo = new MiniGametimes();
-								timeInfo.timetoOpen = (int)(objTime.GetDouble("secondsRemainToOpen"));
-								timeInfo.taskId = objTime.GetUtfString("task_id");
-														
-								lst_miniGametimeInfo.Add(timeInfo);
-								//Debug.Log("count ::" + lst_miniGametimeInfo.Count);
-							}
-						  
-						
-						   if(!miniGameload)
-						   {
-						   miniGameload = true;	
-						   scr_userworld.ChkMiniGames();
-						   }
-						  
-					    }
-						break;
-				}
-				
-				break;
-
-			case "5":
-
-						//Game request Handler
-						//Debug.Log("RequestHandler >>>>>>> :" + obj.GetDump());
-						switch(subCmd)
-						{
-						case "1":
-							
-							if(obj.GetBool("success"))
-							{
-								RESET = currentStatus.RECEIVED;
-							}
-							
-							break;
-							
-						case "3":
-
-							
-//					Debug.Log("1 1 1 1 1 1 1 1 1 1 1 1 1 1 11 1 1 1 1 1");
-							//Debug.Log("Delete :" + obj.GetDump());
-		
-					        GameManager.coins += obj.GetDouble("goldEarned") ;
-					Debug.Log("gold earn :---> " + obj.GetDouble("goldEarned"));
-					        UpdateText();
-		
-							break;
-							
-						case "30":
-					
-					     SendRequestforScheduleTasksinMinigames();
-					    
-					     ISFSArray arrCreatureMorphInfo = obj.GetSFSArray("morphList");
-					     for(int i = 0 ; i< arrCreatureMorphInfo.Size() ; i++)
-					     {
-						    ISFSObject o = arrCreatureMorphInfo.GetSFSObject(i);
-						    scr_userworld.AddCreatureMorphInfo(o.GetDouble("spark_cost"),
-							                                   o.GetInt("morphCreatureId"),
-							                                   o.GetInt("objectTypeId"));
-						    
-					     }
-							
-					      scr_objectCost.ObjectcostLoad();
-					
-							break;
-							
-			        	case "32":
-					
-					        //Debug.Log("Friends added : >>>>>>>>>> " + obj.GetDump());
-					        break;
-							
-					   case "33":
-					
-					        //Debug.Log("DUMP ::>>>>" + obj.GetDump());
-					         ISFSArray arrLvlXp = null;
-					          
-					         if(obj.GetBool("success"))
-					         {
-						        arrLvlXp = obj.GetSFSArray("xpsToNextLevels");
-						
-						        if(arrLvlXp != null)
-					 	        scr_userworld.AddLevelxpInfo(arrLvlXp);
-					         }
-				               
-					  
-					         
-					        break;
-							
-							
-						} 
-						break; 
-			
-			case "1":
-				//User request Handler
-				
-							switch(subCmd)
-							{
-									case "1":
-											
-			//	Debug.Log("Dump : >>>>> " + obj.GetDump());
-						//					  msg = obj.GetUtfString("msg");
-											bool success = obj.GetBool("success");
-					
-					                        if(success)
-						
-											{
-												elapsedtime = obj.GetLong("elapsedTime").ToString();
-										        state = obj.GetUtfString("NOW");
-						                         
-						                        scr_timeDial.scr_DayNightTime.dnCnt = int.Parse(elapsedtime);
-				
-											    //saving elapsedTime
-											    PlayerPrefs.SetString("elapsedtime",elapsedtime);
-											    //saving State
-											    PlayerPrefs.SetString("currentstate",state);
-											}
-					                 
-											//string userId = obj.GetUtfString("userId");
-											//string gold =  obj.GetUtfString("goldBalance");
-								            //string spark = obj.GetUtfString("sparkBalance");
-											//Debug.Log("msg :" + msg);
-											//scr_registerUser.messg = msg;
-											//if(msg != "")
-											//{
-											 // Application.LoadLevel("game");
-											//}
-											//Debug.Log("success :" + success);
-											//Debug.Log("userId :" + userId);
-											//Debug.Log("gold :" + gold);
-											//Debug.Log("spark :" + spark);
-											
-											break;
-											
-										case "5":
-											
-											//Debug.Log("Tasks :"+ obj.GetUtfString("noOfTasksComplete"));
-											//Debug.Log("PopUps :" + obj.GetUtfString("noOfPopupsDisplayed"));
-						
-											
-											break;
-											
-										case "6":
-										case "7":
-										case "8":
-										case "9":
-										case "10":
-										case "11":
-											
-											//Debug.Log("success :" + obj.GetDump());
-											
-											break;
-											
-										case "4":
-											
-//											Debug.Log("1 : >>>>>>>>>>> 4 :" + obj.GetDump());
-					
-					                        if(obj.GetBool("success"))
-					                        {
-											ISFSArray arrUserInfo = obj.GetSFSArray("userAccountInfo");
-										
-											for(int i=0; i < arrUserInfo.Size() ; i++) 
-											{
-												ISFSObject o = arrUserInfo.GetSFSObject(i);
-												scr_userworld.AssingUserValuesFromServer(o.GetInt("darklingOpened"),
-													                                     o.GetInt("story_count"),
-													                                     o.GetInt("no_of_task"),
-													                                     o.GetDouble("balance_gold"),
-													                                     o.GetDouble("balance_xp"),
-													                                     o.GetDouble("maxXpForLevel"),
-													                                     o.GetDouble("currentLevelXp"),
-													                                     o.GetInt("food"),
-													                                     o.GetInt("dnSavings"),
-													                                     o.GetInt("quest"),
-													                                     o.GetInt("level"),
-													                                     o.GetInt("no_of_popup"),
-													                                     o.GetInt("popup_count"),
-													                                     o.GetDouble("balance_spark"));
-											
-											}
-				                        	}
-											// isAssignTasks = false;
-											if(isUserWorld)
-											{
-												SendRequestForGetworld();
-						                        PercentageCalc = ReturnRandomNumber(70,75);
-					                            //Debug.Log("Percentage :" + PercentageCalc);
-												percentageText.GetComponent<SpriteText>().Text = PercentageCalc.ToString() + "%";
-											}
-											
-					                 
-											
-											break;
-											
-										case "13":
-											
-											//Debug.Log("Currnet :: " + obj.GetUtfString("NOW"));
-											//Debug.Log("Remaining time :: " + obj.GetLong("elapsedTime"));
-///***											Debug.Log("DayNnight" + obj.GetDump());
-											
-											state = obj.GetUtfString("NOW");
-											elapsedtime = obj.GetLong("elapsedTime").ToString();
-											
-											scr_timeDial.SetDial();
-											
-											break;
-											
-										case "12":
-											
-											//Debug.Log(obj.GetDump());
-											scr_userworld.ResetValues(obj.GetDouble("balance_xp"),
-												                      obj.GetDouble("maxXpForLevel"),
-												                      obj.GetDouble("currentLevelXp"));
-											
-///***											Debug.Log("task 1 ---- 12 :" + obj.GetDump());		//Task List on every level change
-											if(obj.GetBool("success"))
-						                    {
-												scr_userworld.ClearQuestTasks();
-							               	 	ISFSArray taskList = obj.GetSFSArray("userLevelTask");
-							
-							                    for(int i=0 ; i< taskList.Size() ; i++)
-							                    {
-								                	ISFSObject taskObj = taskList.GetSFSObject(i); 
-													scr_userworld.AddQuestTaskList(taskObj);
-												}
-												scr_taskDetails.totalMissionCount = taskList.Size();
-											//	Debug.Log("Size "+taskList.Size());
-												scr_taskDetails.blueQuestCount.Text = 	scr_taskDetails.totalMissionCount.ToString();
-											}
-											
-											break;
-											
-										case "14":
-											
-											//Debug.Log("gameObjectConstant : " + obj.GetDump());
-											ISFSArray arrGameObj = obj.GetSFSArray("gameObjectConstants");
-											int size = arrGameObj.Size();
-											for(int i=0; i< size; i++)
-											{
-												ISFSObject gameObj = arrGameObj.GetSFSObject(i);
-												ObjectCreationtime = gameObj.GetInt("time_to_create");
-											}
-											break;
-											
-										case "15":
-											
-//										    Debug.Log("1 and 15 : >>>>>>>>>> "+ obj.GetDump());
-											
-					                        if((obj.GetBool("success")))
-					                        {
-											ISFSArray arrUserQuest = obj.GetSFSArray("questsRemain");
-											for(int i=0 ;i< arrUserQuest.Size(); i++)
-											{
-												ISFSObject quest = arrUserQuest.GetSFSObject(i);
-												int questNo = quest.GetInt("quest_no");
-											
-												scr_userworld.AddQuest(questNo);
-											}
-					                        }
-											if(isUserWorld)
-											{
-												//RunOnce();
-												//SendRequestforChildCount();
-						
-						                     SendRequestforLevelXp();
-						
-						                   PercentageCalc = ReturnRandomNumber(90,95);
-///***					                         Debug.Log("Percentage :" + PercentageCalc);
-											percentageText.GetComponent<SpriteText>().Text = PercentageCalc.ToString() + "%";
-												//isUserWorld = false;
-											}
-											
-											//GameManager.quest = 5 - arrUserQuest.Size();
-											////Debug.Log("quest size " + arrUserQuest.Size() + " --- " + GameManager.quest);
-						
-											
-											break;
-											
-										case "16":
-					
-					                        //once task upgrade is saved on server here the response should come for it 
-											
-///***											Debug.Log("Object Upgrade :" + obj.GetDump());
-											SendRequestforGetscheduleTasks();
-						
-											
-											break;
-											
-										case "17":
-											
-											//Debug.Log("TG : >>>>>>>" + obj.GetDump());
-											
-											scr_userworld.RemoveTask(int.Parse(obj.GetUtfString("objectId")));
-											GameManager.xp += float.Parse(obj.GetUtfString("xpGained"));
-											Debug.Log("creature xp = " + float.Parse(obj.GetUtfString("xpGained")));
-					                        UpdateText();
-											break;
-											
-										case "18":
-											
-///***											Debug.Log("DUMP ::" + obj.GetDump());
-											GameManager.xp += float.Parse(obj.GetDouble("xpEarned").ToString());
-					                        UpdateText();
-										    feedLevelSvr = int.Parse(obj.GetInt("feedLevel").ToString());
-					                        feedLevelBarSvr = int.Parse(obj.GetInt("feedLevelBar").ToString());
-											scr_creatureSystem.AssignFeedPb(float.Parse(obj.GetInt("currentFoodFeed").ToString()),
-												                            float.Parse(obj.GetInt("maxFeed").ToString()),feedLevelSvr,feedLevelBarSvr);
-						
-											break;
-										case "19":
-											
-											//Debug.Log("Child :" + obj.GetDump());
-											
-											ISFSArray arrChildObjects = obj.GetSFSArray("childObjects");
-											
-											if(obj.GetBool("success"))
-											{
-												for(int i=0 ; i < arrChildObjects.Size() ; i++ )
-												{
-													ISFSObject parent = arrChildObjects.GetSFSObject(i);
-													int cnt =  (int)(parent.GetLong("creatureCount"));
-										            int parentId = parent.GetInt("parent_object_id");
-													scr_userworld.AddTgInfo(cnt,parentId);
-												}
-												
-												
-												if(obj.GetBool("success"))
-												{
-											        scr_userworld.AddChildItems();
-												}
-											}
-											
-					                       // scr_Mainmenu.loadingBool = false;
-					                         SendRequestforGameObjectsInfo();
-					
-											break;
-											
-										case "20":
-											
-///***											Debug.Log("Max Feed :" + obj.GetDump());					
-											
-											if(obj.GetBool("success"))
-											{
-											ISFSObject feeddetails = obj.GetSFSObject("feedDetails");	
-											scr_userworld.SetFoodLevelPB((float)(feeddetails.GetInt("maxFood")),(float)(feeddetails.GetInt("currentFoodFeed")),
-							                                               (int)feeddetails.GetLong("nextFeedLevel"),feeddetails.GetInt("x"));
-										    }
-											
-											break;
-										
-					                    case "21":
-					                     
-					                      ISFSArray arrUserObjectsDB = obj.GetSFSArray("gameObjectInfo");	
-					                      for(int i= 0; i < arrUserObjectsDB.Size() ; i++)
-					                      {
-						                        ISFSObject objdb = arrUserObjectsDB.GetSFSObject(i);
-						
-						                        scr_userworld.AddUserObjectsDB (objdb.GetDouble("spark_cost"),
-							                                          objdb.GetDouble("cost_gold_total"),
-							                                          objdb.GetDouble("xp_earned"),
-							                                          objdb.GetDouble("cost_gold_base"),
-							                                          objdb.GetUtfString("objectType"),
-							                                          objdb.GetInt("objectTypeId"));
-						
-						
-					                      }
-					
-					                     
-					
-					                     SendRequestforCreatureSpark();
-					
-					                     break;
-					
-					                     case "22":
-											
-					                        if(obj.GetBool("success"))	
-				                        	{
-											 elapsedtime = obj.GetLong("elapsedTime").ToString();
-											 state = obj.GetUtfString("NOW");
-						                     IsSmokePipeweed = obj.GetBool("isSmooking");
-											 scr_timeDial.scr_DayNightTime.dnCnt = int.Parse(elapsedtime);
-///***						                     Debug.Log("Day Night stuff :: >>" + obj.GetDump());
-						 
-					                        }
-					
-											break;
-					
-					
-										case "115":
-											
-											//Debug.Log(obj.GetDump());
-											
-											break;
-											
-										case "110":
-											
-											
-											elapsedtime = obj.GetLong("elapsedTime").ToString();
-											state = obj.GetUtfString("NOW");
-											IsSmokePipeweed = obj.GetBool("isSmooking");
-											GameManager.xp += (float)obj.GetDouble("xpEarned");
-					                        UpdateText();
-	///***										Debug.Log("::::::: current state :: " + state + " -------- " + elapsedtime);
-											scr_timeDial.scr_DayNightTime.dnCnt = int.Parse(elapsedtime);
-											break;
-										
-										case "131":
-					
-					                        //Debug.Log("Award Spark >>>>>> :" + obj.GetDump());
-					
-											 break;
-										
-										case "24":		//Halfling & darkling task list
-										
-///***										Debug.Log("task 1---- 24 :" + obj.GetDump());
-										if(obj.GetBool("success"))
-					                    {
-											scr_userworld.ClearQuestTasks();
-						               	 	ISFSArray taskList = obj.GetSFSArray("userLevelTask");
-						
-						                    for(int i=0 ; i< taskList.Size() ; i++)
-						                    {
-							                	ISFSObject taskObj = taskList.GetSFSObject(i); 
-												scr_userworld.AddQuestTaskList(taskObj);
-											}
-											//Debug.Log("Size : "+taskList.Size());
-											scr_taskDetails.totalMissionCount = taskList.Size();
-											scr_taskDetails.blueQuestCount.Text = 	scr_taskDetails.totalMissionCount.ToString();
-										}
-					
-											break;
-										
-								} 
-							break;
-					
-			case "3":
-						//Game Action Handler
-							
-						//Debug.Log(obj.GetUtfString("error"));	
+                    //Debug.Log(obj.GetUtfString("error"));	
 //				Debug.Log("case id ::>>>>> " + subCmd);
-						switch(subCmd)	
-							{
-									case "1":
-										
-											////Debug.Log(obj.GetDump());
-										//Debug.Log ("sfsobj :" + obj.GetUtfString("objId"));
-								        //Debug.Log("success :" + obj.GetUtfString("success"));
-								        //Debug.Log("TaskId : " + obj.GetUtfString("taskId"));
-										//Debug.Log("error :" + obj.GetUtfString("error"));
-										
-										SendRequestforGetscheduleTasks();
-															
-											
-										break;
-										
-									case "2":
-										
-										SendRequestforGetscheduleTasks();	
-										break;
-										
-									case "12":
-										
-									//	Debug.Log("DUMP :" + obj.GetDump());
-										if (GameManager.taskCount == 8)
-										{
-											scr_popUpinfo.placeDirtPathTutorial(6);
-///***											Debug.Log("~~~~~~~~~~~~~~~> place dirt path <~~~~~~~~~~~~~~~~");
-										}
-					
-					                  if(GameManager.gameLevel > 1)
-					                  {
-					                    if(obj.GetUtfString("objectTypeId") == "12")
-					                    {
-///***							Debug.Log("^^^^^^^^^^^^^^^^^^");
-								               grid.curObj.name  = "HC_D_DirtPath_GO(Clone)";
-							                   scr_popUpinfo.CreateAnotherHalflingdirthPath();
-					                    }
-					                    else if(obj.GetUtfString("objectTypeId") == "205")
-					                    {
-								               grid.curObj.name  = "DL_D_DDirtPath_GO(Clone)";
-							                   scr_popUpinfo.CreateAnotherDarklingdirthPath();
-						                }
-					                   }
-					    
-										//Debug.Log ("sfsobj :" + obj.GetUtfString("objId"));
-								        //Debug.Log("success :" + obj.GetUtfString("success"));
-								        //Debug.Log("TaskId Goblin Camp : " + obj.GetUtfString("taskId"));
-					//					//Debug.Log("error :" + obj.GetUtfString("error"));
-															
-										SendRequestforGetscheduleTasks();
-						
-											
-										break;
-										
-									case "7":
-///***										Debug.Log("cave dump :" + obj.GetDump());
-										SendRequestforGetscheduleTasks();	
-										break;
-										
-									case "18":
-										
-///***										Debug.Log("3 ------ 18 : "+obj.GetDump());
-										//Debug.Log(obj.GetInt("attackedObjId1") +"     "+obj.GetInt("attackedObjId2"));
-										scr_userworld.RemoveCaveTask(obj.GetUtfString("taskId"));
-										scr_popUpinfo.UpdateScore();	
-										scr_OrcAttackSystem.StopAttackTask(obj.GetInt("attackedObjId1") ,obj.GetInt("attackedObjId2"));
-										break;
-										
-									case "19":
-										
-										//Debug.Log("Creature Morphed :" + obj.GetDump());
-										SendRequestforGetscheduleTasks();	
-											
-										break;
-										
-									case "150":
-										//Debug.Log("Creature Morphed :" + obj.GetDump());
-										GameManager.xp += float.Parse(obj.GetDouble("xpGained").ToString());
-										Debug.Log("creature xp = " + float.Parse(obj.GetUtfString("xpGained")));
-					                    UpdateText();
-										scr_creatureSystem.AssignPreviousCreatureFeedLevel(obj.GetInt("objectTypeId"),
-											                                               obj.GetInt("feedLevel"));
-					
-											
-										break;
-										
-									case "13":
-										
-										Debug.Log("Accelerated :" + obj.GetDump());
-					Debug.Log("my creature xp : " + float.Parse(obj.GetUtfString("xpGained")));
-										scr_userworld.RemoveTask(int.Parse(obj.GetUtfString("objectId")));
-										scr_popUpinfo.UpdateScore();
+                    HandleGameActions(obj);
+                    break;
 
-					//GameManager.earnXpVal = int.Parse(obj.GetUtfString("xpGained"));
-					// indra
+                case "2":
+
+                    HandleBuilding(obj);
+                    break;
+
+                case "4":
+
+                    //Economy Hanlder
+
+                    HandleEconomy(obj);
+
+                    break;
+
+            }
+        }
+
+//		catch(Exception ex)
+//		{
+//			//Debug.Log(ex.ToString());
+//		}
+    }
+
+    private void HandleEconomy(ISFSObject obj)
+    {
+        switch (subCmd)
+        {
+            case "1":
+
+                GameManager.coins += obj.GetDouble("goldEarned");
+                Debug.Log("earn coind ~~~~~> " + obj.GetDouble("goldEarned"));
+                GameManager.earnGoldVal = (int) obj.GetDouble("goldEarned");
+                scr_popUpinfo.UpdateScore();
+                Debug.Log("gold object --- : " + GameManager.curGoldBuilding.name);
+                GameObject earnGoldTxt =
+                    Instantiate(Resources.Load("goldValue"), GameManager.curGoldBuilding.transform.position,
+                        Quaternion.Euler(90, 0, 0)) as GameObject;
+                //UpdateText();
+                //Debug.Log("CreditGold : " + obj.GetDump());
+
+                break;
+
+            case "2":
+
+                //Debug.Log("Purchase >>>>>>> :" + obj.GetDump());
+
+                scr_popUpinfo.UpdateScore();
+                break;
+            case "177":
+
+                //Debug.Log("Gold :" + obj.GetDump());
+                ISFSArray arrUsergold = new SFSArray();
+                arrUsergold = obj.GetSFSArray("goldObjects");
+
+                for (int i = 0; i < arrUsergold.Size(); i++)
+                {
+                    ISFSObject objGold = arrUsergold.GetSFSObject(i);
+                    scr_userworld.EnableGoldButton(objGold.GetInt("object_type_id"),
+                        objGold.GetDouble("object_gold"));
+                }
+
+
+                break;
+        }
+    }
+
+    private void HandleBuilding(ISFSObject obj)
+    {
+        switch (subCmd)
+        {
+            case "1":
+
+
+                if (!ChkPosNRot(scr_popUpinfo.GetPosition(), scr_popUpinfo.GetRotation()))
+                {
+                    SendRequestForAddTrainingGround(int.Parse(obj.GetUtfString("userPurchaseId")),
+                        int.Parse(obj.GetUtfString("objectTypeId")),
+                        scr_popUpinfo.GetPosition(), scr_popUpinfo.GetRotation());
+                }
+
+                break;
+
+            case "2":
+
+                // //Debug.Log(obj.GetDump());
+
+                creatureUserPurchaseid = int.Parse(obj.GetUtfString("userPurchaseId"));
+                creatureObjecttypeid = int.Parse(obj.GetUtfString("objectTypeId"));
+
+                SendRequestForGetworld();
+
+                break;
+
+            case "3":
+//								Debug.Log("2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 " + obj.GetDump());
+                if (!ChkPosNRot(scr_popUpinfo.GetPosition(), scr_popUpinfo.GetRotation()))
+                {
+                    SendrequestForCreateStructure(int.Parse(obj.GetUtfString("userPurchaseId")),
+                        int.Parse(obj.GetUtfString("objectTypeId")),
+                        scr_popUpinfo.GetPosition(), scr_popUpinfo.GetRotation());
+                }
+                break;
+
+            case "4":
+
+
+                break;
+
+            case "5":
+
+                if (scr_popUpinfo.isTaskFarming)
+                {
+                    {
+                        //Debug.Log("Plant baby :" + obj.GetDump());
+                        isGetFarmObjId = true;
+                        PlantPurchaseid = int.Parse(obj.GetUtfString("userPurchaseId"));
+                        PlantObjectTypeid = int.Parse(obj.GetUtfString("objectTypeId"));
+
+                        SendRequestForGetworld();
+                        scr_popUpinfo.isTaskFarming = false;
+                    }
+                }
+
+                break;
+
+            case "6":
+
+                ///***					          Debug.Log("dump: " +obj.GetDump());
+
+                ///***						   Debug.Log("Decos : " + scr_popUpinfo.GetDecorationPos());
+
+                if (!ChkPosNRot(scr_popUpinfo.GetDecorationPos(), scr_popUpinfo.GetRotation()))
+                {
+                    SendRequestForAddDecorationItems(int.Parse(obj.GetUtfString("userPurchaseId")),
+                        int.Parse(obj.GetUtfString("objectTypeId")),
+                        scr_popUpinfo.GetDecorationPos(), scr_popUpinfo.GetRotation());
+                }
+
+                break;
+        }
+    }
+
+    private void HandleGameActions(ISFSObject obj)
+    {
+        switch (subCmd)
+        {
+            case "1":
+
+                ////Debug.Log(obj.GetDump());
+                //Debug.Log ("sfsobj :" + obj.GetUtfString("objId"));
+                //Debug.Log("success :" + obj.GetUtfString("success"));
+                //Debug.Log("TaskId : " + obj.GetUtfString("taskId"));
+                //Debug.Log("error :" + obj.GetUtfString("error"));
+
+                SendRequestforGetscheduleTasks();
+
+
+                break;
+
+            case "2":
+
+                SendRequestforGetscheduleTasks();
+                break;
+
+            case "12":
+
+                //	Debug.Log("DUMP :" + obj.GetDump());
+                if (GameManager.taskCount == 8)
+                {
+                    scr_popUpinfo.placeDirtPathTutorial(6);
+                    ///***											Debug.Log("~~~~~~~~~~~~~~~> place dirt path <~~~~~~~~~~~~~~~~");
+                }
+
+                if (GameManager.gameLevel > 1)
+                {
+                    if (obj.GetUtfString("objectTypeId") == "12")
+                    {
+                        ///***							Debug.Log("^^^^^^^^^^^^^^^^^^");
+                        grid.curObj.name = "HC_D_DirtPath_GO(Clone)";
+                        scr_popUpinfo.CreateAnotherHalflingdirthPath();
+                    }
+                    else if (obj.GetUtfString("objectTypeId") == "205")
+                    {
+                        grid.curObj.name = "DL_D_DDirtPath_GO(Clone)";
+                        scr_popUpinfo.CreateAnotherDarklingdirthPath();
+                    }
+                }
+
+                //Debug.Log ("sfsobj :" + obj.GetUtfString("objId"));
+                //Debug.Log("success :" + obj.GetUtfString("success"));
+                //Debug.Log("TaskId Goblin Camp : " + obj.GetUtfString("taskId"));
+                //					//Debug.Log("error :" + obj.GetUtfString("error"));
+
+                SendRequestforGetscheduleTasks();
+
+
+                break;
+
+            case "7":
+                ///***										Debug.Log("cave dump :" + obj.GetDump());
+                SendRequestforGetscheduleTasks();
+                break;
+
+            case "18":
+
+                ///***										Debug.Log("3 ------ 18 : "+obj.GetDump());
+                //Debug.Log(obj.GetInt("attackedObjId1") +"     "+obj.GetInt("attackedObjId2"));
+                scr_userworld.RemoveCaveTask(obj.GetUtfString("taskId"));
+                scr_popUpinfo.UpdateScore();
+                scr_OrcAttackSystem.StopAttackTask(obj.GetInt("attackedObjId1"), obj.GetInt("attackedObjId2"));
+                break;
+
+            case "19":
+
+                //Debug.Log("Creature Morphed :" + obj.GetDump());
+                SendRequestforGetscheduleTasks();
+
+                break;
+
+            case "150":
+                //Debug.Log("Creature Morphed :" + obj.GetDump());
+                GameManager.xp += float.Parse(obj.GetDouble("xpGained").ToString());
+                Debug.Log("creature xp = " + float.Parse(obj.GetUtfString("xpGained")));
+                UpdateText();
+                scr_creatureSystem.AssignPreviousCreatureFeedLevel(obj.GetInt("objectTypeId"),
+                    obj.GetInt("feedLevel"));
+
+
+                break;
+
+            case "13":
+
+                Debug.Log("Accelerated :" + obj.GetDump());
+                Debug.Log("my creature xp : " + float.Parse(obj.GetUtfString("xpGained")));
+                scr_userworld.RemoveTask(int.Parse(obj.GetUtfString("objectId")));
+                scr_popUpinfo.UpdateScore();
+
+                //GameManager.earnXpVal = int.Parse(obj.GetUtfString("xpGained"));
+                // indra
 //					GameManager.earnXpVal = int.Parse(obj.GetUtfString("xpGained"))//(int)scr_sfsRemote.lst_GameObjectsDb[i].xp_earned;
-					
-					// show xp value
+
+                // show xp value
 //					GameObject xpValObj = Instantiate(Resources.Load("xpValue"), 
 //					                                  new Vector3(obj.transform.position.x, obj.transform.position.y + 0.5f, obj.transform.position.z), 
 //					                                  Quaternion.Euler(90, 0, 0)) as GameObject;
 //					Debug.Log("obj ---> " + obj.name);	
 //					xpValObj.transform.parent = obj.transform.root.gameObject.transform;
-						
-											
-										break;
-										
-									case "14":
-										
-									   //Debug.Log(obj.GetDump());
-					      
-									   string msg = obj.GetUtfString("msg");
-					
-					                    if(isUserWorld)
-					                    {
-									    	SendRequestForFarmItems("4","1");
-						                    PercentageCalc = ReturnRandomNumber(60,65);
-					                        //Debug.Log("Percentage :" + PercentageCalc);
-											percentageText.GetComponent<SpriteText>().Text = PercentageCalc.ToString() + "%";
-					                    }
-					
-					                   if(obj.GetBool("success"))
-					                   {
-										if(msg != "no task found")
-										{
-										    ISFSArray arrUserTasks = obj.GetSFSArray("userTasks");	
-										   
-						                    if(lst_times.Count > 0)
-						                    {
-							                  lst_times.Clear();
-						                    }
-						
-										    for(int i=0; i < arrUserTasks.Size() ; i++)
-											{
-													ISFSObject o = arrUserTasks.GetSFSObject(i);							
-													
-													scr_userworld.AllocateProgressBar(o.GetInt("object_id"),
-														                              o.GetInt("objectTypeId"),
-														                              o.GetLong("task_end_time"),							           
-													                                  o.GetUtfString("task_id"),
-														                              o.GetInt("creationTime"),
-														                              o.GetInt("parentObjectId"));
-										    }
-												
-											
-									    }
-											
-					                  }
-					                 
-										break;
-									case "15":
-										
-	///***									Debug.Log("quest kill : " + obj.GetDump());
-					
-					                        if(int.Parse(obj.GetUtfString("questNo")).Equals(502))
-											{
-						                      scr_taskDetails.RemoveQuest(int.Parse(obj.GetUtfString("questNo")));
-											}
-										SendRequestforGetscheduleTasks();	
-					                    scr_popUpinfo.UpdateScore();
-					                    
-					                   
-										break;
-										
-									case "16":
-											
-										//Debug.Log("accelerate quest :" + obj.GetDump());
-					                    scr_popUpinfo.AssignQuestNo(int.Parse(obj.GetUtfString("questNo")));
-					                    scr_taskDetails.RemoveQuest(int.Parse(obj.GetUtfString("questNo"))); //Remove from log
-										if(bool.Parse(obj.GetUtfString("success")))
-										{
-										  GameManager.xp += float.Parse(obj.GetUtfString("xpGained"));
-											Debug.Log("creature xp = " + float.Parse(obj.GetUtfString("xpGained")));
-						                  UpdateText();
-										}
-										
-										break;
-										
-									case "6":
-											
-										//Debug.Log("Dump Baby >>>>>:" + obj.GetDump());
-										
-										//Debug.Log("harvest :" + obj.GetUtfString("success"));
-										
-										scr_userworld.RemoveTask(GetHarverstId());
-										GameManager.food += int.Parse(obj.GetUtfString("foodGained"));
-										GameManager.plants += int.Parse(obj.GetUtfString("foodGained"));
-										GameManager.xp += float.Parse(obj.GetUtfString("xpGained"));
-							          Debug.Log("creature xp = " + float.Parse(obj.GetUtfString("xpGained")));
-										GameManager.coins += double.Parse(obj.GetUtfString("goldGained"));
-										
+
+
+                break;
+
+            case "14":
+
+                //Debug.Log(obj.GetDump());
+
+                string msg = obj.GetUtfString("msg");
+
+                if (isUserWorld)
+                {
+                    SendRequestForFarmItems("4", "1");
+                    PercentageCalc = ReturnRandomNumber(60, 65);
+                    //Debug.Log("Percentage :" + PercentageCalc);
+                    percentageText.GetComponent<SpriteText>().Text = PercentageCalc.ToString() + "%";
+                }
+
+                if (obj.GetBool("success"))
+                {
+                    if (msg != "no task found")
+                    {
+                        ISFSArray arrUserTasks = obj.GetSFSArray("userTasks");
+
+                        if (lst_times.Count > 0)
+                        {
+                            lst_times.Clear();
+                        }
+
+                        for (int i = 0; i < arrUserTasks.Size(); i++)
+                        {
+                            ISFSObject o = arrUserTasks.GetSFSObject(i);
+
+                            scr_userworld.AllocateProgressBar(o.GetInt("object_id"),
+                                o.GetInt("objectTypeId"),
+                                o.GetLong("task_end_time"),
+                                o.GetUtfString("task_id"),
+                                o.GetInt("creationTime"),
+                                o.GetInt("parentObjectId"));
+                        }
+                    }
+                }
+
+                break;
+            case "15":
+
+                ///***									Debug.Log("quest kill : " + obj.GetDump());
+
+                if (int.Parse(obj.GetUtfString("questNo")).Equals(502))
+                {
+                    scr_taskDetails.RemoveQuest(int.Parse(obj.GetUtfString("questNo")));
+                }
+                SendRequestforGetscheduleTasks();
+                scr_popUpinfo.UpdateScore();
+
+
+                break;
+
+            case "16":
+
+                //Debug.Log("accelerate quest :" + obj.GetDump());
+                scr_popUpinfo.AssignQuestNo(int.Parse(obj.GetUtfString("questNo")));
+                scr_taskDetails.RemoveQuest(int.Parse(obj.GetUtfString("questNo"))); //Remove from log
+                if (bool.Parse(obj.GetUtfString("success")))
+                {
+                    GameManager.xp += float.Parse(obj.GetUtfString("xpGained"));
+                    Debug.Log("creature xp = " + float.Parse(obj.GetUtfString("xpGained")));
+                    UpdateText();
+                }
+
+                break;
+
+            case "6":
+
+                //Debug.Log("Dump Baby >>>>>:" + obj.GetDump());
+
+                //Debug.Log("harvest :" + obj.GetUtfString("success"));
+
+                scr_userworld.RemoveTask(GetHarverstId());
+                GameManager.food += int.Parse(obj.GetUtfString("foodGained"));
+                GameManager.plants += int.Parse(obj.GetUtfString("foodGained"));
+                GameManager.xp += float.Parse(obj.GetUtfString("xpGained"));
+                Debug.Log("creature xp = " + float.Parse(obj.GetUtfString("xpGained")));
+                GameManager.coins += double.Parse(obj.GetUtfString("goldGained"));
+
 //										GameObject xpValTemp = GameObject.Find("xpValue(Clone)") as GameObject;
 //					
 //										if (xpValTemp != null)
@@ -2204,404 +1594,402 @@ public class SfsRemote : MonoBehaviour {
 //											GetxpforPlants = obj.GetUtfString("xpGained");
 //					                    	scr_plantXP.objectPlantXP();
 //										}
-					                     
-					
-										UpdateText();
-					
-										
-										break;
-										
-									case "4":
-											
+
+
+                UpdateText();
+
+
+                break;
+
+            case "4":
+
 //									    Debug.Log("3 <<<<<<<<<<< 4 : "+obj.GetDump());
-					
-					                   if(obj.GetBool("success"))
-					                   {
-										ISFSArray arrUserworld = obj.GetSFSArray("userWorld");
-										ISFSArray arrUserInventory = obj.GetSFSArray("userInventory");
-										//error = obj.GetUtfString("error");
-										string mg = obj.GetUtfString("msg");
-										////Debug.Log("error :" + _error);
-										int siz = arrUserworld.Size(); 
-										
-										creatureArray = new SFSArray();
-										decoration = new SFSArray();
-										trainingGround = new SFSArray();
-										GardenPlot = new SFSArray();
-										Plants = new SFSArray();
-										other = new SFSArray();
-										
-										
-					                    if(scr_GuiControl.isGetMaxFeed)
-					                    {  
-						                   if(lst_ObjSvr.Count > 0)
-						                    {
-							                   lst_ObjSvr.Clear();
-						                    }
-					                    }
-						
-					 
-										for(int i=0 ; i< arrUserworld.Size(); i++)
-										{
-											SaveUserworld(arrUserworld.GetSFSObject(i));
-											
-										}
-										 
-										CalluserWorld(trainingGround);
-										CalluserWorld(creatureArray);
-										CalluserWorld(GardenPlot);
-										CalluserWorld(Plants);
-										CalluserWorld(decoration);
-										CalluserWorld(other);
-										
-					                    if(scr_GuiControl.isGetMaxFeed)
-					                    { 
-											//Debug.Log("Feed");
-						                }
-								
-										for(int j=0 ; j < arrUserInventory.Size(); j++)
-										{
-					    					ISFSObject o = arrUserInventory.GetSFSObject(j);
-											//send to popInformation for adding creature and Dirtpath
-											
-											//array user inventory
-											if(isUserWorld)
-											{
-												scr_userworld.AddUserPurchases(o.GetInt("objectTypeId"),
-													                           o.GetInt("userPurchaseId"));
-											}
-											
-									    }
-					
-					                   }
-					                    if(isUserWorld)
-										{					
-											SendRequestforquestPlayed();										
-						                    PercentageCalc = ReturnRandomNumber(80, 85);
-					                        //Debug.Log("Percentage :" + PercentageCalc);
-											percentageText.GetComponent<SpriteText>().Text = PercentageCalc.ToString() + "%";
-									  	}
-					      
-										break;
-					
-									case "5":
-										
-									  //Debug.Log("success :" + obj.GetUtfString("success"));
-									  //Debug.Log("TaskId : " + obj.GetUtfString("taskId"));
-									  //Debug.Log("ObjectIds for plants :" + obj.GetUtfString("objId"));
-									  //Debug.Log("Dump :" + obj.GetDump());
-									  AssignObjId = scr_popUpinfo.GetGameObject();
-									  AssignObjId.name = AssignObjId.name + "_" + obj.GetUtfString("objId");					
-									  if(AssignObjId.name != null)	
-									  {
-									    TempAssignName = AssignObjId.name;
-									  }
-									  SendRequestforGetscheduleTasks(); 
-											
-										break;
-										
-										
-									case "8":
-										
-									  //Debug.Log("Creature Task :" + obj.GetDump());
-									  //Debug.Log(obj.GetUtfString("error"));	
-									  SendRequestforGetscheduleTasks();	
-											
-										break;
-										
-									case "9":
-										
-											//Debug.Log(obj.GetDump());
-										break;
-										
-										
-									case "100":
-											
-											//Debug.Log(obj.GetDump());	
-										
-										xpGainedSvr = obj.GetDouble("xpGained");
-							Debug.Log(" TG xp :------- " + xpGainedSvr);
 
-										//update xp 
-										
-										GameManager.xp = GameManager.xp + (int)xpGainedSvr;
-					                    UpdateText();
-										
-										break;
-										
-									case "101":
-										
-									   //Debug.Log(obj.GetDump());
-									   HarvestObjectId = obj.GetInt("objectId");
-									   //Debug.Log("harvest : " + HarvestObjectId);
-							
-										break;
-										
-									case "102":
-										
-										  //Debug.Log(obj.GetDump());
-									 // //Debug.Log(obj.GetUtfString("error"));
-										
-										xpGainedSvr = obj.GetDouble("xpGained");
-							Debug.Log(" creature xp : " + xpGainedSvr);
-										//update xp 
-										
-										GameManager.xp = GameManager.xp + (int)xpGainedSvr;	
-					                    UpdateText();
-											
-										break;
-										
-									case "103":
-										//Debug.Log(obj.GetDump());
-									  //Debug.Log("Cave cleared");
-										
-									   xpGainedSvr = obj.GetDouble("xpGained");
+                if (obj.GetBool("success"))
+                {
+                    ISFSArray arrUserworld = obj.GetSFSArray("userWorld");
+                    ISFSArray arrUserInventory = obj.GetSFSArray("userInventory");
+                    //error = obj.GetUtfString("error");
+                    string mg = obj.GetUtfString("msg");
+                    ////Debug.Log("error :" + _error);
+                    int siz = arrUserworld.Size();
 
-							Debug.Log(" creature xp : " + xpGainedSvr);
-									   //update xp
-										
-									   GameManager.xp = GameManager.xp + (int)xpGainedSvr;
-									   UpdateText();
-					
-											
-										break;
-										
-									case "111":
-											
-									    //Debug.Log("Quest Success :" + obj.GetDump());
-										xpGainedSvr = obj.GetDouble("xpGained");
-							Debug.Log(" creature xp : " + xpGainedSvr);
-										QuestNoSvr = obj.GetInt("questNo");
-										scr_popUpinfo.AssignQuestNo(QuestNoSvr);
-										scr_taskDetails.RemoveQuest(QuestNoSvr); //Remove from log
-										GameManager.xp = GameManager.xp + (int)xpGainedSvr;
-										GameManager.sparks = GameManager.sparks + (int)(obj.GetDouble("sparksGained"));
-										UpdateText();
-										break;
-										
-									case "112":
-										
-										//Debug.Log("Burned Plant :" + obj.GetDump());
-										isBurn = obj.GetBool("isBurn");
-										burnObjid = obj.GetInt("objectId");	
-										break;
-										
-									case "20":
-										
-										//Debug.Log("Accelerate Morphing Task :" + obj.GetDump());
-					                    GameManager.xp = GameManager.xp + (int)(obj.GetDouble("xpGained"));
-					                    UpdateText();
-										scr_creatureSystem.AssignPreviousCreatureFeedLevel(obj.GetInt("objectTypeId"),
-											                                               obj.GetInt("feedLevel"));
-											
-										break;
-										
-									case "21":
-										
-										//Debug.Log("Accelerate Plant plants: " + obj.GetDump());
-						
-										break;
-					
-									case "22":
-										// cave attack time coming from server
-					                    Debug.Log("Recieved Cave Time :" + obj.GetDump());
-										bool isThreshold = obj.GetBool("SecondThreshold");
-					                      getOrgattacktym = float.Parse(obj.GetUtfString("taskEndTime"));
-										scr_userworld.GetCaveCreatures(obj.GetInt("objectTypeId"), isThreshold); 		//Added
-										scr_OrcAttackSystem.AddCaveTimer();
-					                      isgetOrgtym = true;
-										
-										break;
-					
-									case "23":
-					                     
+                    creatureArray = new SFSArray();
+                    decoration = new SFSArray();
+                    trainingGround = new SFSArray();
+                    GardenPlot = new SFSArray();
+                    Plants = new SFSArray();
+                    other = new SFSArray();
 
-										int obj1 = 0;
-										int obj2 = 0;
 
-										//SendRequestForGetworld();
-				                        Debug.Log("Recieved Building Time :" + obj.GetDump());
-										int caveId = obj.GetInt("fromObjId");
-										//scr_userworld.GetCaveCreatures(scr_userworld.ReturnTypeIdfromObjId(caveId));
-										scr_userworld.GetCaveCreatures(scr_userworld.ReturnTypeIdfromObjId(caveId), false);
-										Debug.Log("cave ID = "+scr_userworld.ReturnTypeIdfromObjId(caveId));					
-					
-										if(caveId != -1)
-										{
+                    if (scr_GuiControl.isGetMaxFeed)
+                    {
+                        if (lst_ObjSvr.Count > 0)
+                        {
+                            lst_ObjSvr.Clear();
+                        }
+                    }
 
+
+                    for (int i = 0; i < arrUserworld.Size(); i++)
+                    {
+                        SaveUserworld(arrUserworld.GetSFSObject(i));
+                    }
+
+                    CalluserWorld(trainingGround);
+                    CalluserWorld(creatureArray);
+                    CalluserWorld(GardenPlot);
+                    CalluserWorld(Plants);
+                    CalluserWorld(decoration);
+                    CalluserWorld(other);
+
+                    if (scr_GuiControl.isGetMaxFeed)
+                    {
+                        //Debug.Log("Feed");
+                    }
+
+                    for (int j = 0; j < arrUserInventory.Size(); j++)
+                    {
+                        ISFSObject o = arrUserInventory.GetSFSObject(j);
+                        //send to popInformation for adding creature and Dirtpath
+
+                        //array user inventory
+                        if (isUserWorld)
+                        {
+                            scr_userworld.AddUserPurchases(o.GetInt("objectTypeId"),
+                                o.GetInt("userPurchaseId"));
+                        }
+                    }
+                }
+                if (isUserWorld)
+                {
+                    SendRequestforquestPlayed();
+                    PercentageCalc = ReturnRandomNumber(80, 85);
+                    //Debug.Log("Percentage :" + PercentageCalc);
+                    percentageText.GetComponent<SpriteText>().Text = PercentageCalc.ToString() + "%";
+                }
+
+                break;
+
+            case "5":
+
+                //Debug.Log("success :" + obj.GetUtfString("success"));
+                //Debug.Log("TaskId : " + obj.GetUtfString("taskId"));
+                //Debug.Log("ObjectIds for plants :" + obj.GetUtfString("objId"));
+                //Debug.Log("Dump :" + obj.GetDump());
+                AssignObjId = scr_popUpinfo.GetGameObject();
+                AssignObjId.name = AssignObjId.name + "_" + obj.GetUtfString("objId");
+                if (AssignObjId.name != null)
+                {
+                    TempAssignName = AssignObjId.name;
+                }
+                SendRequestforGetscheduleTasks();
+
+                break;
+
+
+            case "8":
+
+                //Debug.Log("Creature Task :" + obj.GetDump());
+                //Debug.Log(obj.GetUtfString("error"));	
+                SendRequestforGetscheduleTasks();
+
+                break;
+
+            case "9":
+
+                //Debug.Log(obj.GetDump());
+                break;
+
+
+            case "100":
+
+                //Debug.Log(obj.GetDump());	
+
+                xpGainedSvr = obj.GetDouble("xpGained");
+                Debug.Log(" TG xp :------- " + xpGainedSvr);
+
+                //update xp 
+
+                GameManager.xp = GameManager.xp + (int) xpGainedSvr;
+                UpdateText();
+
+                break;
+
+            case "101":
+
+                //Debug.Log(obj.GetDump());
+                HarvestObjectId = obj.GetInt("objectId");
+                //Debug.Log("harvest : " + HarvestObjectId);
+
+                break;
+
+            case "102":
+
+                //Debug.Log(obj.GetDump());
+                // //Debug.Log(obj.GetUtfString("error"));
+
+                xpGainedSvr = obj.GetDouble("xpGained");
+                Debug.Log(" creature xp : " + xpGainedSvr);
+                //update xp 
+
+                GameManager.xp = GameManager.xp + (int) xpGainedSvr;
+                UpdateText();
+
+                break;
+
+            case "103":
+                //Debug.Log(obj.GetDump());
+                //Debug.Log("Cave cleared");
+
+                xpGainedSvr = obj.GetDouble("xpGained");
+
+                Debug.Log(" creature xp : " + xpGainedSvr);
+                //update xp
+
+                GameManager.xp = GameManager.xp + (int) xpGainedSvr;
+                UpdateText();
+
+
+                break;
+
+            case "111":
+
+                //Debug.Log("Quest Success :" + obj.GetDump());
+                xpGainedSvr = obj.GetDouble("xpGained");
+                Debug.Log(" creature xp : " + xpGainedSvr);
+                QuestNoSvr = obj.GetInt("questNo");
+                scr_popUpinfo.AssignQuestNo(QuestNoSvr);
+                scr_taskDetails.RemoveQuest(QuestNoSvr); //Remove from log
+                GameManager.xp = GameManager.xp + (int) xpGainedSvr;
+                GameManager.sparks = GameManager.sparks + (int) (obj.GetDouble("sparksGained"));
+                UpdateText();
+                break;
+
+            case "112":
+
+                //Debug.Log("Burned Plant :" + obj.GetDump());
+                isBurn = obj.GetBool("isBurn");
+                burnObjid = obj.GetInt("objectId");
+                break;
+
+            case "20":
+
+                //Debug.Log("Accelerate Morphing Task :" + obj.GetDump());
+                GameManager.xp = GameManager.xp + (int) (obj.GetDouble("xpGained"));
+                UpdateText();
+                scr_creatureSystem.AssignPreviousCreatureFeedLevel(obj.GetInt("objectTypeId"),
+                    obj.GetInt("feedLevel"));
+
+                break;
+
+            case "21":
+
+                //Debug.Log("Accelerate Plant plants: " + obj.GetDump());
+
+                break;
+
+            case "22":
+                // cave attack time coming from server
+                Debug.Log("Recieved Cave Time :" + obj.GetDump());
+                bool isThreshold = obj.GetBool("SecondThreshold");
+                getOrgattacktym = float.Parse(obj.GetUtfString("taskEndTime"));
+                scr_userworld.GetCaveCreatures(obj.GetInt("objectTypeId"), isThreshold); //Added
+                scr_OrcAttackSystem.AddCaveTimer();
+                isgetOrgtym = true;
+
+                break;
+
+            case "23":
+
+
+                int obj1 = 0;
+                int obj2 = 0;
+
+                //SendRequestForGetworld();
+                Debug.Log("Recieved Building Time :" + obj.GetDump());
+                int caveId = obj.GetInt("fromObjId");
+                //scr_userworld.GetCaveCreatures(scr_userworld.ReturnTypeIdfromObjId(caveId));
+                scr_userworld.GetCaveCreatures(scr_userworld.ReturnTypeIdfromObjId(caveId), false);
+                Debug.Log("cave ID = " + scr_userworld.ReturnTypeIdfromObjId(caveId));
+
+                if (caveId != -1)
+                {
 //											obj1 = obj.GetInt("toObjId1");
 //											obj2 = obj.GetInt("toObjId2");
 //											
 //											
 //											getObjTime1 = float.Parse(obj.GetUtfString("toObjId1EndTime"));
 //											getObjTime2 = float.Parse(obj.GetUtfString("toObjId2EndTime"));
-											
-						if (scr_OrcAttackSystem.caveCreature_01 != null && scr_OrcAttackSystem.caveCreature_02 != null)
-						{
-											if(scr_OrcAttackSystem.caveCreature_01.gameObject.tag == "Untagged" && scr_OrcAttackSystem.caveCreature_02.gameObject.tag == "Untagged")
-											{
+
+                    if (scr_OrcAttackSystem.caveCreature_01 != null && scr_OrcAttackSystem.caveCreature_02 != null)
+                    {
+                        if (scr_OrcAttackSystem.caveCreature_01.gameObject.tag == "Untagged" &&
+                            scr_OrcAttackSystem.caveCreature_02.gameObject.tag == "Untagged")
+                        {
 //												scr_OrcAttackSystem.attackObjId_01 = obj.GetInt("toObjId1");
 //												scr_OrcAttackSystem.attackObjId_02 = obj.GetInt("toObjId2");
 
-												obj1 = obj.GetInt("toObjId1");
-												obj2 = obj.GetInt("toObjId2");
-						
-
-												getObjTime1 = float.Parse(obj.GetUtfString("toObjId1EndTime"));
-												getObjTime2 = float.Parse(obj.GetUtfString("toObjId2EndTime"));
+                            obj1 = obj.GetInt("toObjId1");
+                            obj2 = obj.GetInt("toObjId2");
 
 
-												Debug.Log("Object Ids For Attack "+obj1+ " And "+obj2);
-											}	
-											else if(scr_OrcAttackSystem.caveCreature_01.gameObject.tag == "busy" && scr_OrcAttackSystem.caveCreature_02.gameObject.tag == "Untagged")
-											{
+                            getObjTime1 = float.Parse(obj.GetUtfString("toObjId1EndTime"));
+                            getObjTime2 = float.Parse(obj.GetUtfString("toObjId2EndTime"));
+
+
+                            Debug.Log("Object Ids For Attack " + obj1 + " And " + obj2);
+                        }
+                        else if (scr_OrcAttackSystem.caveCreature_01.gameObject.tag == "busy" &&
+                                 scr_OrcAttackSystem.caveCreature_02.gameObject.tag == "Untagged")
+                        {
 //												scr_OrcAttackSystem.attackObjId_01 = 0;
 //												scr_OrcAttackSystem.attackObjId_02 = obj.GetInt("toObjId1");
 
-												obj1 = 0;
-												obj2 = obj.GetInt("toObjId1");
+                            obj1 = 0;
+                            obj2 = obj.GetInt("toObjId1");
 
-												getObjTime1 = 0;
-												getObjTime2 = float.Parse(obj.GetUtfString("toObjId1EndTime"));
-											}
-											else if(scr_OrcAttackSystem.caveCreature_01.gameObject.tag == "Untagged" && scr_OrcAttackSystem.caveCreature_02.gameObject.tag == "busy")
-											{
-												scr_OrcAttackSystem.attackObjId_01 = obj.GetInt("toObjId1");
-												scr_OrcAttackSystem.attackObjId_02 = 0;
+                            getObjTime1 = 0;
+                            getObjTime2 = float.Parse(obj.GetUtfString("toObjId1EndTime"));
+                        }
+                        else if (scr_OrcAttackSystem.caveCreature_01.gameObject.tag == "Untagged" &&
+                                 scr_OrcAttackSystem.caveCreature_02.gameObject.tag == "busy")
+                        {
+                            scr_OrcAttackSystem.attackObjId_01 = obj.GetInt("toObjId1");
+                            scr_OrcAttackSystem.attackObjId_02 = 0;
 
-												obj1 = obj.GetInt("toObjId1");
-												obj2 = 0;
-											
-												getObjTime1 = float.Parse(obj.GetUtfString("toObjId1EndTime"));
-												getObjTime2 = 0;
-											}
+                            obj1 = obj.GetInt("toObjId1");
+                            obj2 = 0;
 
-											scr_OrcAttackSystem.CreatureAttackMode(obj1,obj2);	
-						}
-										}
-										//isGetObjectTime = true;
-										//Debug.Log("Building Time Recieved");
-					
-										break;
-					
-									case "24":
-										
-					
-					
-										break;
-					
-									case "25":
-										
-///***					                    Debug.Log("Attack user task : " + obj.GetDump());
-					
-					                    if(obj.GetBool("success"))
-					                    {
-						                     ISFSArray arrAttackOrgtask = obj.GetSFSArray("userTasks");
-						
-						                     for(int i=0 ; i< arrAttackOrgtask.Size() ; i++)
-						                   //  foreach(ISFSObject attckobj in arrAttackOrgtask)
-										   	 {
-							                      ISFSObject attackObj = arrAttackOrgtask.GetSFSObject(i); //attckobj; //
-							                      scr_userworld.AddOrgCaveTasks(attackObj);
-							
-							                     if(i== arrAttackOrgtask.Size() - 1)
-							                     {
-								                    scr_userworld.assignObjIdforOrcAttack = true; 
-							                     }
-											 }					
-					                    }
-										SendRequestForGetworld();
+                            getObjTime1 = float.Parse(obj.GetUtfString("toObjId1EndTime"));
+                            getObjTime2 = 0;
+                        }
 
-										break;
-					
-									case "26":				//----- Defense task ---- //
-										
-///***										Debug.Log("Defense Task : "+obj.GetDump());
-										scr_userworld.currentShieldTime = float.Parse(obj.GetUtfString("ShieldTime"));
-					
-										if(obj.GetBool("success"))
-										{
-											ISFSArray defenseTask = obj.GetSFSArray("objectList");
-											
-											int obliskId = obj.GetInt("objectTypeId");
-											//Debug.Log("obliskID = "+obliskID);
-						
-											for(int i=0; i<defenseTask.Size(); i++)
-											{
-												int defenseId = defenseTask.GetInt(i);
-							
-												scr_userworld.AddDefenseTimer(defenseId, obliskId);
-											}
-										}
-							
-										break;
-					
-									case "27" :				//----- Restart Defense task ---- //
-					
-///***										Debug.Log("Restart defense task : "+obj.GetDump());
-										
-										if(obj.GetBool("success"))
-										{
-											//scr_userworld.currentShieldTime = (float)obj.GetLong("taskEndTime");
-											//scr_userworld.ConvertLongToFloat(obj.GetLong("taskEndTime"));
-											
-											ISFSArray defenseTask = obj.GetSFSArray("userTasks");
-											
-											for(int i=0; i<defenseTask.Size(); i++)
-											{
-												ISFSObject defenseObj = defenseTask.GetSFSObject(i);
-												
-												scr_userworld.ResumeDefenseTimer(defenseObj);
-											}
-										}
-										
-										break;
-					
-									case "29" :			//Stop cave destroy
-										
-///***										Debug.Log("Stop cave destroy : "+obj.GetDump());
-										int typeId = obj.GetInt("caveTypeId");
-										string caveName = scr_userworld.ReturnCaveNameFromTypeid(typeId);
-										GameObject currentCave = GameObject.Find(caveName);
-///***										Debug.Log("currentCave : "+currentCave.name);
-										
-										if(currentCave != null)
-										{
-											progressBar progressBarScript = currentCave.GetComponent<progressBar>();
-											progressBarScript.cnt = 0;
-											progressBarScript.seconds = 0;
-											progressBarScript.SecCnt = 0;
-											progressBarScript.enabled = false;
-						
-											currentCave.transform.FindChild("ProgressBar").gameObject.SetActiveRecursively(false);
-											currentCave.transform.FindChild("RabbtiButton").gameObject.SetActiveRecursively(false);
-										}					
-					
-										break;
-					
-									case "30" :
-										Debug.Log("Storry trigger list : "+obj.GetDump());
-										ISFSArray storyList = obj.GetSFSArray("storyTriggerList");				
-					
-										for(int i=0; i<storyList.Size(); i++)
-										{
-											ISFSObject storyObject = storyList.GetSFSObject(i);
-											//Debug.Log("Trigger no. : "+storyObject.GetInt("triggerNo"));
-											scr_userworld.AddStoryLogList(storyObject);
-											
-											if(storyObject.GetInt("status") == 1)
-												noOfStoriesUnlocked++;	
-										}
-										scr_taskDetails.RedQuestCount.Text = noOfStoriesUnlocked.ToString();
-										//scr_taskDetails.QuestStoryLog();
-										//scr_taskDetails.FindChild(scr_taskDetails.storyLogQuest).SetActiveRecursively(false);
-										break;
-					
-								case "31" :
-									Debug.Log("Unlock story : "+obj.GetDump());
-					
-									ISFSArray storyUnlockArray = obj.GetSFSArray("storyTriggerList");	
-									
+                        scr_OrcAttackSystem.CreatureAttackMode(obj1, obj2);
+                    }
+                }
+                //isGetObjectTime = true;
+                //Debug.Log("Building Time Recieved");
+
+                break;
+
+            case "24":
+
+
+                break;
+
+            case "25":
+
+                ///***					                    Debug.Log("Attack user task : " + obj.GetDump());
+
+                if (obj.GetBool("success"))
+                {
+                    ISFSArray arrAttackOrgtask = obj.GetSFSArray("userTasks");
+
+                    for (int i = 0; i < arrAttackOrgtask.Size(); i++)
+                        //  foreach(ISFSObject attckobj in arrAttackOrgtask)
+                    {
+                        ISFSObject attackObj = arrAttackOrgtask.GetSFSObject(i); //attckobj; //
+                        scr_userworld.AddOrgCaveTasks(attackObj);
+
+                        if (i == arrAttackOrgtask.Size() - 1)
+                        {
+                            scr_userworld.assignObjIdforOrcAttack = true;
+                        }
+                    }
+                }
+                SendRequestForGetworld();
+
+                break;
+
+            case "26": //----- Defense task ---- //
+
+                ///***										Debug.Log("Defense Task : "+obj.GetDump());
+                scr_userworld.currentShieldTime = float.Parse(obj.GetUtfString("ShieldTime"));
+
+                if (obj.GetBool("success"))
+                {
+                    ISFSArray defenseTask = obj.GetSFSArray("objectList");
+
+                    int obliskId = obj.GetInt("objectTypeId");
+                    //Debug.Log("obliskID = "+obliskID);
+
+                    for (int i = 0; i < defenseTask.Size(); i++)
+                    {
+                        int defenseId = defenseTask.GetInt(i);
+
+                        scr_userworld.AddDefenseTimer(defenseId, obliskId);
+                    }
+                }
+
+                break;
+
+            case "27": //----- Restart Defense task ---- //
+
+                ///***										Debug.Log("Restart defense task : "+obj.GetDump());
+
+                if (obj.GetBool("success"))
+                {
+                    //scr_userworld.currentShieldTime = (float)obj.GetLong("taskEndTime");
+                    //scr_userworld.ConvertLongToFloat(obj.GetLong("taskEndTime"));
+
+                    ISFSArray defenseTask = obj.GetSFSArray("userTasks");
+
+                    for (int i = 0; i < defenseTask.Size(); i++)
+                    {
+                        ISFSObject defenseObj = defenseTask.GetSFSObject(i);
+
+                        scr_userworld.ResumeDefenseTimer(defenseObj);
+                    }
+                }
+
+                break;
+
+            case "29": //Stop cave destroy
+
+                ///***										Debug.Log("Stop cave destroy : "+obj.GetDump());
+                int typeId = obj.GetInt("caveTypeId");
+                string caveName = scr_userworld.ReturnCaveNameFromTypeid(typeId);
+                GameObject currentCave = GameObject.Find(caveName);
+                ///***										Debug.Log("currentCave : "+currentCave.name);
+
+                if (currentCave != null)
+                {
+                    progressBar progressBarScript = currentCave.GetComponent<progressBar>();
+                    progressBarScript.cnt = 0;
+                    progressBarScript.seconds = 0;
+                    progressBarScript.SecCnt = 0;
+                    progressBarScript.enabled = false;
+
+                    currentCave.transform.FindChild("ProgressBar").gameObject.SetActiveRecursively(false);
+                    currentCave.transform.FindChild("RabbtiButton").gameObject.SetActiveRecursively(false);
+                }
+
+                break;
+
+            case "30":
+                Debug.Log("Storry trigger list : " + obj.GetDump());
+                ISFSArray storyList = obj.GetSFSArray("storyTriggerList");
+
+                for (int i = 0; i < storyList.Size(); i++)
+                {
+                    ISFSObject storyObject = storyList.GetSFSObject(i);
+                    //Debug.Log("Trigger no. : "+storyObject.GetInt("triggerNo"));
+                    scr_userworld.AddStoryLogList(storyObject);
+
+                    if (storyObject.GetInt("status") == 1)
+                        noOfStoriesUnlocked++;
+                }
+                scr_taskDetails.RedQuestCount.Text = noOfStoriesUnlocked.ToString();
+                //scr_taskDetails.QuestStoryLog();
+                //scr_taskDetails.FindChild(scr_taskDetails.storyLogQuest).SetActiveRecursively(false);
+                break;
+
+            case "31":
+                Debug.Log("Unlock story : " + obj.GetDump());
+
+                ISFSArray storyUnlockArray = obj.GetSFSArray("storyTriggerList");
+
 //									for(int i=0; i<storyUnlockArray.Size(); i++)
 //									{
 //										ISFSObject storyUnlockObject = storyUnlockArray.GetSFSObject(i);
@@ -2611,155 +1999,771 @@ public class SfsRemote : MonoBehaviour {
 ////											noOfStoriesUnlocked++;
 //										
 //									}
-									Debug.Log(" unlockedStory length : "+obj.GetIntArray("unlockedStory").Length);
-				
-									for(int i=0; i<obj.GetIntArray("unlockedStory").Length; i++)
-									{	
-										//scr_taskDetails.showStoryNo.Add(i);
-										scr_taskDetails.showStoryNo.Add((int)obj.GetIntArray("unlockedStory").GetValue(i));
-										Debug.Log(" unlockedStory : "+scr_taskDetails.showStoryNo[i]);
-									}
-									if(scr_taskDetails.showStoryNo.Count > 0)
-									{
-										Debug.Log("Show story");
-										scr_taskDetails.ShowCurrentStory(0, 0);
-										scr_taskDetails.isStory = true;
-									}
-									noOfStoriesUnlocked = noOfStoriesUnlocked + obj.GetIntArray("unlockedStory").Length;
-									scr_taskDetails.RedQuestCount.Text = noOfStoriesUnlocked.ToString();
-									break;
-							} 
-				break;
-						
-			case "2":
-				
-							switch(subCmd)
-							{
-								
-							case "1":
-								
-					            
-					            if(!ChkPosNRot(scr_popUpinfo.GetPosition(),scr_popUpinfo.GetRotation()))
-					             {
-								SendRequestForAddTrainingGround(int.Parse(obj.GetUtfString("userPurchaseId")),int.Parse(obj.GetUtfString("objectTypeId")),
-									                                     scr_popUpinfo.GetPosition(),scr_popUpinfo.GetRotation());
-					             }
-								
-								break;
-								
-							case "2":
-								
-								// //Debug.Log(obj.GetDump());
-							
-								  creatureUserPurchaseid = int.Parse(obj.GetUtfString("userPurchaseId"));
-								  creatureObjecttypeid = int.Parse(obj.GetUtfString("objectTypeId"));
-									
-								  SendRequestForGetworld();
-								
-								break;
-								
-							case "3":
-//								Debug.Log("2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 " + obj.GetDump());
-					            if(!ChkPosNRot(scr_popUpinfo.GetPosition(),scr_popUpinfo.GetRotation()))
-					             {
-								 	SendrequestForCreateStructure(int.Parse(obj.GetUtfString("userPurchaseId")),int.Parse(obj.GetUtfString("objectTypeId")),
-								                          scr_popUpinfo.GetPosition(),scr_popUpinfo.GetRotation());
-					             }
-								break;
-								
-							case "4":
-								
-								
-								
-								break;
-								
-							case "5":
-								
-								  if(scr_popUpinfo.isTaskFarming)
-						           {
-										{
-											//Debug.Log("Plant baby :" + obj.GetDump());
-											isGetFarmObjId = true;
-											PlantPurchaseid = int.Parse(obj.GetUtfString("userPurchaseId"));
-											PlantObjectTypeid = int.Parse(obj.GetUtfString("objectTypeId"));
-											
-											SendRequestForGetworld();
-											scr_popUpinfo.isTaskFarming = false;
-										}
-									}
-								
-								break;
-								
-							case "6":
-								
-///***					          Debug.Log("dump: " +obj.GetDump());
-						
-///***						   Debug.Log("Decos : " + scr_popUpinfo.GetDecorationPos());
-					          
-				        	if(!ChkPosNRot(scr_popUpinfo.GetDecorationPos(),scr_popUpinfo.GetRotation()))
-				            	{
-							   SendRequestForAddDecorationItems(int.Parse(obj.GetUtfString("userPurchaseId")),int.Parse(obj.GetUtfString("objectTypeId")),
-									                   scr_popUpinfo.GetDecorationPos(),scr_popUpinfo.GetRotation());
-				            	}
-								
-								break;
-						   } 
-					break;
-					
-				case "4":
-					
-				//Economy Hanlder
-					
-					switch(subCmd)
-					{
-						case "1":
-							
-							GameManager.coins += obj.GetDouble("goldEarned");
-					Debug.Log("earn coind ~~~~~> " + obj.GetDouble("goldEarned"));
-					GameManager.earnGoldVal = (int) obj.GetDouble("goldEarned");
-						    scr_popUpinfo.UpdateScore();
-					Debug.Log("gold object --- : " + GameManager.curGoldBuilding.name);
-					GameObject earnGoldTxt = Instantiate(Resources.Load("goldValue"), GameManager.curGoldBuilding.transform.position, Quaternion.Euler(90, 0, 0)) as GameObject;
-					        //UpdateText();
-							//Debug.Log("CreditGold : " + obj.GetDump());
-	
-							break;
-					
-					   case "2" :
-							
-					        //Debug.Log("Purchase >>>>>>> :" + obj.GetDump());
-					
-					        scr_popUpinfo.UpdateScore();
-							break;
-					    case "177":
-					
-					         //Debug.Log("Gold :" + obj.GetDump());
-					         ISFSArray arrUsergold = new SFSArray();
-					         arrUsergold = obj.GetSFSArray("goldObjects");
-					
-					         for(int i = 0 ;  i < arrUsergold.Size() ; i++)
-					         {
-						         ISFSObject objGold = arrUsergold.GetSFSObject(i);
-						         scr_userworld.EnableGoldButton(objGold.GetInt("object_type_id"),
-						                                       objGold.GetDouble("object_gold"));				       
-					         }
-					          
-					
-					        break;
-					}
-				
-				break;
-					
-			}
-		}
-		
-//		catch(Exception ex)
-//		{
-//			//Debug.Log(ex.ToString());
-//		}
-	}
-	
-	public float GetOrgattackTym()
+                Debug.Log(" unlockedStory length : " + obj.GetIntArray("unlockedStory").Length);
+
+                for (int i = 0; i < obj.GetIntArray("unlockedStory").Length; i++)
+                {
+                    //scr_taskDetails.showStoryNo.Add(i);
+                    scr_taskDetails.showStoryNo.Add((int) obj.GetIntArray("unlockedStory").GetValue(i));
+                    Debug.Log(" unlockedStory : " + scr_taskDetails.showStoryNo[i]);
+                }
+                if (scr_taskDetails.showStoryNo.Count > 0)
+                {
+                    Debug.Log("Show story");
+                    scr_taskDetails.ShowCurrentStory(0, 0);
+                    scr_taskDetails.isStory = true;
+                }
+                noOfStoriesUnlocked = noOfStoriesUnlocked + obj.GetIntArray("unlockedStory").Length;
+                scr_taskDetails.RedQuestCount.Text = noOfStoriesUnlocked.ToString();
+                break;
+        }
+    }
+
+    private void HandleUserRequests(ISFSObject obj)
+    {
+        switch (subCmd)
+        {
+            case "1":
+
+                //	Debug.Log("Dump : >>>>> " + obj.GetDump());
+                //					  msg = obj.GetUtfString("msg");
+                bool success = obj.GetBool("success");
+
+                if (success)
+
+                {
+                    elapsedtime = obj.GetLong("elapsedTime").ToString();
+                    state = obj.GetUtfString("NOW");
+
+                    scr_timeDial.scr_DayNightTime.dnCnt = int.Parse(elapsedtime);
+
+                    //saving elapsedTime
+                    PlayerPrefs.SetString("elapsedtime", elapsedtime);
+                    //saving State
+                    PlayerPrefs.SetString("currentstate", state);
+                }
+
+                //string userId = obj.GetUtfString("userId");
+                //string gold =  obj.GetUtfString("goldBalance");
+                //string spark = obj.GetUtfString("sparkBalance");
+                //Debug.Log("msg :" + msg);
+                //scr_registerUser.messg = msg;
+                //if(msg != "")
+                //{
+                // Application.LoadLevel("game");
+                //}
+                //Debug.Log("success :" + success);
+                //Debug.Log("userId :" + userId);
+                //Debug.Log("gold :" + gold);
+                //Debug.Log("spark :" + spark);
+
+                break;
+
+            case "5":
+
+                //Debug.Log("Tasks :"+ obj.GetUtfString("noOfTasksComplete"));
+                //Debug.Log("PopUps :" + obj.GetUtfString("noOfPopupsDisplayed"));
+
+
+                break;
+
+            case "6":
+            case "7":
+            case "8":
+            case "9":
+            case "10":
+            case "11":
+
+                //Debug.Log("success :" + obj.GetDump());
+
+                break;
+
+            case "4":
+
+//											Debug.Log("1 : >>>>>>>>>>> 4 :" + obj.GetDump());
+
+                if (obj.GetBool("success"))
+                {
+                    ISFSArray arrUserInfo = obj.GetSFSArray("userAccountInfo");
+
+                    for (int i = 0; i < arrUserInfo.Size(); i++)
+                    {
+                        ISFSObject o = arrUserInfo.GetSFSObject(i);
+                        scr_userworld.AssingUserValuesFromServer(o.GetInt("darklingOpened"),
+                            o.GetInt("story_count"),
+                            o.GetInt("no_of_task"),
+                            o.GetDouble("balance_gold"),
+                            o.GetDouble("balance_xp"),
+                            o.GetDouble("maxXpForLevel"),
+                            o.GetDouble("currentLevelXp"),
+                            o.GetInt("food"),
+                            o.GetInt("dnSavings"),
+                            o.GetInt("quest"),
+                            o.GetInt("level"),
+                            o.GetInt("no_of_popup"),
+                            o.GetInt("popup_count"),
+                            o.GetDouble("balance_spark"));
+                    }
+                }
+                // isAssignTasks = false;
+                if (isUserWorld)
+                {
+                    SendRequestForGetworld();
+                    PercentageCalc = ReturnRandomNumber(70, 75);
+                    //Debug.Log("Percentage :" + PercentageCalc);
+                    percentageText.GetComponent<SpriteText>().Text = PercentageCalc.ToString() + "%";
+                }
+
+
+                break;
+
+            case "13":
+
+                //Debug.Log("Currnet :: " + obj.GetUtfString("NOW"));
+                //Debug.Log("Remaining time :: " + obj.GetLong("elapsedTime"));
+                ///***											Debug.Log("DayNnight" + obj.GetDump());
+
+                state = obj.GetUtfString("NOW");
+                elapsedtime = obj.GetLong("elapsedTime").ToString();
+
+                scr_timeDial.SetDial();
+
+                break;
+
+            case "12":
+
+                //Debug.Log(obj.GetDump());
+                scr_userworld.ResetValues(obj.GetDouble("balance_xp"),
+                    obj.GetDouble("maxXpForLevel"),
+                    obj.GetDouble("currentLevelXp"));
+
+                ///***											Debug.Log("task 1 ---- 12 :" + obj.GetDump());		//Task List on every level change
+                if (obj.GetBool("success"))
+                {
+                    scr_userworld.ClearQuestTasks();
+                    ISFSArray taskList = obj.GetSFSArray("userLevelTask");
+
+                    for (int i = 0; i < taskList.Size(); i++)
+                    {
+                        ISFSObject taskObj = taskList.GetSFSObject(i);
+                        scr_userworld.AddQuestTaskList(taskObj);
+                    }
+                    scr_taskDetails.totalMissionCount = taskList.Size();
+                    //	Debug.Log("Size "+taskList.Size());
+                    scr_taskDetails.blueQuestCount.Text = scr_taskDetails.totalMissionCount.ToString();
+                }
+
+                break;
+
+            case "14":
+
+                //Debug.Log("gameObjectConstant : " + obj.GetDump());
+                ISFSArray arrGameObj = obj.GetSFSArray("gameObjectConstants");
+                int size = arrGameObj.Size();
+                for (int i = 0; i < size; i++)
+                {
+                    ISFSObject gameObj = arrGameObj.GetSFSObject(i);
+                    ObjectCreationtime = gameObj.GetInt("time_to_create");
+                }
+                break;
+
+            case "15":
+
+//										    Debug.Log("1 and 15 : >>>>>>>>>> "+ obj.GetDump());
+
+                if ((obj.GetBool("success")))
+                {
+                    ISFSArray arrUserQuest = obj.GetSFSArray("questsRemain");
+                    for (int i = 0; i < arrUserQuest.Size(); i++)
+                    {
+                        ISFSObject quest = arrUserQuest.GetSFSObject(i);
+                        int questNo = quest.GetInt("quest_no");
+
+                        scr_userworld.AddQuest(questNo);
+                    }
+                }
+                if (isUserWorld)
+                {
+                    //RunOnce();
+                    //SendRequestforChildCount();
+
+                    SendRequestforLevelXp();
+
+                    PercentageCalc = ReturnRandomNumber(90, 95);
+                    ///***					                         Debug.Log("Percentage :" + PercentageCalc);
+                    percentageText.GetComponent<SpriteText>().Text = PercentageCalc.ToString() + "%";
+                    //isUserWorld = false;
+                }
+
+                //GameManager.quest = 5 - arrUserQuest.Size();
+                ////Debug.Log("quest size " + arrUserQuest.Size() + " --- " + GameManager.quest);
+
+
+                break;
+
+            case "16":
+
+                //once task upgrade is saved on server here the response should come for it 
+
+                ///***											Debug.Log("Object Upgrade :" + obj.GetDump());
+                SendRequestforGetscheduleTasks();
+
+
+                break;
+
+            case "17":
+
+                //Debug.Log("TG : >>>>>>>" + obj.GetDump());
+
+                scr_userworld.RemoveTask(int.Parse(obj.GetUtfString("objectId")));
+                GameManager.xp += float.Parse(obj.GetUtfString("xpGained"));
+                Debug.Log("creature xp = " + float.Parse(obj.GetUtfString("xpGained")));
+                UpdateText();
+                break;
+
+            case "18":
+
+                ///***											Debug.Log("DUMP ::" + obj.GetDump());
+                GameManager.xp += float.Parse(obj.GetDouble("xpEarned").ToString());
+                UpdateText();
+                feedLevelSvr = int.Parse(obj.GetInt("feedLevel").ToString());
+                feedLevelBarSvr = int.Parse(obj.GetInt("feedLevelBar").ToString());
+                scr_creatureSystem.AssignFeedPb(float.Parse(obj.GetInt("currentFoodFeed").ToString()),
+                    float.Parse(obj.GetInt("maxFeed").ToString()), feedLevelSvr, feedLevelBarSvr);
+
+                break;
+            case "19":
+
+                //Debug.Log("Child :" + obj.GetDump());
+
+                ISFSArray arrChildObjects = obj.GetSFSArray("childObjects");
+
+                if (obj.GetBool("success"))
+                {
+                    for (int i = 0; i < arrChildObjects.Size(); i++)
+                    {
+                        ISFSObject parent = arrChildObjects.GetSFSObject(i);
+                        int cnt = (int) (parent.GetLong("creatureCount"));
+                        int parentId = parent.GetInt("parent_object_id");
+                        scr_userworld.AddTgInfo(cnt, parentId);
+                    }
+
+
+                    if (obj.GetBool("success"))
+                    {
+                        scr_userworld.AddChildItems();
+                    }
+                }
+
+                // scr_Mainmenu.loadingBool = false;
+                SendRequestforGameObjectsInfo();
+
+                break;
+
+            case "20":
+
+                ///***											Debug.Log("Max Feed :" + obj.GetDump());					
+
+                if (obj.GetBool("success"))
+                {
+                    ISFSObject feeddetails = obj.GetSFSObject("feedDetails");
+                    scr_userworld.SetFoodLevelPB((float) (feeddetails.GetInt("maxFood")),
+                        (float) (feeddetails.GetInt("currentFoodFeed")),
+                        (int) feeddetails.GetLong("nextFeedLevel"), feeddetails.GetInt("x"));
+                }
+
+                break;
+
+            case "21":
+
+                ISFSArray arrUserObjectsDB = obj.GetSFSArray("gameObjectInfo");
+                for (int i = 0; i < arrUserObjectsDB.Size(); i++)
+                {
+                    ISFSObject objdb = arrUserObjectsDB.GetSFSObject(i);
+
+                    scr_userworld.AddUserObjectsDB(objdb.GetDouble("spark_cost"),
+                        objdb.GetDouble("cost_gold_total"),
+                        objdb.GetDouble("xp_earned"),
+                        objdb.GetDouble("cost_gold_base"),
+                        objdb.GetUtfString("objectType"),
+                        objdb.GetInt("objectTypeId"));
+                }
+
+
+                SendRequestforCreatureSpark();
+
+                break;
+
+            case "22":
+
+                if (obj.GetBool("success"))
+                {
+                    elapsedtime = obj.GetLong("elapsedTime").ToString();
+                    state = obj.GetUtfString("NOW");
+                    IsSmokePipeweed = obj.GetBool("isSmooking");
+                    scr_timeDial.scr_DayNightTime.dnCnt = int.Parse(elapsedtime);
+                    ///***						                     Debug.Log("Day Night stuff :: >>" + obj.GetDump());
+                }
+
+                break;
+
+
+            case "115":
+
+                //Debug.Log(obj.GetDump());
+
+                break;
+
+            case "110":
+
+
+                elapsedtime = obj.GetLong("elapsedTime").ToString();
+                state = obj.GetUtfString("NOW");
+                IsSmokePipeweed = obj.GetBool("isSmooking");
+                GameManager.xp += (float) obj.GetDouble("xpEarned");
+                UpdateText();
+                ///***										Debug.Log("::::::: current state :: " + state + " -------- " + elapsedtime);
+                scr_timeDial.scr_DayNightTime.dnCnt = int.Parse(elapsedtime);
+                break;
+
+            case "131":
+
+                //Debug.Log("Award Spark >>>>>> :" + obj.GetDump());
+
+                break;
+
+            case "24": //Halfling & darkling task list
+
+                ///***										Debug.Log("task 1---- 24 :" + obj.GetDump());
+                if (obj.GetBool("success"))
+                {
+                    scr_userworld.ClearQuestTasks();
+                    ISFSArray taskList = obj.GetSFSArray("userLevelTask");
+
+                    for (int i = 0; i < taskList.Size(); i++)
+                    {
+                        ISFSObject taskObj = taskList.GetSFSObject(i);
+                        scr_userworld.AddQuestTaskList(taskObj);
+                    }
+                    //Debug.Log("Size : "+taskList.Size());
+                    scr_taskDetails.totalMissionCount = taskList.Size();
+                    scr_taskDetails.blueQuestCount.Text = scr_taskDetails.totalMissionCount.ToString();
+                }
+
+                break;
+        }
+        return;
+    }
+
+    private void HandleGameRequests(ISFSObject obj)
+    {
+        switch (subCmd)
+        {
+            case "1":
+
+                if (obj.GetBool("success"))
+                {
+                    RESET = currentStatus.RECEIVED;
+                }
+
+                break;
+
+            case "3":
+
+
+//					Debug.Log("1 1 1 1 1 1 1 1 1 1 1 1 1 1 11 1 1 1 1 1");
+                //Debug.Log("Delete :" + obj.GetDump());
+
+                GameManager.coins += obj.GetDouble("goldEarned");
+                Debug.Log("gold earn :---> " + obj.GetDouble("goldEarned"));
+                UpdateText();
+
+                break;
+
+            case "30":
+
+                SendRequestforScheduleTasksinMinigames();
+
+                ISFSArray arrCreatureMorphInfo = obj.GetSFSArray("morphList");
+                for (int i = 0; i < arrCreatureMorphInfo.Size(); i++)
+                {
+                    ISFSObject o = arrCreatureMorphInfo.GetSFSObject(i);
+                    scr_userworld.AddCreatureMorphInfo(o.GetDouble("spark_cost"),
+                        o.GetInt("morphCreatureId"),
+                        o.GetInt("objectTypeId"));
+                }
+
+                scr_objectCost.ObjectcostLoad();
+
+                break;
+
+            case "32":
+
+                //Debug.Log("Friends added : >>>>>>>>>> " + obj.GetDump());
+                break;
+
+            case "33":
+
+                //Debug.Log("DUMP ::>>>>" + obj.GetDump());
+                ISFSArray arrLvlXp = null;
+
+                if (obj.GetBool("success"))
+                {
+                    arrLvlXp = obj.GetSFSArray("xpsToNextLevels");
+
+                    if (arrLvlXp != null)
+                        scr_userworld.AddLevelxpInfo(arrLvlXp);
+                }
+
+
+                break;
+        }
+    }
+
+    private void HandleMiniGame(ISFSObject obj)
+    {
+        switch (subCmd)
+        {
+            case "4":
+
+                if (obj.GetBool("success"))
+                {
+                    ISFSArray userHerbarray = obj.GetSFSArray("herbList");
+
+                    if (lst_HerbObjects.Count > 0)
+                    {
+                        lst_HerbObjects.Clear();
+                    }
+
+                    for (int i = 0; i < userHerbarray.Size(); i++)
+                    {
+                        ISFSObject herb = userHerbarray.GetSFSObject(i);
+                        AddHerbObjects(herb.GetUtfString("objectType"),
+                            herb.GetInt("objectId"),
+                            herb.GetInt("objectTypeId"));
+                    }
+                }
+
+                break;
+
+            case "1":
+
+                //Debug.Log("Tavern :" + obj.GetDump());
+
+                break;
+
+            case "2":
+
+                //Debug.Log("Mini Game:" + obj.GetDump());
+
+                break;
+
+            case "666":
+
+                tavernGameactive = obj.GetBool("success");
+
+                break;
+
+            case "777":
+
+                //Debug.Log("Opened :" + obj.GetDump());
+
+                potionGameactive = obj.GetBool("success");
+
+                break;
+
+            case "5":
+
+                //Debug.Log("Accelerate Mini :: " + obj.GetDump());
+
+                if (GetminiGametask() == "TavernMiniGame")
+                {
+                    tavernGameactive = true;
+                }
+
+                if (GetminiGametask() == "ApothecaryMiniGame")
+                {
+                    potionGameactive = true;
+                }
+
+                break;
+
+            case "6":
+
+
+                //Debug.Log("Mini :: " + obj.GetDump());
+
+                isIdleCounttimer = true;
+
+                getPotionList();
+
+                if (obj.GetBool("success"))
+                {
+                    ISFSArray arrMinigameTimes = obj.GetSFSArray("miniGames");
+
+                    if (lst_miniGametimeInfo.Count > 0)
+                    {
+                        lst_miniGametimeInfo.Clear();
+                    }
+
+                    for (int i = 0; i < arrMinigameTimes.Size(); i++)
+                    {
+                        ISFSObject objTime = arrMinigameTimes.GetSFSObject(i);
+
+                        MiniGametimes timeInfo = new MiniGametimes();
+                        timeInfo.timetoOpen = (int) (objTime.GetDouble("secondsRemainToOpen"));
+                        timeInfo.taskId = objTime.GetUtfString("task_id");
+
+                        lst_miniGametimeInfo.Add(timeInfo);
+                        //Debug.Log("count ::" + lst_miniGametimeInfo.Count);
+                    }
+
+
+                    if (!miniGameload)
+                    {
+                        miniGameload = true;
+                        scr_userworld.ChkMiniGames();
+                    }
+                }
+                break;
+        }
+    }
+
+    private void HandleValuesFromServer(ISFSObject obj)
+    {
+        Debug.Log("DUMP SCORE:" + obj.GetDump());
+
+
+        GameManager.food = obj.GetInt("food");
+        GameManager.plants = (int) obj.GetInt("food");
+        GameManager.coins = (int) (obj.GetDouble("balance_gold"));
+        GameManager.sparks = (int) obj.GetDouble("balance_spark");
+
+        UpdateText();
+    }
+
+    private void UpdateFightFromServer(ISFSObject obj)
+    {
+        switch (int.Parse(subCmd))
+        {
+            case 1:
+
+                RESET = currentStatus.RECEIVED;
+
+                break;
+            case 21:
+
+                bgmScript.NewUserInfoManager(obj);
+
+                break;
+
+            case 22: //get Creature List from server
+
+                int size = 0;
+                ISFSArray arr = null;
+                ISFSObject sfsObjCreatureList = null;
+
+                arr = obj.GetSFSArray("creatureList");
+                size = arr.Count;
+
+
+                for (int i = 0; i < size; i++)
+                {
+                    sfsObjCreatureList = arr.GetSFSObject(i);
+                }
+
+                break;
+
+
+            case 23:
+
+                if (PlayerPrefs.GetInt("isBattleFirstTime") == 2)
+                {
+                    if (obj.GetBool("success"))
+                    {
+                        fightuser = obj.GetUtfString("userId").ToString();
+
+                        ///***							Debug.Log("Fight request successfully send to "+obj.GetUtfString("userId"));
+                    }
+                    if (fightuser == myName)
+                    {
+                        fightRequestbool = true;
+                    }
+
+                    GameManager.battleActiveBool = true;
+
+
+                    bgmScript.FightRequestReceived(obj);
+                }
+                else
+                    Debug.Log("first complete battle tutorals...");
+
+                break;
+
+
+            case 24:
+
+                //Debug.Log("----------FIGHT INVITE ACCEPT RESPONSE----------");
+                //Debug.Log(obj.GetDump());
+
+                //if(PlayerPrefs.GetInt("isBattleFirstTime") == 2)
+                //{
+                if (obj.GetBool("success"))
+                {
+                    bgmScript.BattleScreenCollider(true);
+                    bgmScript.changeState();
+                    bgmScript.FightAcceptInfo(obj);
+                    getPotionList(); // Call this for Potion List
+                }
+                //}
+                //else
+                //Debug.Log("play first battle...");
+
+
+                break;
+
+
+            case 25:
+
+                // Get Scheduled task when connection is lost
+
+                //Debug.Log(obj.GetDump());
+
+                break;
+
+            case 26:
+
+                SendRequestforOrgAttacktask();
+                // Get Potion List
+                if (obj.GetBool("success"))
+                {
+                    bgmScript.getFightPotionList(obj);
+                }
+                else
+                {
+                    //Debug.Log("No Potion List Found");
+                }
+                break;
+
+            case 27:
+
+                // Update Fight Potion
+
+                //Debug.Log(obj.GetDump());
+
+                if (obj.GetBool("isOpponentOnline"))
+                {
+                    //Start Fight
+                }
+                else
+                {
+                    bgmScript.PopupMessage("Fight cannot start\nYour opponent\nis not online.");
+                    // Show Popup That user went offline
+                }
+
+
+                break;
+
+            case 29:
+
+                // Update Extra Power
+
+                //Debug.Log(obj.GetDump());
+
+                break;
+
+            case 30:
+
+                SendRequestForDefenseTask();
+                SendRequestForQuestTask();
+                SendRequestForStoryLog();
+
+                break;
+
+            case 31:
+
+                // Fight Rejected...
+
+                //Debug.Log(obj.GetDump());
+
+                break;
+
+            case 100:
+                // Remaining Balance HUD
+
+                // inder change 3march
+//					GameManager.sparks = (int)obj.GetDouble("balance_spark");
+//					GameManager.coins = obj.GetDouble("balance_gold");
+//					GameManager.xp = (float)obj.GetDouble("currentLevelXp");
+
+                scr_GuiControl.goldCoinScoreInfo.Text = ((int) obj.GetDouble("balance_gold")).ToString();
+
+                scr_GuiControl.sparkScoreInfo.Text = ((int) obj.GetDouble("balance_spark")).ToString();
+
+                //Debug.Log(obj.GetDump());
+
+
+                break;
+
+            case 1000:
+
+                // Fight Winner Message
+
+                //Debug.Log("Winning msg at sfsRemote");
+                //Debug.Log(obj.GetDump());
+
+                BattleGroundPlayer.isBattleOver = true;
+
+                bgmScript.BattleWinnerResult(obj);
+
+                break;
+
+            case 2000:
+
+                //Start Fight Message
+
+
+                if (obj.GetBool("success"))
+                {
+                    bgmScript.LoadFightScene();
+                    startAnimationFightbool = true;
+                    bgmScript.SetOtherGUIComponentOff();
+
+                    bgmScript.getFightDuration(obj.GetInt("battleDuration"));
+
+                    bgmScript.ShowBubbleMessage("Tap Bubbles to increase\nYour Creature Power!");
+
+                    bgmScript.BattleStartAudio();
+                }
+
+                break;
+
+
+            case 28:
+
+                //Json Test
+
+                //Debug.Log(obj.GetDump());
+
+
+                if (obj.GetBool("success"))
+                {
+                    ISFSObject sfsObj = obj.GetSFSObject("custom");
+
+                    bgmScript.battleId = sfsObj.GetInt("battleId");
+                    bgmScript.opponentId = sfsObj.GetUtfString("userId");
+                    bgmScript.opponentBattleCreatureId = sfsObj.GetInt("user1CreatureId");
+                    bgmScript.gotServerResponse = true;
+
+                    //Debug.Log("Battle Id Form Server "+sfsObj.GetUtfString("userId"));
+                }
+
+
+                break;
+        }
+    }
+
+    public float GetOrgattackTym()
 	{
 		return getOrgattacktym;
 	}
