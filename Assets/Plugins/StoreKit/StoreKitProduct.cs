@@ -7,13 +7,18 @@ using Prime31;
 #if UNITY_IPHONE
 public class StoreKitProduct
 {
-    public string productIdentifier { get; private set; }
-    public string title { get; private set; }
-    public string description { get; private set; }
-    public string price { get; private set; }
-	public string currencySymbol { get; private set; }
-	public string currencyCode { get; private set; }
-	public string formattedPrice { get; private set; }
+    public string productIdentifier;
+    public string title;
+    public string description;
+    public string price;
+	public string currencySymbol;
+	public string currencyCode;
+	public string formattedPrice;
+
+	public string countryCode;
+	public string downloadContentVersion;
+	public bool downloadable;
+	public List<Int64> downloadContentLengths = new List<Int64>();
 
 
 	public static List<StoreKitProduct> productsFromJson( string json )
@@ -53,14 +58,30 @@ public class StoreKitProduct
 		if( ht.ContainsKey( "formattedPrice" ) )
 			product.formattedPrice = ht["formattedPrice"].ToString();
 
+		if( ht.ContainsKey( "countryCode" ) )
+			product.countryCode = ht["countryCode"].ToString();
+
+		if( ht.ContainsKey( "downloadContentVersion" ) )
+			product.downloadContentVersion = ht["downloadContentVersion"].ToString();
+
+		if( ht.ContainsKey( "downloadable" ) )
+			product.downloadable = bool.Parse( ht["downloadable"].ToString() );
+
+		if( ht.ContainsKey( "downloadContentLengths" ) && ht["downloadContentLengths"] is IList )
+		{
+			var tempLengths = ht["downloadContentLengths"] as List<object>;
+			foreach( var dlLength in tempLengths )
+				product.downloadContentLengths.Add( System.Convert.ToInt64( dlLength ) );
+		}
+
         return product;
     }
 
 
 	public override string ToString()
 	{
-		return String.Format( "<StoreKitProduct>\nID: {0}\nTitle: {1}\nDescription: {2}\nPrice: {3}\nCurrency Symbol: {4}\nFormatted Price: {5}\nCurrency Code: {6}",
-			productIdentifier, title, description, price, currencySymbol, formattedPrice, currencyCode );
+		return String.Format( "<StoreKitProduct>\nID: {0}\ntitle: {1}\ndescription: {2}\nprice: {3}\ncurrencysymbol: {4}\nformattedPrice: {5}\ncurrencyCode: {6}\ncountryCode: {7}\ndownloadContentVersion: {8}\ndownloadable: {9}",
+			productIdentifier, title, description, price, currencySymbol, formattedPrice, currencyCode, countryCode, downloadContentVersion, downloadable );
 	}
 
 }
