@@ -1409,17 +1409,12 @@ public class SfsRemote : MonoBehaviour {
                 //Debug.Log("error :" + obj.GetUtfString("error"));
 
                 SendRequestforGetscheduleTasks();
-
-
                 break;
 
             case "2":
-
                 SendRequestforGetscheduleTasks();
                 break;
-
             case "12":
-
                 //	Debug.Log("DUMP :" + obj.GetDump());
                 if (GameManager.taskCount == 8)
                 {
@@ -1451,14 +1446,12 @@ public class SfsRemote : MonoBehaviour {
 
 
                 break;
-
             case "7":
                 ///***										Debug.Log("cave dump :" + obj.GetDump());
                 SendRequestforGetscheduleTasks();
                 break;
 
             case "18":
-
                 ///***										Debug.Log("3 ------ 18 : "+obj.GetDump());
                 //Debug.Log(obj.GetInt("attackedObjId1") +"     "+obj.GetInt("attackedObjId2"));
                 scr_userworld.RemoveCaveTask(obj.GetUtfString("taskId"));
@@ -1467,10 +1460,8 @@ public class SfsRemote : MonoBehaviour {
                 break;
 
             case "19":
-
                 //Debug.Log("Creature Morphed :" + obj.GetDump());
                 SendRequestforGetscheduleTasks();
-
                 break;
 
             case "150":
@@ -1480,12 +1471,9 @@ public class SfsRemote : MonoBehaviour {
                 UpdateText();
                 scr_creatureSystem.AssignPreviousCreatureFeedLevel(obj.GetInt("objectTypeId"),
                     obj.GetInt("feedLevel"));
-
-
                 break;
 
             case "13":
-
                 Debug.Log("Accelerated :" + obj.GetDump());
                 Debug.Log("my creature xp : " + float.Parse(obj.GetUtfString("xpGained")));
                 scr_userworld.RemoveTask(int.Parse(obj.GetUtfString("objectId")));
@@ -1501,12 +1489,9 @@ public class SfsRemote : MonoBehaviour {
 //					                                  Quaternion.Euler(90, 0, 0)) as GameObject;
 //					Debug.Log("obj ---> " + obj.name);	
 //					xpValObj.transform.parent = obj.transform.root.gameObject.transform;
-
-
                 break;
 
             case "14":
-
                 //Debug.Log(obj.GetDump());
 
                 string msg = obj.GetUtfString("msg");

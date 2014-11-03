@@ -40,9 +40,25 @@ public class LoadUserWorld : MonoBehaviour
 	
 	private bool runOnlyOnceBool = true;
 	private int questCb = 0;
-	
-	private bool hGoblinCave01_bool = false, hGoblinCave02_bool = false, hGoblinCave03_bool = false, hOrgCave01_bool = false, hOrgCave02_bool = false, hOrgCave03_bool = false, hTrollCave01_bool = false, hTrollCave02_bool = false, hTrollCave03_bool = false, 
-					dGoblinCave01_bool = false, dGoblinCave02_bool = false, dGoblinCave03_bool = false, dOrgCave01_bool = false, dOrgCave02_bool = false, dOrgCave03_bool = false, dTrollCave01_bool = false, dTrollCave02_bool = false, dTrollCave03_bool = false;
+
+    private bool hGoblinCave01_bool = false,
+        hGoblinCave02_bool = false,
+        hGoblinCave03_bool = false,
+        hOrgCave01_bool = false,
+        hOrgCave02_bool = false,
+        hOrgCave03_bool = false,
+        hTrollCave01_bool = false,
+        hTrollCave02_bool = false,
+        hTrollCave03_bool = false,
+        dGoblinCave01_bool = false,
+        dGoblinCave02_bool = false,
+        dGoblinCave03_bool = false,
+        dOrgCave01_bool = false,
+        dOrgCave02_bool = false,
+        dOrgCave03_bool = false,
+        dTrollCave01_bool = false,
+        dTrollCave02_bool = false,
+        dTrollCave03_bool = false;
 	
 	private Color curColor;
 	public GameObject hGround, dGround;
@@ -1221,12 +1237,6 @@ public class LoadUserWorld : MonoBehaviour
 				if(scr_sfsRemote.lst_OrgAttackTasks[i].caveTypeId.Equals(cavetypeid))
 				{
 					lst_attackedObjIds.Add(scr_sfsRemote.lst_OrgAttackTasks[i].attackedObjId);
-				
-					   if(lst_attackedObjIds.Count >= 2)
-					   {
-							//Debug.Log("12345678");
-					   }
-					//Debug.Log("Count of attacked Obj ids :" + lst_attackedObjIds.Count);
 				}
 			}
 		}
