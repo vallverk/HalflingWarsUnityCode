@@ -1457,6 +1457,8 @@ public class LoadUserWorld : MonoBehaviour
 	public float currentShieldTime;
 	public void AddDefenseTimer(int objTypeId, int obliskTypeId)
 	{
+        Debug.Log("Add defence timer");
+
 		string defenseBuilding = ReturnBuildingNameFromTypeid(objTypeId);
 		string obliskBuilding = ReturnOblisknameFromTypeId(obliskTypeId);
 		
@@ -1471,7 +1473,6 @@ public class LoadUserWorld : MonoBehaviour
 				HealthProgressBar hPB = defenseObject.GetComponent<HealthProgressBar>();
 				hPB.attackCreature.transform.position = hPB.caveCreaturePosOld;
 				hPB.attackCreature.transform.FindChild("attack_anim").renderer.enabled = false;
-
 				hPB.attackCreature.tag = "Untagged";
 				hPB.ResetProgressbarScale();
 				Debug.Log("Creature Name "+hPB.attackCreature.name);
@@ -1479,8 +1480,16 @@ public class LoadUserWorld : MonoBehaviour
 				hPB.attackCreature.renderer.enabled = true;
 				hPB.attackCreature.transform.localScale = new Vector3(1.111111f, 1.111111f, 1.666667f);
 				
+
 				defenseObject.transform.FindChild("HealthProgressBar").gameObject.SetActiveRecursively(false);
 				defenseObject.transform.FindChild("Isometric_Collider").gameObject.tag = "editableObj";
+			    var orcCreatureMove = hPB.attackCreature.GetComponent<OrcCreatureMove>();
+                Destroy(orcCreatureMove);
+
+                orcCreatureMove.transform.FindChild("Walk_anim").renderer.enabled = false;
+                orcCreatureMove.transform.FindChild("attack_anim").renderer.enabled = false;
+                orcCreatureMove.transform.FindChild("LessAgg2_anim").renderer.enabled = true;
+
 				Destroy(hPB.parOrcAttackEff);
 				Destroy(hPB);
 			}
@@ -1488,7 +1497,7 @@ public class LoadUserWorld : MonoBehaviour
 			//defenseObject.transform.FindChild("defenceTime").gameObject.SetActiveRecursively(true);
 			//defenseObject.transform.FindChild("defenceTime").renderer.enabled = true;
 			
-			defenseObject.AddComponent("DefenseProgressBar");
+			    defenseObject.AddComponent("DefenseProgressBar");
 			DefenseProgressBar dPB = defenseObject.GetComponent<DefenseProgressBar>();
 			dPB.SecCnt = currentShieldTime;
 			

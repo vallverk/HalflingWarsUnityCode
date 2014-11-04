@@ -59,6 +59,8 @@ public class OrcCreatureMove : MonoBehaviour
 		}
 	}
 	
+
+
 	void StopCreatureMovement(float distance)
 	{
 		if(Vector3.Distance(caveCreature.transform.position , target) <= distance)
