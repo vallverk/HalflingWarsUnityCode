@@ -77,11 +77,11 @@ public class LoadUserWorld : MonoBehaviour
 	private int dirtPathCount = 0, dDirtPathCount = 0;
 
 	private bool bridgeHandBool = true;
-	
+    public static LoadUserWorld Instance;
 	void Awake()
 	{
 		//scripts Invoke 
-		
+	    Instance = this;
 		scr_gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		scr_guiControl = GameObject.Find("GUIManager").GetComponent<guiControl>();
 		scr_popUpInfo = GameObject.Find("PopUPManager").GetComponent<popUpInformation>();
@@ -1486,9 +1486,27 @@ public class LoadUserWorld : MonoBehaviour
 			    var orcCreatureMove = hPB.attackCreature.GetComponent<OrcCreatureMove>();
                 Destroy(orcCreatureMove);
 
-                orcCreatureMove.transform.FindChild("Walk_anim").renderer.enabled = false;
-                orcCreatureMove.transform.FindChild("attack_anim").renderer.enabled = false;
-                orcCreatureMove.transform.FindChild("LessAgg2_anim").renderer.enabled = true;
+			    try
+			    {
+                    orcCreatureMove.transform.FindChild("Walk_anim").renderer.enabled = false;
+                    orcCreatureMove.transform.FindChild("attack_anim").renderer.enabled = false;
+                    var anim1 = orcCreatureMove.transform.FindChild("LessAgg1_anim");
+                    if (anim1)
+                    {
+                        anim1.renderer.enabled = false;
+                    }
+
+                    var anim2 = orcCreatureMove.transform.FindChild("LessAgg2_anim");
+			        if (anim2)
+			        {
+                        anim2.renderer.enabled = false;
+			        }
+			    }
+			    catch (Exception)
+			    {
+			        
+			    }
+
 
 				Destroy(hPB.parOrcAttackEff);
 				Destroy(hPB);

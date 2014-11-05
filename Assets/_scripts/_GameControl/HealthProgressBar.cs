@@ -573,7 +573,14 @@ public class HealthProgressBar : MonoBehaviour
 					caveCreatureWalkScript.targetPosition = caveCreaturePosOld;
 				}
 				Destroy(parOrcAttackEff);
-				Destroy(this.gameObject);
+
+			    if (gameObject.name.ToLower().Contains("plot"))
+			    {
+                    GameManager.gardenPlotCnt--;
+                    LoadUserWorld.Instance.scr_popUpInfo.cnGrnd--;
+                    GameManager.placeHGardenPlotBool = true;
+			    }
+			    Destroy(this.gameObject);
 			}
 			cnt++;	
 	
