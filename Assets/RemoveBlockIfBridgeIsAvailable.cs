@@ -5,17 +5,14 @@ public class RemoveBlockIfBridgeIsAvailable : MonoBehaviour
 {	
 	void Start () 
 	{
-	
+		//GameObject.Find();
 	}
 
 	void Update () 
 	{
-		Debug.Log("u " + GameManager.unlockDarklingBool);
-		Debug.Log("READY " + GameManager.readyToUnlockDarklingBool);
-
-		if((GameManager.unlockDarklingBool || GameManager.readyToUnlockDarklingBool) && !GameManager.bridgeBuildBool)
+		if((GameManager.unlockDarklingBool || GameManager.readyToUnlockDarklingBool) && (!GameManager.bridgeBuildBool))
 		{
-			Debug.Log("HELLYEAH");
+			Debug.Log("Fake unlock");
 			gameObject.SetActive(false);
 		}
 	}

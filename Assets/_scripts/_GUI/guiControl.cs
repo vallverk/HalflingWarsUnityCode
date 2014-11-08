@@ -2009,6 +2009,8 @@ public class guiControl : MonoBehaviour
 	{
 		if (GameManager.gameLevel >= 3)
 		{
+			GameManager.bridgeBuildBool = false;
+
 			scr_audioController.audio_buttonClick.Play();
 			scr_remote.sfs.Send(new LogoutRequest());
 			scr_remote.sfs.RemoveAllEventListeners();
@@ -2607,7 +2609,6 @@ public class guiControl : MonoBehaviour
 			guiControl.popUpOpenBool = false;
 		}
 	}
-	
 	// Bridge plate
 	void buildingPlate03Button()
 	{
@@ -2617,7 +2618,7 @@ public class guiControl : MonoBehaviour
 		buildingUI.SetActiveRecursively(false);
 		guiControl.popUpOpenBool = false;
 		
-		if (GameManager.gameLevel >= 4 && GameManager.bridgeBuildBool == false)
+		if (GameManager.gameLevel >= 4)
 		{
 			if(GameManager.coins >= scr_userWorld.ReturnGoldCostTotal(scr_gameObjsvr.objBridge.objTypeId))
 			{

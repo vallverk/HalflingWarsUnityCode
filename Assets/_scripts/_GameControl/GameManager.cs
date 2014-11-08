@@ -137,7 +137,22 @@ public class GameManager : MonoBehaviour
 	public static bool questRunningBool = false;
 	public static bool destroyQuestPbBool = false;
 	public static bool readyToUnlockDarklingBool = false;
-	public static bool bridgeBuildBool = false;
+
+	private static bool _bridgeBuild = false;
+	public static bool bridgeBuildBool
+	{
+		get
+		{
+			return _bridgeBuild;
+		}
+		set
+		{
+			Debug.Log("I am here you piece of " + _bridgeBuild);
+			
+			_bridgeBuild = value;
+		}
+
+	}
 	
 	public static bool placeHGardenPlotBool = false;
 	public static bool placeDGardenPlotBool = false;

@@ -3318,6 +3318,7 @@ public class LoadUserWorld : MonoBehaviour
 			// Create Bridge Progress Bar
 			GameObject bridgePBObj = Instantiate(bridgePB_pref, new Vector3(0, 0.1f, -5f), Quaternion.Euler(0, 180, 0)) as GameObject;
 			progressBar bPB = bridgePBObj.GetComponent<progressBar>();
+			Debug.Log("Build BRIDGE AAAAAHHHH");
 			GameManager.bridgeBuildBool = true;
 			//objectSelection.objectSelectionBool = true;
 			
@@ -5535,12 +5536,14 @@ public class LoadUserWorld : MonoBehaviour
 																			bar.progressBarPov.transform.localScale.y, 
 																			bar.progressBarPov.transform.localScale.z);
 					GameManager.unlockDarklingBool = false;
+					Debug.Log("Build BRIDGE AAAAAHHHH");
 					GameManager.bridgeBuildBool = true;
 				}
 				
 			}
 			else
 			{
+				Debug.Log("Build BRIDGE AAAAAHHHH");
 				GameManager.bridgeBuildBool = true;
 				Debug.Log("Bridge construction is complete.......................................................");
 				//bridge_mat.mainTexture = bridge_tex;
