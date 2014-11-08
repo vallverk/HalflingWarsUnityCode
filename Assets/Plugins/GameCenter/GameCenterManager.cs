@@ -11,76 +11,76 @@ public class GameCenterManager : AbstractManager
 {
 	// Player events
 	// Fired when retrieving player data (friends) fails
-	public static event Action<string> loadPlayerDataFailed;
+	public static event Action<string> loadPlayerDataFailedEvent;
 
 	// Fired when player data is loaded after requesting friends
-	public static event Action<List<GameCenterPlayer>> playerDataLoaded;
+	public static event Action<List<GameCenterPlayer>> playerDataLoadedEvent;
 
 	// Fired when a player is logged in
-	public static event Action playerAuthenticated;
+	public static event Action playerAuthenticatedEvent;
 
 	// Fired when a player fails to login
-	public static event Action<string> playerFailedToAuthenticate;
+	public static event Action<string> playerFailedToAuthenticateEvent;
 
 	// Fired when a player logs out
-	public static event Action playerLoggedOut;
+	public static event Action playerLoggedOutEvent;
 
 	// Fired when the profile image is loaded for the player and includes the full path to the image
-	public static event Action<string> profilePhotoLoaded;
+	public static event Action<string> profilePhotoLoadedEvent;
 
 	// Fired when the profile image fails to load
-	public static event Action<string> profilePhotoFailed;
+	public static event Action<string> profilePhotoFailedEvent;
 
 
 	// Leaderboard events
 	// Fired when loading leaderboard category data fails
-	public static event Action<string> loadCategoryTitlesFailed;
+	public static event Action<string> loadCategoryTitlesFailedEvent;
 
 	// Fired when loading leaderboard category data completes
-	public static event Action<List<GameCenterLeaderboard>> categoriesLoaded;
+	public static event Action<List<GameCenterLeaderboard>> categoriesLoadedEvent;
 
 	// Fired when reporting a score fails
-	public static event Action<string> reportScoreFailed;
+	public static event Action<string> reportScoreFailedEvent;
 
 	// Fired when reporting a score finishes successfully
-	public static event Action<string> reportScoreFinished;
+	public static event Action<string> reportScoreFinishedEvent;
 
 	// Fired when retrieving scores fails
-	public static event Action<string> retrieveScoresFailed;
+	public static event Action<string> retrieveScoresFailedEvent;
 
 	// Fired when retrieving scores completes successfully
-	public static event Action<List<GameCenterScore>> scoresLoaded;
+	public static event Action<GameCenterRetrieveScoresResult> scoresLoadedEvent;
 
 	// Fired when retrieving scores for a playerId fails
-	public static event Action<string> retrieveScoresForPlayerIdFailed;
+	public static event Action<string> retrieveScoresForPlayerIdFailedEvent;
 
 	// Fired when retrieving scores for a playerId completes successfully
-	public static event Action<List<GameCenterScore>> scoresForPlayerIdLoaded;
+	public static event Action<GameCenterRetrieveScoresResult> scoresForPlayerIdLoadedEvent;
 
 	// Achievement events
 	// Fired when reporting an achievement fails
-	public static event Action<string> reportAchievementFailed;
+	public static event Action<string> reportAchievementFailedEvent;
 
 	// Fired when reporting an achievement completes successfully
-	public static event Action<string> reportAchievementFinished;
+	public static event Action<string> reportAchievementFinishedEvent;
 
 	// Fired when loading achievements fails
-	public static event Action<string> loadAchievementsFailed;
+	public static event Action<string> loadAchievementsFailedEvent;
 
 	// Fired when loading achievements completes successfully
-	public static event Action<List<GameCenterAchievement>> achievementsLoaded;
+	public static event Action<List<GameCenterAchievement>> achievementsLoadedEvent;
 
 	// Fired when resetting achievements fails
-	public static event Action<string> resetAchievementsFailed;
+	public static event Action<string> resetAchievementsFailedEvent;
 
 	// Fired when resetting achievements completes successfully
-	public static event Action resetAchievementsFinished;
+	public static event Action resetAchievementsFinishedEvent;
 
 	// Fired when loading achievement metadata fails
-	public static event Action<string> retrieveAchievementMetadataFailed;
+	public static event Action<string> retrieveAchievementMetadataFailedEvent;
 
 	// Fired when loading achievement metadata completes successfully
-	public static event Action<List<GameCenterAchievementMetadata>> achievementMetadataLoaded;
+	public static event Action<List<GameCenterAchievementMetadata>> achievementMetadataLoadedEvent;
 
 
 	// Challenge events
@@ -112,6 +112,66 @@ public class GameCenterManager : AbstractManager
 	public static event Action challengeNotIssuedEvent;
 
 
+
+	#region Deprecated Events
+
+	#pragma warning disable 0067
+
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<string> loadPlayerDataFailed;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<List<GameCenterPlayer>> playerDataLoaded;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action playerAuthenticated;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<string> playerFailedToAuthenticate;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action playerLoggedOut;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<string> profilePhotoLoaded;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<string> profilePhotoFailed;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<string> loadCategoryTitlesFailed;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<List<GameCenterLeaderboard>> categoriesLoaded;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<string> reportScoreFailed;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<string> reportScoreFinished;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<string> retrieveScoresFailed;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<List<GameCenterScore>> scoresLoaded;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<string> retrieveScoresForPlayerIdFailed;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<List<GameCenterScore>> scoresForPlayerIdLoaded;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<string> reportAchievementFailed;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<string> reportAchievementFinished;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<string> loadAchievementsFailed;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<List<GameCenterAchievement>> achievementsLoaded;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<string> resetAchievementsFailed;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action resetAchievementsFinished;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<string> retrieveAchievementMetadataFailed;
+	[System.Obsolete( "All events have been renamed to match the style of all of our other plugins. Append 'Event' to the event name for the new name." )]
+	public static event Action<List<GameCenterAchievementMetadata>> achievementMetadataLoaded;
+
+	#pragma warning restore 0067
+
+	#endregion
+
+
+
+
+
     static GameCenterManager()
     {
 		AbstractManager.initialize( typeof( GameCenterManager ) );
@@ -122,8 +182,8 @@ public class GameCenterManager : AbstractManager
 
 	public void loadPlayerDataDidFail( string error )
 	{
-		if( loadPlayerDataFailed != null )
-			loadPlayerDataFailed( error );
+		if( loadPlayerDataFailedEvent != null )
+			loadPlayerDataFailedEvent( error );
 	}
 
 
@@ -131,43 +191,43 @@ public class GameCenterManager : AbstractManager
 	{
 		List<GameCenterPlayer> list = GameCenterPlayer.fromJSON( jsonFriendList );
 
-		if( playerDataLoaded != null )
-			playerDataLoaded( list );
+		if( playerDataLoadedEvent != null )
+			playerDataLoadedEvent( list );
 	}
 
 
 	public void playerDidLogOut()
 	{
-		if( playerLoggedOut != null )
-			playerLoggedOut();
+		if( playerLoggedOutEvent != null )
+			playerLoggedOutEvent();
 	}
 
 
-	public void playerDidAuthenticate()
+	public void playerDidAuthenticate( string playerId )
 	{
-		if( playerAuthenticated != null )
-			playerAuthenticated();
+		if( playerAuthenticatedEvent != null )
+			playerAuthenticatedEvent();
 	}
 
 
 	public void playerAuthenticationFailed( string error )
 	{
-		if( playerFailedToAuthenticate != null )
-			playerFailedToAuthenticate( error );
+		if( playerFailedToAuthenticateEvent != null )
+			playerFailedToAuthenticateEvent( error );
 	}
 
 
 	public void loadProfilePhotoDidLoad( string path )
 	{
-		if( profilePhotoLoaded != null )
-			profilePhotoLoaded( path );
+		if( profilePhotoLoadedEvent != null )
+			profilePhotoLoadedEvent( path );
 	}
 
 
 	public void loadProfilePhotoDidFail( string error )
 	{
-		if( profilePhotoFailed != null )
-			profilePhotoFailed( error );
+		if( profilePhotoFailedEvent != null )
+			profilePhotoFailedEvent( error );
 	}
 
 	#endregion;
@@ -177,8 +237,8 @@ public class GameCenterManager : AbstractManager
 
 	public void loadCategoryTitlesDidFail( string error )
 	{
-		if( loadCategoryTitlesFailed != null )
-			loadCategoryTitlesFailed( error );
+		if( loadCategoryTitlesFailedEvent != null )
+			loadCategoryTitlesFailedEvent( error );
 	}
 
 
@@ -186,55 +246,51 @@ public class GameCenterManager : AbstractManager
 	{
 		List<GameCenterLeaderboard> list = GameCenterLeaderboard.fromJSON( jsonCategoryList );
 
-		if( categoriesLoaded != null )
-			categoriesLoaded( list );
+		if( categoriesLoadedEvent != null )
+			categoriesLoadedEvent( list );
 	}
 
 
 	public void reportScoreDidFail( string error )
 	{
-		if( reportScoreFailed != null )
-			reportScoreFailed( error );
+		if( reportScoreFailedEvent != null )
+			reportScoreFailedEvent( error );
 	}
 
 
 	public void reportScoreDidFinish( string category )
 	{
-		if( reportScoreFinished != null )
-			reportScoreFinished( category );
+		if( reportScoreFinishedEvent != null )
+			reportScoreFinishedEvent( category );
 	}
 
 
 	public void retrieveScoresDidFail( string category )
 	{
-		if( retrieveScoresFailed != null )
-			retrieveScoresFailed( category );
+		if( retrieveScoresFailedEvent != null )
+			retrieveScoresFailedEvent( category );
 	}
 
 
-	public void retrieveScoresDidLoad( string jsonScoresList )
+	public void retrieveScoresDidLoad( string json )
 	{
-		if( scoresLoaded != null )
-		{
-			var list = GameCenterScore.fromJSON( jsonScoresList );
-			scoresLoaded( list );
-		}
+		Debug.Log( json );
+		if( scoresLoadedEvent != null )
+			scoresLoadedEvent( Json.decode<GameCenterRetrieveScoresResult>( json ) );
 	}
 
 
 	public void retrieveScoresForPlayerIdDidFail( string error )
 	{
-		if( retrieveScoresForPlayerIdFailed != null )
-			retrieveScoresForPlayerIdFailed( error );
+		if( retrieveScoresForPlayerIdFailedEvent != null )
+			retrieveScoresForPlayerIdFailedEvent( error );
 	}
 
 
-	public void retrieveScoresForPlayerIdDidLoad( string jsonScoresList )
+	public void retrieveScoresForPlayerIdDidLoad( string json )
 	{
-		List<GameCenterScore> list = GameCenterScore.fromJSON( jsonScoresList );
-
-		if( scoresForPlayerIdLoaded != null )
-			scoresForPlayerIdLoaded( list );
+		if( scoresForPlayerIdLoadedEvent != null )
+			scoresForPlayerIdLoadedEvent( Json.decode<GameCenterRetrieveScoresResult>( json ) );
 	}
 
 	#endregion;
@@ -244,22 +300,22 @@ public class GameCenterManager : AbstractManager
 
 	public void reportAchievementDidFail( string error )
 	{
-		if( reportAchievementFailed != null )
-			reportAchievementFailed( error );
+		if( reportAchievementFailedEvent != null )
+			reportAchievementFailedEvent( error );
 	}
 
 
 	public void reportAchievementDidFinish( string identifier )
 	{
-		if( reportAchievementFinished != null )
-			reportAchievementFinished( identifier );
+		if( reportAchievementFinishedEvent != null )
+			reportAchievementFinishedEvent( identifier );
 	}
 
 
 	public void loadAchievementsDidFail( string error )
 	{
-		if( loadAchievementsFailed != null )
-			loadAchievementsFailed( error );
+		if( loadAchievementsFailedEvent != null )
+			loadAchievementsFailedEvent( error );
 	}
 
 
@@ -267,29 +323,29 @@ public class GameCenterManager : AbstractManager
 	{
 		List<GameCenterAchievement> list = GameCenterAchievement.fromJSON( jsonAchievmentList );
 
-		if( achievementsLoaded != null )
-			achievementsLoaded( list );
+		if( achievementsLoadedEvent != null )
+			achievementsLoadedEvent( list );
 	}
 
 
 	public void resetAchievementsDidFail( string error )
 	{
-		if( resetAchievementsFailed != null )
-			resetAchievementsFailed( error );
+		if( resetAchievementsFailedEvent != null )
+			resetAchievementsFailedEvent( error );
 	}
 
 
 	public void resetAchievementsDidFinish( string emptyString )
 	{
-		if( resetAchievementsFinished != null )
-			resetAchievementsFinished();
+		if( resetAchievementsFinishedEvent != null )
+			resetAchievementsFinishedEvent();
 	}
 
 
-	public void retrieveAchievementsMetadataDidFail( string error )
+	public void retrieveAchievementsMetaDataDidFail( string error )
 	{
-		if( retrieveAchievementMetadataFailed != null )
-			retrieveAchievementMetadataFailed( error );
+		if( retrieveAchievementMetadataFailedEvent != null )
+			retrieveAchievementMetadataFailedEvent( error );
 	}
 
 
@@ -297,8 +353,8 @@ public class GameCenterManager : AbstractManager
 	{
 		List<GameCenterAchievementMetadata> list = GameCenterAchievementMetadata.fromJSON( jsonAchievementDescriptionList );
 
-		if( achievementMetadataLoaded != null )
-			achievementMetadataLoaded( list );
+		if( achievementMetadataLoadedEvent != null )
+			achievementMetadataLoadedEvent( list );
 	}
 
 	#endregion;
@@ -353,15 +409,15 @@ public class GameCenterManager : AbstractManager
 		if( challengesFailedToLoadEvent != null )
 			challengesFailedToLoadEvent( error );
 	}
-	
-	
+
+
 	public void challengeIssuedSuccessfully( string json )
 	{
 		if( challengeIssuedSuccessfullyEvent != null )
 			challengeIssuedSuccessfullyEvent( json.listFromJson() );
 	}
-	
-	
+
+
 	public void challengeNotIssued( string empty )
 	{
 		if( challengeNotIssuedEvent != null )

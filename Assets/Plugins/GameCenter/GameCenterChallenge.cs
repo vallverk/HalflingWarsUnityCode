@@ -6,7 +6,7 @@ using Prime31;
 
 
 
-#if UNITY_IPHONE
+#if UNITY_IPHONE || UNITY_STANDALONE_OSX
 public enum GameCenterChallengeState
 {
 	Invalid = 0,
@@ -29,6 +29,8 @@ public class GameCenterChallenge
 	// either a score or an achievement will be present but not both
 	public GameCenterScore score;
 	public GameCenterAchievement achievement;
+
+
 
 	public GameCenterChallenge( Dictionary<string,object> dict )
 	{
@@ -72,15 +74,15 @@ public class GameCenterChallenge
 		if( dict.ContainsKey( "hash" ) )
 			hash = uint.Parse( dict["hash"].ToString() );
 	}
-	
+
 	public static List<GameCenterChallenge> fromJson( string json )
 	{
 		var rawDataList = json.listFromJson();
 		var challenges = new List<GameCenterChallenge>();
-		
+
 		foreach( Dictionary<string,object> dict in rawDataList )
 			challenges.Add( new GameCenterChallenge( dict ) );
-		
+
 		return challenges;
 	}
 
