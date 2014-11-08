@@ -1889,7 +1889,7 @@ public class SfsRemote : MonoBehaviour {
 
             case "26": //----- Defense task ---- //
 
-                ///***										Debug.Log("Defense Task : "+obj.GetDump());
+                Debug.Log("Defense Task : "+obj.GetDump());
                 scr_userworld.currentShieldTime = float.Parse(obj.GetUtfString("ShieldTime"));
 
                 if (obj.GetBool("success"))

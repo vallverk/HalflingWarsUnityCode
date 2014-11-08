@@ -9269,6 +9269,7 @@ public class LoadUserWorld : MonoBehaviour
 						Texture nightObjTex_L03, string nightObjName, int status, int level, double objgold, 
 						bool halflingBool, bool obeliskBool,int objId)
 	{
+		Debug.Log("Create building " + buildingPref.name);
 		// instantiate building object
 		Temp = Instantiate(buildingPref, objPos,Quaternion.Euler(objRot)) as GameObject;
 		
@@ -9289,6 +9290,7 @@ public class LoadUserWorld : MonoBehaviour
 		
 		if (IsConstructedOrNot(objTypeID) && status == 1)
 		{
+			Debug.Log("Is constructed");
 			if (halflingBool)
 			{
 				Temp.transform.Find("Isometric_Collider").gameObject.tag = "working";
@@ -9345,7 +9347,13 @@ public class LoadUserWorld : MonoBehaviour
 			{
 				Temp.renderer.material.mainTexture = scr_UpgradeTexture.h_ObeliskContruction;
 				Temp.transform.FindChild("DefenceObeliskIcon").gameObject.SetActiveRecursively(false);
+				Debug.Log("FALSE");
+				Debug.Log("FALSE");
+				Debug.Log("FALSE");
+				Debug.Log("FALSE");
 			}
+			Debug.Log("YEAH");
+
 			
 			Temp.transform.FindChild("RabbtiButton").gameObject.SetActiveRecursively(true);
 			Temp.transform.FindChild("touchMovePlane").gameObject.SetActiveRecursively(false);
@@ -9508,6 +9516,7 @@ public class LoadUserWorld : MonoBehaviour
 		}
 		else
 		{
+			Debug.Log("Constructed");
 			GameObject objUI = Temp.transform.FindChild("UI").gameObject;
 			GameObject objButt = objUI.transform.FindChild("ObjectPlacePanel").gameObject.transform.FindChild("objPlace").gameObject;
 			objButt.GetComponent<UIButton>().methodToInvoke = "MoveObject";
@@ -9551,6 +9560,10 @@ public class LoadUserWorld : MonoBehaviour
 				Temp.transform.FindChild("HWgame_Obelisk").gameObject.transform.FindChild("SubEmitter").gameObject.GetComponent<ParticleSystem>().Play();
 				Temp.transform.FindChild("HWgame_Obelisk").gameObject.GetComponent<ParticleSystem>().renderer.enabled = true;
 				Temp.transform.FindChild("HWgame_Obelisk").gameObject.GetComponent<ParticleSystem>().Play();
+
+				Temp.transform.FindChild("DefenceObeliskIcon").gameObject.SetActiveRecursively(false);
+
+				Debug.Log("It is even obelisk");
 			}
 			
 			if (gldButton != null)
@@ -9585,74 +9598,6 @@ public class LoadUserWorld : MonoBehaviour
 			}
 		}
 	}
-	
-	// cave load
-	/*void CaveLoad(GameObject cavePref, Vector3 objPos, Vector3 objRot, int objTypeID, string objName)
-	{
-		Temp = Instantiate(cavePref, objPos, Quaternion.Euler(objRot)) as GameObject;
-		
-		Temp.transform.position = new Vector3(Temp.transform.position.x, (0.0306f -(Temp.transform.position.z / 10000)), Temp.transform.position.z);
-				
-		Temp.gameObject.name = objName;//"HC_B_GoblinCamp_GO(Clone)_01";
-			
-		GameObject hGC01 = Temp.gameObject;
-		
-		Temp.transform.FindChild("ProgressBar").gameObject.SetActiveRecursively(false);
-		Temp.transform.FindChild("RabbtiButton").gameObject.SetActiveRecursively(false);
-			
-		//change textrue only for level 2
-		if (GameManager.gameLevel == 2 && hGC01.name == "HC_B_GoblinCamp_GO(Clone)_01")
-		{
-			hGC01.renderer.material.mainTexture = scr_UpgradeTexture.hc_GoblinCamp_Tex;
-			hGC01.transform.FindChild("GoblinChar01").gameObject.GetComponent<MeshRenderer>().enabled = true;
-			hGC01.transform.FindChild("GoblinChar02").gameObject.GetComponent<MeshRenderer>().enabled = true;
-			hGC01.transform.FindChild("burnFood").gameObject.GetComponent<MeshRenderer>().enabled = true;
-		}
-			
-		Transform rabbit = hGC01.transform.FindChild("RabbtiButton").gameObject.transform.FindChild("Rabbit") as Transform;
-		UIButton delObjUIButtonInfo = rabbit.gameObject.GetComponent("UIButton") as UIButton;
-		delObjUIButtonInfo.scriptWithMethodToInvoke = scr_guiControl;
-			
-		if (IsConstructedOrNot(objTypeID))
-		{
-				
-				hGoblinCave01_bool = true;
-				hGC01.transform.FindChild("ProgressBar").gameObject.SetActiveRecursively(true);
-				GameObject rabbitButtenEff = hGC01.transform.FindChild("RabbtiButton").gameObject;
-				rabbitButtenEff.SetActiveRecursively(true);
-				rabbitButtenEff.GetComponent<buttonPulse>().scaleAnim = true;						
-				
-				hGC01.transform.GetComponent<progressBar>().enabled = true;
-				progressBar bar = hGC01.transform.GetComponent<progressBar>();
-			    scr_gameObjectSvr.objGoblinCamp01.CreateTime = (float)( ReturnConstructionTime(101)  * 60);
-				
-				bar.seconds = (float) ReturnTimefrmSvr(101);
-				
-				//Debug.Log("creation Time : " + scr_gameObjectSvr.objGoblinCamp01.CreateTime);
-				
-				bar.cnt = (int)((scr_gameObjectSvr.objGoblinCamp01.CreateTime) - bar.seconds);
-				float remainTime = ((float)bar.cnt) / scr_gameObjectSvr.objGoblinCamp01.CreateTime;
-				bar.seconds = scr_gameObjectSvr.objGoblinCamp01.CreateTime;
-				
-				bar.progressBarPov.transform.localScale = new Vector3(remainTime, bar.progressBarPov.transform.localScale.y, bar.progressBarPov.transform.localScale.z);
-				
-				
-				if (GameManager.gameLevel >= 3)
-					delObjUIButtonInfo.methodToInvoke = ("goblinCaveRabbitButton");
-				else
-					delObjUIButtonInfo.methodToInvoke = "rabbitButton";	
-			}	
-			else
-			{
-				if (GameManager.taskCount == 4)
-				{
-					//Debug.Log("----- goblin complete---- ");
-					GameManager.taskCount = 5;
-					scr_popUpInfo.updateTaskCount();
-				}
-			}
-		}
-	}*/
 	
 	void FindCreature(int id, GameObject cave)
 	{
