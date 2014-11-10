@@ -19,7 +19,9 @@ public class ObliskProgressBar : MonoBehaviour
 			if(SecCnt > 0)
 			{
 	            SecCnt--;
-				this.gameObject.transform.FindChild("DefenceObeliskIcon").FindChild("RemainTime").GetComponent<SpriteText>().Text = assignSecToTimeSpan(SecCnt).ToString();
+				var go = this.gameObject.transform.FindChild("DefenceObeliskIcon").FindChild("RemainTime");
+				go.gameObject.SetActive(true);
+				go.GetComponent<SpriteText>().Text = assignSecToTimeSpan(SecCnt).ToString();
 				//this.gameObject.transform.FindChild("defenceTime").gameObject.GetComponent<MeshRenderer>().enabled = true;
 			}
 			else

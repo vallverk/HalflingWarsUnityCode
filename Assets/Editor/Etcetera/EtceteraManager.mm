@@ -507,7 +507,7 @@ UIColor * ColorFromHex( int hexcolor )
 			return;
 		
 		_popoverViewController = [[popoverClass alloc] initWithContentViewController:picker];
-		[_popoverViewController setDelegate:self];
+		//[_popoverViewController setDelegate:self];
 		//picker.modalInPopover = YES;
 		
 		// Display the popover

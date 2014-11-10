@@ -23,14 +23,6 @@ public enum GameCenterViewControllerState
 
 public class GameCenterBinding
 {
-	// Checks to see if GameCenter is available on the current device and iOS version
-	[System.Obsolete( "Deprecated. We only support iOS 5+ so this is a moot call." )]
-    public static bool isGameCenterAvailable()
-    {
-		return true;
-    }
-
-
 	#region Player and General methods
 
 	[DllImport("__Internal")]
@@ -200,6 +192,7 @@ public class GameCenterBinding
     private static extern void _gameCenterRetrieveScores( bool friendsOnly, int timeScope, int start, int end );
 
 	// Sends a request to get the current scores with the given criteria. End MUST be between 1 and 100 inclusive.
+	// Results in the retrieveScoresFailedEvent/scoresLoadedEvent firing and if the local players scores gets loaded retrieveScoresForPlayerIdLoadedEvent will fire.
     public static void retrieveScores( bool friendsOnly, GameCenterLeaderboardTimeScope timeScope, int start, int end )
     {
 		if( Application.platform == RuntimePlatform.IPhonePlayer )
@@ -210,7 +203,8 @@ public class GameCenterBinding
 	[DllImport("__Internal")]
     private static extern void _gameCenterRetrieveScoresForLeaderboard( bool friendsOnly, int timeScope, int start, int end, string leaderboardId );
 
-	// Sends a request to get the current scores with the given criteria.  End MUST be between 1 and 100 inclusive.
+	// Sends a request to get the current scores with the given criteria. End MUST be between 1 and 100 inclusive.
+	// Results in the retrieveScoresFailedEvent/scoresLoadedEvent firing and if the local players scores gets loaded retrieveScoresForPlayerIdLoadedEvent will fire.
     public static void retrieveScores( bool friendsOnly, GameCenterLeaderboardTimeScope timeScope, int start, int end, string leaderboardId )
     {
 		if( Application.platform == RuntimePlatform.IPhonePlayer )
@@ -221,7 +215,7 @@ public class GameCenterBinding
 	[DllImport("__Internal")]
     private static extern void _gameCenterRetrieveScoresForPlayerId( string playerId );
 
-	// Sends a request to get the current scores for the given playerId. retrieveScoresForPlayerIdLoaded/retrieveScoresForPlayerIdFailed will fire with the results.
+	// Sends a request to get the current scores for the given playerId. retrieveScoresForPlayerIdLoadedEvent/retrieveScoresForPlayerIdFailedEvent will fire with the results.
     public static void retrieveScoresForPlayerId( string playerId )
     {
 		if( Application.platform == RuntimePlatform.IPhonePlayer )
@@ -232,18 +226,18 @@ public class GameCenterBinding
 	[DllImport("__Internal")]
     private static extern void _gameCenterRetrieveScoresForPlayerIdAndLeaderboard( string playerId, string leaderboardId );
 
-	// Sends a request to get the current scores for the given playerId and leaderboardId. retrieveScoresForPlayerIdLoaded/retrieveScoresForPlayerIdFailed will fire with the results.
+	// Sends a request to get the current scores for the given playerId and leaderboardId. retrieveScoresForPlayerIdLoadedEvent/retrieveScoresForPlayerIdFailedEvent will fire with the results.
     public static void retrieveScoresForPlayerId( string playerId, string leaderboardId )
     {
 		if( Application.platform == RuntimePlatform.IPhonePlayer )
 			_gameCenterRetrieveScoresForPlayerIdAndLeaderboard( playerId, leaderboardId );
     }
 
-	
+
 	[DllImport("__Internal")]
     private static extern void _gameCenterRetrieveScoresForPlayerIds( string playerIds, string leaderboardId );
 
-	// Sends a request to get the current scores for the given playerIds and leaderboardId. retrieveScoresForPlayerIdLoaded/retrieveScoresForPlayerIdFailed will fire with the results.
+	// Sends a request to get the current scores for the given playerIds and leaderboardId. retrieveScoresForPlayerIdLoadedEvent/retrieveScoresForPlayerIdFailedEvent will fire with the results.
     public static void retrieveScoresForPlayerIds( string[] playerIdArray, string leaderboardId )
     {
 		if( Application.platform == RuntimePlatform.IPhonePlayer )
@@ -339,7 +333,7 @@ public class GameCenterBinding
 	[DllImport("__Internal")]
 	private static extern void _gameCenterLoadReceivedChallenges();
 
-	// Sends a request to load all received challenges. iOS 6+ only@
+	// Sends a request to load all received challenges. iOS 6+ only
     public static void loadReceivedChallenges()
     {
 		if( Application.platform == RuntimePlatform.IPhonePlayer )
@@ -350,7 +344,7 @@ public class GameCenterBinding
 	[DllImport("__Internal")]
 	private static extern void _gameCenterIssueScoreChallenge( System.Int64 score, System.Int64 context, string leaderboardId, string playerIds, string message );
 
-	// iOS 6 only! Issues a score challenge to the given players for the leaderboard
+	// iOS 6+ only! Issues a score challenge to the given players for the leaderboard
     public static void issueScoreChallenge( System.Int64 score, System.Int64 context, string leaderboardId, string[] playerIds, string message )
     {
 		if( Application.platform == RuntimePlatform.IPhonePlayer )
@@ -361,7 +355,7 @@ public class GameCenterBinding
 	[DllImport("__Internal")]
 	private static extern void _gameCenterSelectChallengeablePlayerIDsForAchievement( string identifier, string playerIds );
 
-	// iOS 6 only! Checks the given playerIds to see if any are elligible for the achievement challenge
+	// iOS 6+ only! Checks the given playerIds to see if any are eligible for the achievement challenge
     public static void selectChallengeablePlayerIDsForAchievement( string identifier, string[] playerIds)
     {
 		if( Application.platform == RuntimePlatform.IPhonePlayer )
@@ -372,7 +366,7 @@ public class GameCenterBinding
 	[DllImport("__Internal")]
 	private static extern void _gameCenterIssueAchievementChallenge( string identifier, string playerIds, string message );
 
-	// iOS 6 only! Issues an achievement challenge to the players for the given identifier
+	// iOS 6+ only! Issues an achievement challenge to the players for the given identifier
     public static void issueAchievementChallenge( string identifier, string[] playerIds, string message )
     {
 		if( Application.platform == RuntimePlatform.IPhonePlayer )

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Prime31;
 
 
-#if UNITY_IPHONE
+#if UNITY_IPHONE || UNITY_STANDALONE_OSX
 public class GameCenterLeaderboard
 {
 	public string leaderboardId;
