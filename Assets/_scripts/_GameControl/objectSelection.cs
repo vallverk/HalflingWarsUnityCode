@@ -466,23 +466,11 @@ public class objectSelection : MonoBehaviour
 			creature02_Obj.active = false;
 			creature01_Obj.renderer.material = cusith_Mat;
 		}
-		
-		// creature 02 button
-		
-		// hound 01 - hound 02
-		/*if ((curSelectedObj.transform.FindChild("HC_C_Hound_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Hound_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Barg_GO(Clone)") == null && curSelectedObj.transform.FindChild("HC_C_Cusith_GO(Clone)") == null) && GameManager.earthTG_Creature_Cnt == 2)
+		else
 		{
-			//Debug.Log(" +++ hound -- hound +++ 01");
-			// creature 01
-			GameManager.curCreature01 = curSelectedObj.transform.FindChild("HC_C_Hound_GO(Clone)").gameObject;
-			creature01_Obj.active = true;
-			creature01_Obj.renderer.material = hound_Mat;
-			
-			// creature 02
-			GameManager.curCreature02 = curSelectedObj.transform.FindChild("HC_C_Hound_GO(Clone)").gameObject;
-			creature02_Obj.active = true;
-			creature02_Obj.renderer.material = hound_Mat;
-		}*/
+            creature01_Obj.active = false;
+            creature02_Obj.active = false;
+		}
 		
 		// hound 01 - barg
 		if ((curSelectedObj.transform.FindChild("HC_C_Barg_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Hound_GO(Clone)") != null) && GameManager.earthTG_Creature_Cnt == 2)
@@ -498,22 +486,6 @@ public class objectSelection : MonoBehaviour
 			creature02_Obj.active = true;
 			creature02_Obj.renderer.material = hound_Mat;
 		}
-		
-		// barg 01 - barg
-		/*else if ((curSelectedObj.transform.FindChild("HC_C_Barg_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Barg_GO(Clone)") != null) && GameManager.earthTG_Creature_Cnt == 2)
-		{
-			//Debug.Log(" +++ barg -- barg +++ 03");
-			// creature 01
-			GameManager.curCreature01 = curSelectedObj.transform.FindChild("HC_C_Barg_GO(Clone)").gameObject;
-			creature01_Obj.active = true;
-			creature01_Obj.renderer.material = barg_Mat;
-			
-			// creature 02
-			GameManager.curCreature02 = curSelectedObj.transform.FindChild("HC_C_Barg_GO(Clone)").gameObject;
-			creature02_Obj.active = true;
-			creature02_Obj.renderer.material = barg_Mat;
-		}*/
-		
 		
 		// hound 01 - cusith
 		else if ((curSelectedObj.transform.FindChild("HC_C_Cusith_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Hound_GO(Clone)") != null) && GameManager.earthTG_Creature_Cnt == 2)
@@ -552,7 +524,7 @@ public class objectSelection : MonoBehaviour
 			creature01_Obj.active = false;
 			creature02_Obj.active = false;
 		}
-		
+	    bool somethingActive = false;
 		//Debug.Log("---> Plant <--- " + GameManager.plantTG_Creature_Cnt);
 		// creature button 01
 		if (curSelectedObj.transform.FindChild("HC_C_Sprout_GO(Clone)") != null && GameManager.plantTG_Creature_Cnt == 1)
@@ -562,6 +534,7 @@ public class objectSelection : MonoBehaviour
 			creature01_Obj.active = true;
 			creature02_Obj.active = false;
 			creature01_Obj.renderer.material = sprout_Mat;
+		    somethingActive = true;
 		}
 		else if (curSelectedObj.transform.FindChild("HC_C_Nymph_GO(Clone)") != null && GameManager.plantTG_Creature_Cnt == 1)
 		{
@@ -569,6 +542,8 @@ public class objectSelection : MonoBehaviour
 			creature01_Obj.active = true;
 			creature02_Obj.active = false;
 			creature01_Obj.renderer.material = nymph_Mat;
+            somethingActive = true;
+
 		}
 		else if (curSelectedObj.transform.FindChild("HC_C_Dryad_GO(Clone)") != null && GameManager.plantTG_Creature_Cnt == 1)
 		{
@@ -576,23 +551,9 @@ public class objectSelection : MonoBehaviour
 			creature01_Obj.active = true;
 			creature02_Obj.active = false;
 			creature01_Obj.renderer.material = dryad_Mat;
+            somethingActive = true;
+
 		}
-		
-		// creature button 02
-		
-		// sprout -- sprout
-		/*if ((curSelectedObj.transform.FindChild("HC_C_Sprout_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Sprout_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Nymph_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Dryad_GO(Clone)") != null) && GameManager.plantTG_Creature_Cnt == 2)
-		{
-			// creature 01
-			GameManager.curCreature01 = curSelectedObj.transform.FindChild("HC_C_Sprout_GO(Clone)").gameObject;
-			creature01_Obj.active = true;
-			creature01_Obj.renderer.material = sprout_Mat;
-			
-			// creature button 02
-			GameManager.curCreature02 = curSelectedObj.transform.FindChild("HC_C_Sprout_GO(Clone)").gameObject;
-			creature02_Obj.active = true;
-			creature02_Obj.renderer.material = sprout_Mat;
-		}*/
 		
 		// sprout -- nymph
 		if ((curSelectedObj.transform.FindChild("HC_C_Nymph_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Sprout_GO(Clone)") != null) && GameManager.plantTG_Creature_Cnt == 2)
@@ -606,21 +567,9 @@ public class objectSelection : MonoBehaviour
 			GameManager.curCreature02 = curSelectedObj.transform.FindChild("HC_C_Nymph_GO(Clone)").gameObject;
 			creature02_Obj.active = true;
 			creature02_Obj.renderer.material = nymph_Mat;
+            somethingActive = true;
+
 		}
-		
-		// nymph -- nymph
-		/*else if ((curSelectedObj.transform.FindChild("HC_C_Nymph_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Nymph_GO(Clone)") != null) && GameManager.plantTG_Creature_Cnt == 2)
-		{
-			// creature 01
-			GameManager.curCreature01 = curSelectedObj.transform.FindChild("HC_C_Nymph_GO(Clone)").gameObject;
-			creature01_Obj.active = true;
-			creature01_Obj.renderer.material = nymph_Mat;
-			
-			// creature button 02
-			GameManager.curCreature02 = curSelectedObj.transform.FindChild("HC_C_Nymph_GO(Clone)").gameObject;
-			creature02_Obj.active = true;
-			creature02_Obj.renderer.material = nymph_Mat;
-		}*/
 		
 		// sprout -- dryad
 		else if ((curSelectedObj.transform.FindChild("HC_C_Sprout_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Dryad_GO(Clone)") != null) && GameManager.plantTG_Creature_Cnt == 2)
@@ -634,6 +583,8 @@ public class objectSelection : MonoBehaviour
 			GameManager.curCreature02 = curSelectedObj.transform.FindChild("HC_C_Dryad_GO(Clone)").gameObject;
 			creature02_Obj.active = true;
 			creature02_Obj.renderer.material = dryad_Mat;
+            somethingActive = true;
+
 		}
 		
 		// dryad -- nymph
@@ -643,12 +594,20 @@ public class objectSelection : MonoBehaviour
 			GameManager.curCreature01 = curSelectedObj.transform.FindChild("HC_C_Nymph_GO(Clone)").gameObject;
 			creature01_Obj.active = true;
 			creature01_Obj.renderer.material = nymph_Mat;
+
 			
 			// creature button 02
 			GameManager.curCreature02 = curSelectedObj.transform.FindChild("HC_C_Dryad_GO(Clone)").gameObject;
 			creature02_Obj.active = true;
 			creature02_Obj.renderer.material = dryad_Mat;
+            somethingActive = true;
 		}
+
+	    if (!somethingActive)
+	    {
+            creature01_Obj.active = false;
+            creature02_Obj.active = false;
+	    }
 	}
 	
 	// Water Training Ground Creature
@@ -659,6 +618,8 @@ public class objectSelection : MonoBehaviour
 			creature01_Obj.active = false;
 			creature02_Obj.active = false;
 		}
+
+	    bool somethingActive = false;
 		
 			//Debug.Log("---> Water <---  " + GameManager.waterTG_Creature_Cnt);
 		// creature button 01
@@ -668,6 +629,7 @@ public class objectSelection : MonoBehaviour
 			creature01_Obj.active = true;
 			creature02_Obj.active = false;
 			creature01_Obj.renderer.material = nix_Mat;
+		    somethingActive = true;
 		}
 		else if (curSelectedObj.transform.FindChild("HC_C_Draug_GO(Clone)") != null && GameManager.waterTG_Creature_Cnt == 1)
 		{
@@ -675,6 +637,8 @@ public class objectSelection : MonoBehaviour
 			creature01_Obj.active = true;
 			creature02_Obj.active = false;
 			creature01_Obj.renderer.material = draug_Mat;
+            somethingActive = true;
+
 		}
 		else if (curSelectedObj.transform.FindChild("HC_C_Dragon_GO(Clone)") != null && GameManager.waterTG_Creature_Cnt == 1)
 		{
@@ -682,23 +646,10 @@ public class objectSelection : MonoBehaviour
 			creature01_Obj.active = true;
 			creature02_Obj.active = false;
 			creature01_Obj.renderer.material = dragon_Mat;
+            somethingActive = true;
+
 		}
-		
-		// creature button 02
-		
-		// nix -- nix
-		/*if ((curSelectedObj.transform.FindChild("HC_C_Nix_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Nix_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Draug_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Dragon_GO(Clone)") != null) && GameManager.waterTG_Creature_Cnt == 2)
-		{
-			// creature 01
-			GameManager.curCreature01 = curSelectedObj.transform.FindChild("HC_C_Nix_GO(Clone)").gameObject;
-			creature01_Obj.active = true;
-			creature01_Obj.renderer.material = nix_Mat;
-			
-			// creature button 02
-			GameManager.curCreature02 = curSelectedObj.transform.FindChild("HC_C_Nix_GO(Clone)").gameObject;
-			creature02_Obj.active = true;
-			creature02_Obj.renderer.material = nix_Mat;
-		}*/
+	
 		
 		// nix -- draug
 		if ((curSelectedObj.transform.FindChild("HC_C_Draug_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Nix_GO(Clone)") != null) && GameManager.waterTG_Creature_Cnt == 2)
@@ -712,21 +663,10 @@ public class objectSelection : MonoBehaviour
 			GameManager.curCreature02 = curSelectedObj.transform.FindChild("HC_C_Draug_GO(Clone)").gameObject;
 			creature02_Obj.active = true;
 			creature02_Obj.renderer.material = draug_Mat;
+            somethingActive = true;
+
 		}
-		
-		// draug -- draug
-		/*else if ((curSelectedObj.transform.FindChild("HC_C_Draug_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Draug_GO(Clone)") != null) && GameManager.waterTG_Creature_Cnt == 2)
-		{
-			// creature 01
-			GameManager.curCreature01 = curSelectedObj.transform.FindChild("HC_C_Draug_GO(Clone)").gameObject;
-			creature01_Obj.active = true;
-			creature01_Obj.renderer.material = draug_Mat;
-			
-			// creature button 02
-			GameManager.curCreature02 = curSelectedObj.transform.FindChild("HC_C_Draug_GO(Clone)").gameObject;
-			creature02_Obj.active = true;
-			creature02_Obj.renderer.material = draug_Mat;
-		}*/
+	
 		
 		// nix -- dragon
 		else if ((curSelectedObj.transform.FindChild("HC_C_Nix_GO(Clone)") != null && curSelectedObj.transform.FindChild("HC_C_Dragon_GO(Clone)") != null) && GameManager.waterTG_Creature_Cnt == 2)
@@ -740,6 +680,8 @@ public class objectSelection : MonoBehaviour
 			GameManager.curCreature02 = curSelectedObj.transform.FindChild("HC_C_Dragon_GO(Clone)").gameObject;
 			creature02_Obj.active = true;
 			creature02_Obj.renderer.material = dragon_Mat;
+            somethingActive = true;
+
 		}
 		
 		// dragon -- draug
@@ -754,9 +696,15 @@ public class objectSelection : MonoBehaviour
 			GameManager.curCreature02 = curSelectedObj.transform.FindChild("HC_C_Dragon_GO(Clone)").gameObject;
 			creature02_Obj.active = true;
 			creature02_Obj.renderer.material = dragon_Mat;
+            somethingActive = true;
+
 		}
-		
-		
+
+	    if (!somethingActive)
+	    {
+            creature01_Obj.active = false;
+            creature02_Obj.active = false;
+	    }
 	}
 	
 	// Swamp Training Ground Creature
@@ -767,7 +715,9 @@ public class objectSelection : MonoBehaviour
 			creature01_Obj.active = false;
 			creature02_Obj.active = false;
 		}
-		
+
+	    bool somethingActive = false;
+
 		//Debug.Log("---> Swamp <--- " + GameManager.swampTG_Creature_Cnt);
 		// creature button 01
 		if (curSelectedObj.transform.FindChild("DL_C_Leech_GO(Clone)") != null && GameManager.swampTG_Creature_Cnt == 1)
@@ -777,21 +727,25 @@ public class objectSelection : MonoBehaviour
 			creature01_Obj.active = true;
 			creature02_Obj.active = false;
 			creature01_Obj.renderer.material = leech_Mat;
+		    somethingActive = true;
 		}
 		else if (curSelectedObj.transform.FindChild("DL_C_Leshy_GO(Clone)") != null && GameManager.swampTG_Creature_Cnt == 1)
 		{
 			GameManager.curCreature01 = curSelectedObj.transform.FindChild("DL_C_Leshy_GO(Clone)").gameObject;
 			creature01_Obj.active = true;
 			creature02_Obj.active = false;
+		    somethingActive = true;
 			creature01_Obj.renderer.material = leshy_Mat;
-		}
+            somethingActive = true;
+        }
 		else if (curSelectedObj.transform.FindChild("DL_C_Lurker_GO(Clone)") != null && GameManager.swampTG_Creature_Cnt == 1)
 		{
 			GameManager.curCreature01 = curSelectedObj.transform.FindChild("DL_C_Lurker_GO(Clone)").gameObject;
 			creature01_Obj.active = true;
 			creature02_Obj.active = false;
 			creature01_Obj.renderer.material = lurker_Mat;
-		}
+            somethingActive = true;
+        }
 		
 		// creature button 02
 		
@@ -821,21 +775,8 @@ public class objectSelection : MonoBehaviour
 			GameManager.curCreature02 = curSelectedObj.transform.FindChild("DL_C_Leshy_GO(Clone)").gameObject;
 			creature02_Obj.active = true;
 			creature02_Obj.renderer.material = leshy_Mat;
-		}
-		
-		// leshy -- leshy
-		/*else if ((curSelectedObj.transform.FindChild("DL_C_Leshy_GO(Clone)") != null && curSelectedObj.transform.FindChild("DL_C_Leshy_GO(Clone)") != null) && GameManager.swampTG_Creature_Cnt == 2)
-		{
-			// creature 01
-			GameManager.curCreature01 = curSelectedObj.transform.FindChild("DL_C_Leshy_GO(Clone)").gameObject;
-			creature01_Obj.active = true;
-			creature01_Obj.renderer.material = leshy_Mat;
-			
-			// creature button 02
-			GameManager.curCreature02 = curSelectedObj.transform.FindChild("DL_C_Leshy_GO(Clone)").gameObject;
-			creature02_Obj.active = true;
-			creature02_Obj.renderer.material = leshy_Mat;
-		}*/
+            somethingActive = true;
+        }
 		
 		// leech -- lurker
 		else if ((curSelectedObj.transform.FindChild("DL_C_Leech_GO(Clone)") != null && curSelectedObj.transform.FindChild("DL_C_Lurker_GO(Clone)") != null) && GameManager.swampTG_Creature_Cnt == 2)
@@ -849,7 +790,8 @@ public class objectSelection : MonoBehaviour
 			GameManager.curCreature02 = curSelectedObj.transform.FindChild("DL_C_Lurker_GO(Clone)").gameObject;
 			creature02_Obj.active = true;
 			creature02_Obj.renderer.material = lurker_Mat;
-		}
+            somethingActive = true;
+        }
 		
 		// leshy -- lurker
 		else if ((curSelectedObj.transform.FindChild("DL_C_Leshy_GO(Clone)") != null && curSelectedObj.transform.FindChild("DL_C_Lurker_GO(Clone)") != null) && GameManager.swampTG_Creature_Cnt == 2)
@@ -863,10 +805,16 @@ public class objectSelection : MonoBehaviour
 			GameManager.curCreature02 = curSelectedObj.transform.FindChild("DL_C_Lurker_GO(Clone)").gameObject;
 			creature02_Obj.active = true;
 			creature02_Obj.renderer.material = lurker_Mat;
+            somethingActive = true;
+
 		}
-		
-		
-		            scr_audioController.audio_DLswamp.Play();
+	    if (somethingActive)
+	    {
+            creature01_Obj.active = false;
+            creature02_Obj.active = false;
+	    }
+
+	    scr_audioController.audio_DLswamp.Play();
 					scr_audioController.audio_DLswamp.loop = true;
 					scr_audioController.audio_DLswamp.volume = 0.8f;
 					scr_audioController.audio_DLswamp.minDistance = 1;
@@ -881,6 +829,8 @@ public class objectSelection : MonoBehaviour
 			creature01_Obj.active = false;
 			creature02_Obj.active = false;
 		}
+
+	    bool somethingActive = false;
 		
 		//Debug.Log("---> D Earth <---" + GameManager.dEarthTG_Creature_Cnt);
 		// creature button 01
@@ -890,6 +840,8 @@ public class objectSelection : MonoBehaviour
 			creature01_Obj.active = true;
 			creature02_Obj.active = false;
 			creature01_Obj.renderer.material = dHound_Mat;
+
+		    somethingActive = true;
 		}
 		else if (curSelectedObj.transform.FindChild("DL_C_Fenrir_GO(Clone)") != null && GameManager.dEarthTG_Creature_Cnt == 1)
 		{
@@ -897,36 +849,21 @@ public class objectSelection : MonoBehaviour
 			creature01_Obj.active = true;
 			creature02_Obj.active = false;
 			creature01_Obj.renderer.material = fenrir_Mat;
-		}
+            somethingActive = true;
+        }
 		else if (curSelectedObj.transform.FindChild("DL_C_HellHound_GO(Clone)") != null && GameManager.dEarthTG_Creature_Cnt == 1)
 		{
 			GameManager.curCreature01 = curSelectedObj.transform.FindChild("DL_C_HellHound_GO(Clone)").gameObject;
 			creature01_Obj.active = true;
 			creature02_Obj.active = false;
 			creature01_Obj.renderer.material = hellHound_Mat;
-		}
+            somethingActive = true;
+        }
 		else
 		{
 			creature01_Obj.active = false;
 			creature02_Obj.active = false;
 		}
-		
-		// creature 02 button
-		
-		// dhound 01 - dhound 02
-		/*if ((curSelectedObj.transform.FindChild("DL_C_DHound_GO(Clone)") != null && curSelectedObj.transform.FindChild("DL_C_DHound_GO(Clone)") != null && curSelectedObj.transform.FindChild("DL_C_Fenrir_GO(Clone)") == null && curSelectedObj.transform.FindChild("DL_C_HellHound_GO(Clone)") == null) && GameManager.dEarthTG_Creature_Cnt == 2)
-		{
-			//Debug.Log(" +++ hound -- hound +++ 01");
-			// creature 01
-			GameManager.curCreature01 = curSelectedObj.transform.FindChild("DL_C_DHound_GO(Clone)").gameObject;
-			creature01_Obj.active = true;
-			creature01_Obj.renderer.material = dHound_Mat;
-			
-			// creature 02
-			GameManager.curCreature02 = curSelectedObj.transform.FindChild("DL_C_DHound_GO(Clone)").gameObject;
-			creature02_Obj.active = true;
-			creature02_Obj.renderer.material = dHound_Mat;
-		}*/
 		
 		// dhound 01 - fenrir
 		if ((curSelectedObj.transform.FindChild("DL_C_Fenrir_GO(Clone)") != null && curSelectedObj.transform.FindChild("DL_C_DHound_GO(Clone)") != null) && GameManager.dEarthTG_Creature_Cnt == 2)
@@ -941,23 +878,8 @@ public class objectSelection : MonoBehaviour
 			GameManager.curCreature02 = curSelectedObj.transform.FindChild("DL_C_DHound_GO(Clone)").gameObject;
 			creature02_Obj.active = true;
 			creature02_Obj.renderer.material = dHound_Mat;
-		}
-		
-		// fenrir 01 - fenrir
-		/*else if ((curSelectedObj.transform.FindChild("DL_C_Fenrir_GO(Clone)") != null && curSelectedObj.transform.FindChild("DL_C_Fenrir_GO(Clone)") != null) && GameManager.dEarthTG_Creature_Cnt == 2)
-		{
-			//Debug.Log(" +++ barg -- barg +++ 03");
-			// creature 01
-			GameManager.curCreature01 = curSelectedObj.transform.FindChild("DL_C_Fenrir_GO(Clone)").gameObject;
-			creature01_Obj.active = true;
-			creature01_Obj.renderer.material = fenrir_Mat;
-			
-			// creature 02
-			GameManager.curCreature02 = curSelectedObj.transform.FindChild("DL_C_Fenrir_GO(Clone)").gameObject;
-			creature02_Obj.active = true;
-			creature02_Obj.renderer.material = fenrir_Mat;
-		}*/
-		
+            somethingActive = true;
+        }
 		
 		// dhound 01 - hellHound
 		else if ((curSelectedObj.transform.FindChild("DL_C_HellHound_GO(Clone)") != null && curSelectedObj.transform.FindChild("DL_C_DHound_GO(Clone)") != null) && GameManager.dEarthTG_Creature_Cnt == 2)
@@ -971,7 +893,8 @@ public class objectSelection : MonoBehaviour
 			GameManager.curCreature02 = curSelectedObj.transform.FindChild("DL_C_DHound_GO(Clone)").gameObject;
 			creature02_Obj.active = true;
 			creature02_Obj.renderer.material = dHound_Mat;
-		}
+            somethingActive = true;
+        }
 		
 		// fenrir - hell hound
 		else if ((curSelectedObj.transform.FindChild("DL_C_Fenrir_GO(Clone)") != null && curSelectedObj.transform.FindChild("DL_C_HellHound_GO(Clone)") != null) && GameManager.dEarthTG_Creature_Cnt == 2)
@@ -985,7 +908,14 @@ public class objectSelection : MonoBehaviour
 			GameManager.curCreature02 = curSelectedObj.transform.FindChild("DL_C_HellHound_GO(Clone)").gameObject;
 			creature02_Obj.active = true;
 			creature02_Obj.renderer.material = hellHound_Mat;
+            somethingActive = true;
 		}
+
+        if (!somethingActive)
+        {
+            creature01_Obj.active = false;
+            creature02_Obj.active = false;
+        }
 	}
 	
 	// Fire Training Ground Creature
@@ -996,7 +926,9 @@ public class objectSelection : MonoBehaviour
 			creature01_Obj.active = false;
 			creature02_Obj.active = false;
 		}
-		
+
+	    bool somethingActive = false;
+
 		//Debug.Log("---> Fire <---");
 		// creature button 01
 		if (curSelectedObj.transform.FindChild("DL_C_Sprite_GO(Clone)") != null && GameManager.fireTG_Creature_Cnt == 1)
@@ -1005,6 +937,8 @@ public class objectSelection : MonoBehaviour
 			creature01_Obj.active = true;
 			creature02_Obj.active = false;
 			creature01_Obj.renderer.material = sprite_Mat;
+
+		    somethingActive = true;
 		}
 		else if (curSelectedObj.transform.FindChild("DL_C_Imp_GO(Clone)") != null && GameManager.fireTG_Creature_Cnt == 1)
 		{
@@ -1012,31 +946,16 @@ public class objectSelection : MonoBehaviour
 			creature01_Obj.active = true;
 			creature02_Obj.active = false;
 			creature01_Obj.renderer.material = imp_Mat;
-		}
+            somethingActive = true;
+        }
 		else if (curSelectedObj.transform.FindChild("DL_C_Djinn_GO(Clone)") != null && GameManager.fireTG_Creature_Cnt == 1)
 		{
 			GameManager.curCreature01 = curSelectedObj.transform.FindChild("DL_C_Djinn_GO(Clone)").gameObject;
 			creature01_Obj.active = true;
 			creature02_Obj.active = false;
 			creature01_Obj.renderer.material = djinn_Mat;
-		}
-		
-		// creature 02 button
-		
-		// Sprite 01 - Sprite 02
-		/*if ((curSelectedObj.transform.FindChild("DL_C_Sprite_GO(Clone)") != null && curSelectedObj.transform.FindChild("DL_C_Sprite_GO(Clone)") != null && curSelectedObj.transform.FindChild("DL_C_Imp_GO(Clone)") == null && curSelectedObj.transform.FindChild("DL_C_Djinn_GO(Clone)") == null) && GameManager.fireTG_Creature_Cnt == 2)
-		{
-			//Debug.Log(" +++ hound -- hound +++ 01");
-			// creature 01
-			GameManager.curCreature01 = curSelectedObj.transform.FindChild("DL_C_Sprite_GO(Clone)").gameObject;
-			creature01_Obj.active = true;
-			creature01_Obj.renderer.material = sprite_Mat;
-			
-			// creature 02
-			GameManager.curCreature02 = curSelectedObj.transform.FindChild("DL_C_Sprite_GO(Clone)").gameObject;
-			creature02_Obj.active = true;
-			creature02_Obj.renderer.material = sprite_Mat;
-		}*/
+            somethingActive = true;
+        }
 		
 		// sprite 01 - imp
 		if ((curSelectedObj.transform.FindChild("DL_C_Imp_GO(Clone)") != null && curSelectedObj.transform.FindChild("DL_C_Sprite_GO(Clone)") != null) && GameManager.fireTG_Creature_Cnt == 2)
@@ -1051,22 +970,8 @@ public class objectSelection : MonoBehaviour
 			GameManager.curCreature02 = curSelectedObj.transform.FindChild("DL_C_Sprite_GO(Clone)").gameObject;
 			creature02_Obj.active = true;
 			creature02_Obj.renderer.material = sprite_Mat;
-		}
-		
-		// Imp 01 - Imp
-		/*else if ((curSelectedObj.transform.FindChild("DL_C_Imp_GO(Clone)") != null && curSelectedObj.transform.FindChild("DL_C_Imp_GO(Clone)") != null) && GameManager.fireTG_Creature_Cnt == 2)
-		{
-			//Debug.Log(" +++ barg -- barg +++ 03");
-			// creature 01
-			GameManager.curCreature01 = curSelectedObj.transform.FindChild("DL_C_Imp_GO(Clone)").gameObject;
-			creature01_Obj.active = true;
-			creature01_Obj.renderer.material = barg_Mat;
-			
-			// creature 02
-			GameManager.curCreature02 = curSelectedObj.transform.FindChild("DL_C_Imp_GO(Clone)").gameObject;
-			creature02_Obj.active = true;
-			creature02_Obj.renderer.material = imp_Mat;
-		}*/
+            somethingActive = true;
+        }
 		
 		
 		// sprite 01 - djinn
@@ -1081,7 +986,8 @@ public class objectSelection : MonoBehaviour
 			GameManager.curCreature02 = curSelectedObj.transform.FindChild("DL_C_Sprite_GO(Clone)").gameObject;
 			creature02_Obj.active = true;
 			creature02_Obj.renderer.material = sprite_Mat;
-		}
+            somethingActive = true;
+        }
 		
 		// imp - djinn
 		else if ((curSelectedObj.transform.FindChild("DL_C_Imp_GO(Clone)") != null && curSelectedObj.transform.FindChild("DL_C_Djinn_GO(Clone)") != null) && GameManager.fireTG_Creature_Cnt == 2)
@@ -1095,7 +1001,14 @@ public class objectSelection : MonoBehaviour
 			GameManager.curCreature02 = curSelectedObj.transform.FindChild("DL_C_Djinn_GO(Clone)").gameObject;
 			creature02_Obj.active = true;
 			creature02_Obj.renderer.material = djinn_Mat;
-		}
+            somethingActive = true;
+        }
+
+	    if (!somethingActive)
+	    {
+            creature01_Obj.active = false;
+            creature02_Obj.active = false; 
+	    }
 	}
 	
 	
