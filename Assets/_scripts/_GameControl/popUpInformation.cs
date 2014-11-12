@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using System.Collections;
 
@@ -3193,7 +3194,7 @@ public class popUpInformation: MonoBehaviour
 		{
 			Debug.Log("place second dirtpath...");
 			
-			GameObject[] dirtPathList = GameObject.FindGameObjectsWithTag("Decoration");
+			GameObject[] dirtPathList = GameObject.FindGameObjectsWithTag("Decoration").Where(p => !p.name.Contains("FAKE")).ToArray();
 			
 			Debug.Log("size -> " + dirtPathList.Length);
 			

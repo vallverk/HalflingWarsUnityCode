@@ -19,8 +19,10 @@ public class LoadUserWorld : MonoBehaviour
 	                  Tree1_pref,dl_Herbwolfbane,WaterTrainingGrnd_pref,Nix_pref,Darkstable_pref,Halflingstable_pref,DarkearthTrainingGrnd_pref,hl_EarthObelsik_pref,dl_earthObelisk_pref,hl_dryad_pref,hl_Apothecary,
 	                  Darkhound_pref,FirePepper_pref,DarklingDirtPath_pref,DarklingBog_pref,Barg_pref,DarklingBlacksmith_pref,dl_SwampObelsik_pref,dl_fireObelisk_pref,dl_draugh_pref,hl_Sunshrine,dl_Moonshrine,dl_ravenPerch,
 	                  hl_Scarecrow,hl_partyTent,hl_knollHill,hl_Fence,hl_Cottage,hl_Cornfield,dl_Scarecrow,dl_huntingtent,dl_fence,dl_knollhill,dl_Birdhouse,hl_WheelBarrow,hl_Shroomery,hl_barrel,hl_well,hl_windmill,dl_windmill, bridgePB_pref;
-	         
-	
+
+
+
+    public GameObject FakeDirtPath;
 	private SfsRemote scr_sfsRemote;
 	public UpgradeTexture scr_UpgradeTexture;
 	private GameObject Temp;
@@ -104,10 +106,30 @@ public class LoadUserWorld : MonoBehaviour
 		//UnLockItemLoading();
 		
 		scr_OrcAttackSystem = GameObject.Find("GameManager").GetComponent<OrcAttackSystem>();
+
+        CreateFakeRoadPath();
 	}
-	
-	
-	// Update is called once per frame
+
+
+    /// <summary>
+    /// Is used to not allow users create buildings over tutorial path
+    /// </summary>
+    private void CreateFakeRoadPath()
+    {
+        GameObject.Instantiate(LoadUserWorld.Instance.FakeDirtPath, new Vector3(-64.24f, 0, 1.46f),
+            Quaternion.identity);
+        GameObject.Instantiate(LoadUserWorld.Instance.FakeDirtPath, new Vector3(-62.78f, 0, 0.73f),
+            Quaternion.identity);
+        GameObject.Instantiate(LoadUserWorld.Instance.FakeDirtPath, new Vector3(-61.32f, 0, 0f),
+            Quaternion.identity);
+        GameObject.Instantiate(LoadUserWorld.Instance.FakeDirtPath, new Vector3(-59.86f, 0, -0.73f),
+            Quaternion.identity);
+        GameObject.Instantiate(LoadUserWorld.Instance.FakeDirtPath, new Vector3(-58.4f, 0, -1.46f),
+            Quaternion.identity);
+    }
+
+
+    // Update is called once per frame
 	void Update () 
 	{
 		if(assignObjIdforOrcAttack)
@@ -3718,9 +3740,12 @@ public class LoadUserWorld : MonoBehaviour
 					hGC02.transform.FindChild("ProgressBar").gameObject.SetActiveRecursively(true);
 					GameObject rabbitButtenEff = hGC02.transform.FindChild("RabbtiButton").gameObject;
 					rabbitButtenEff.SetActiveRecursively(true);
-					rabbitButtenEff.GetComponent<buttonPulse>().scaleAnim = false;						
-					
-					hGC02.transform.GetComponent<progressBar>().enabled = true;
+				    if (rabbitButtenEff.GetComponent<buttonPulse>())
+				    {
+				        rabbitButtenEff.GetComponent<buttonPulse>().scaleAnim = false;
+				    }
+
+				    hGC02.transform.GetComponent<progressBar>().enabled = true;
 					progressBar bar = hGC02.transform.GetComponent<progressBar>();
 				    scr_gameObjectSvr.objGoblinCamp02.CreateTime = (float)( ReturnConstructionTime(102));
 					
@@ -5225,7 +5250,7 @@ public class LoadUserWorld : MonoBehaviour
 			GameObject desCol = GameObject.Find("pathCol") as GameObject;
 			if (desCol != null)
 				Destroy(desCol);
-			
+		        GetType();
 			break;
 		
 		case 32:	// Nymph
@@ -9350,9 +9375,6 @@ public class LoadUserWorld : MonoBehaviour
 			{
 				Temp.renderer.material.mainTexture = scr_UpgradeTexture.h_ObeliskContruction;
 				Temp.transform.FindChild("DefenceObeliskIcon").gameObject.SetActiveRecursively(false);
-				Debug.Log("FALSE");
-				Debug.Log("FALSE");
-				Debug.Log("FALSE");
 				Debug.Log("FALSE");
 			}
 			Debug.Log("YEAH");
