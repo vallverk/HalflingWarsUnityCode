@@ -808,7 +808,7 @@ public class objectSelection : MonoBehaviour
             somethingActive = true;
 
 		}
-	    if (somethingActive)
+	    if (!somethingActive)
 	    {
             creature01_Obj.active = false;
             creature02_Obj.active = false;
