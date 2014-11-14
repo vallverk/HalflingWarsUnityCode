@@ -1656,7 +1656,7 @@ public class SfsRemote : MonoBehaviour {
                     //Debug.Log("Percentage :" + PercentageCalc);
                     percentageText.GetComponent<SpriteText>().Text = PercentageCalc.ToString() + "%";
                 }
-
+                finishedLoadingWorld = true;
                 break;
 
             case "5":
@@ -1779,83 +1779,14 @@ public class SfsRemote : MonoBehaviour {
 
             case "22":
                 // cave attack time coming from server
-                Debug.Log("Recieved Cave Time :" + obj.GetDump());
-                bool isThreshold = obj.GetBool("SecondThreshold");
-                getOrgattacktym = float.Parse(obj.GetUtfString("taskEndTime"));
-                scr_userworld.GetCaveCreatures(obj.GetInt("objectTypeId"), isThreshold); //Added
-                scr_OrcAttackSystem.AddCaveTimer();
-                isgetOrgtym = true;
+                StartCoroutine(AddCaveTime(obj));
 
                 break;
 
             case "23":
 
 
-                int obj1 = 0;
-                int obj2 = 0;
-
-                //SendRequestForGetworld();
-                Debug.Log("Recieved Building Time :" + obj.GetDump());
-                int caveId = obj.GetInt("fromObjId");
-                //scr_userworld.GetCaveCreatures(scr_userworld.ReturnTypeIdfromObjId(caveId));
-                scr_userworld.GetCaveCreatures(scr_userworld.ReturnTypeIdfromObjId(caveId), false);
-                Debug.Log("cave ID = " + scr_userworld.ReturnTypeIdfromObjId(caveId));
-
-                if (caveId != -1)
-                {
-//											obj1 = obj.GetInt("toObjId1");
-//											obj2 = obj.GetInt("toObjId2");
-//											
-//											
-//											getObjTime1 = float.Parse(obj.GetUtfString("toObjId1EndTime"));
-//											getObjTime2 = float.Parse(obj.GetUtfString("toObjId2EndTime"));
-
-                    if (scr_OrcAttackSystem.caveCreature_01 != null && scr_OrcAttackSystem.caveCreature_02 != null)
-                    {
-                        if (scr_OrcAttackSystem.caveCreature_01.gameObject.tag == "Untagged" &&
-                            scr_OrcAttackSystem.caveCreature_02.gameObject.tag == "Untagged")
-                        {
-//												scr_OrcAttackSystem.attackObjId_01 = obj.GetInt("toObjId1");
-//												scr_OrcAttackSystem.attackObjId_02 = obj.GetInt("toObjId2");
-
-                            obj1 = obj.GetInt("toObjId1");
-                            obj2 = obj.GetInt("toObjId2");
-
-
-                            getObjTime1 = float.Parse(obj.GetUtfString("toObjId1EndTime"));
-                            getObjTime2 = float.Parse(obj.GetUtfString("toObjId2EndTime"));
-
-
-                            Debug.Log("Object Ids For Attack " + obj1 + " And " + obj2);
-                        }
-                        else if (scr_OrcAttackSystem.caveCreature_01.gameObject.tag == "busy" &&
-                                 scr_OrcAttackSystem.caveCreature_02.gameObject.tag == "Untagged")
-                        {
-//												scr_OrcAttackSystem.attackObjId_01 = 0;
-//												scr_OrcAttackSystem.attackObjId_02 = obj.GetInt("toObjId1");
-
-                            obj1 = 0;
-                            obj2 = obj.GetInt("toObjId1");
-
-                            getObjTime1 = 0;
-                            getObjTime2 = float.Parse(obj.GetUtfString("toObjId1EndTime"));
-                        }
-                        else if (scr_OrcAttackSystem.caveCreature_01.gameObject.tag == "Untagged" &&
-                                 scr_OrcAttackSystem.caveCreature_02.gameObject.tag == "busy")
-                        {
-                            scr_OrcAttackSystem.attackObjId_01 = obj.GetInt("toObjId1");
-                            scr_OrcAttackSystem.attackObjId_02 = 0;
-
-                            obj1 = obj.GetInt("toObjId1");
-                            obj2 = 0;
-
-                            getObjTime1 = float.Parse(obj.GetUtfString("toObjId1EndTime"));
-                            getObjTime2 = 0;
-                        }
-
-                        scr_OrcAttackSystem.CreatureAttackMode(obj1, obj2);
-                    }
-                }
+                StartCoroutine(AddBuildingTimer(obj));
                 //isGetObjectTime = true;
                 //Debug.Log("Building Time Recieved");
 
@@ -2005,6 +1936,89 @@ public class SfsRemote : MonoBehaviour {
                 scr_taskDetails.RedQuestCount.Text = noOfStoriesUnlocked.ToString();
                 break;
         }
+    }
+
+    private IEnumerator AddBuildingTimer(ISFSObject obj)
+    {
+        while (!finishedLoadingWorld) yield return null;
+
+        int obj1 = 0;
+        int obj2 = 0;
+
+        //SendRequestForGetworld();
+        Debug.Log("Recieved Building Time :" + obj.GetDump());
+        int caveId = obj.GetInt("fromObjId");
+        //scr_userworld.GetCaveCreatures(scr_userworld.ReturnTypeIdfromObjId(caveId));
+        scr_userworld.GetCaveCreatures(scr_userworld.ReturnTypeIdfromObjId(caveId), false);
+        Debug.Log("cave ID = " + scr_userworld.ReturnTypeIdfromObjId(caveId));
+
+        if (caveId != -1)
+        {
+//											obj1 = obj.GetInt("toObjId1");
+//											obj2 = obj.GetInt("toObjId2");
+//											
+//											
+//											getObjTime1 = float.Parse(obj.GetUtfString("toObjId1EndTime"));
+//											getObjTime2 = float.Parse(obj.GetUtfString("toObjId2EndTime"));
+
+            if (scr_OrcAttackSystem.caveCreature_01 != null && scr_OrcAttackSystem.caveCreature_02 != null)
+            {
+                if (scr_OrcAttackSystem.caveCreature_01.gameObject.tag == "Untagged" &&
+                    scr_OrcAttackSystem.caveCreature_02.gameObject.tag == "Untagged")
+                {
+//												scr_OrcAttackSystem.attackObjId_01 = obj.GetInt("toObjId1");
+//												scr_OrcAttackSystem.attackObjId_02 = obj.GetInt("toObjId2");
+
+                    obj1 = obj.GetInt("toObjId1");
+                    obj2 = obj.GetInt("toObjId2");
+
+
+                    getObjTime1 = float.Parse(obj.GetUtfString("toObjId1EndTime"));
+                    getObjTime2 = float.Parse(obj.GetUtfString("toObjId2EndTime"));
+
+
+                    Debug.Log("Object Ids For Attack " + obj1 + " And " + obj2);
+                }
+                else if (scr_OrcAttackSystem.caveCreature_01.gameObject.tag == "busy" &&
+                         scr_OrcAttackSystem.caveCreature_02.gameObject.tag == "Untagged")
+                {
+//												scr_OrcAttackSystem.attackObjId_01 = 0;
+//												scr_OrcAttackSystem.attackObjId_02 = obj.GetInt("toObjId1");
+
+                    obj1 = 0;
+                    obj2 = obj.GetInt("toObjId1");
+
+                    getObjTime1 = 0;
+                    getObjTime2 = float.Parse(obj.GetUtfString("toObjId1EndTime"));
+                }
+                else if (scr_OrcAttackSystem.caveCreature_01.gameObject.tag == "Untagged" &&
+                         scr_OrcAttackSystem.caveCreature_02.gameObject.tag == "busy")
+                {
+                    scr_OrcAttackSystem.attackObjId_01 = obj.GetInt("toObjId1");
+                    scr_OrcAttackSystem.attackObjId_02 = 0;
+
+                    obj1 = obj.GetInt("toObjId1");
+                    obj2 = 0;
+
+                    getObjTime1 = float.Parse(obj.GetUtfString("toObjId1EndTime"));
+                    getObjTime2 = 0;
+                }
+
+                scr_OrcAttackSystem.CreatureAttackMode(obj1, obj2);
+            }
+        }
+    }
+
+    private IEnumerator AddCaveTime(ISFSObject obj)
+    {
+        while (!finishedLoadingWorld) yield return null;
+
+        Debug.Log("Recieved Cave Time :" + obj.GetDump());
+        bool isThreshold = obj.GetBool("SecondThreshold");
+        getOrgattacktym = float.Parse(obj.GetUtfString("taskEndTime"));
+        scr_userworld.GetCaveCreatures(obj.GetInt("objectTypeId"), isThreshold); //Added
+        scr_OrcAttackSystem.AddCaveTimer();
+        isgetOrgtym = true;
     }
 
     private void HandleUserRequests(ISFSObject obj)
@@ -3081,32 +3095,32 @@ public class SfsRemote : MonoBehaviour {
 		}
 		
 	}
-	
-	public void SendRequestforGetscheduleTasks()
-	{  
-		try{
-		string cmd = "3";
-		int subCmd = 14;
-		ISFSObject obj = new SFSObject();
-		obj.PutInt("subCmd",subCmd);
-		sfs.Send(new ExtensionRequest(cmd,obj,currentroom));
-			
-			if(isUserWorld)
-			{
-			 PercentageCalc = ReturnRandomNumber(40,45);
-	         //Debug.Log("Percentage :" + PercentageCalc);
-			 percentageText.GetComponent<SpriteText>().Text = PercentageCalc.ToString() + "%";
-			 }
-			
-			}
-		catch(Exception ex)
-		{
-			//Debug.Log(ex.ToString());
-		}
-		
-	}
-	
-	public void SendRequestforDayNnightActivation()
+
+    public void SendRequestforGetscheduleTasks()
+    {
+        try
+        {
+            string cmd = "3";
+            int subCmd = 14;
+            ISFSObject obj = new SFSObject();
+            obj.PutInt("subCmd", subCmd);
+            sfs.Send(new ExtensionRequest(cmd, obj, currentroom));
+
+            if (isUserWorld)
+            {
+                PercentageCalc = ReturnRandomNumber(40, 45);
+                //Debug.Log("Percentage :" + PercentageCalc);
+                percentageText.GetComponent<SpriteText>().Text = PercentageCalc.ToString() + "%";
+            }
+
+        }
+        catch (Exception ex)
+        {
+            //Debug.Log(ex.ToString());
+        }
+    }
+
+    public void SendRequestforDayNnightActivation()
 	{
 		try{
 		string cmd = "1";
@@ -3993,8 +4007,9 @@ public class SfsRemote : MonoBehaviour {
 	
 	private string soundSave;
 	private string musicSave;
-	
-	public void SetMusicNSound()
+    public bool finishedLoadingWorld;
+
+    public void SetMusicNSound()
 	{
 ///***		Debug.Log("Music :" + PlayerPrefs.GetString("MusicSave").ToString());
 ///***		Debug.Log("Sound :" + PlayerPrefs.GetString("SoundSave").ToString());
