@@ -598,19 +598,10 @@ public class mainMenu : MonoBehaviour
 			
 				FacebookBinding.loginWithReadPermissions( permissions );  
 
-//			if(!Application.isEditor)
-//			{
-//				StartCoroutine(ReloadThis());
-//			}
 			}
 	 }
-
-	IEnumerator ReloadThis()
-	{
-		yield return new WaitForSeconds(1.5f);
-		Application.LoadLevel("MainMenu");
-	}
 	
+
 	  void GetFacebookUserId()		
 	  {
 				if(PlayerPrefs.GetString("CurrentUserId") != "")
