@@ -45,14 +45,19 @@ public class StoreKitManager : AbstractManager
 	public static event Action<List<StoreKitDownload>> paymentQueueUpdatedDownloadsEvent;
 
 
+	private static bool InitFinished;
 
-    static StoreKitManager()
-    {
-		AbstractManager.initialize( typeof( StoreKitManager ) );
-
-		// we ignore the results of this call because our only purpose is to trigger the creation of the required listener on the native side for transaction processing.
-		StoreKitBinding.canMakePayments();
-    }
+	public void Start()
+	{
+		if(!InitFinished)
+		{
+			InitFinished = true;
+			AbstractManager.initialize( typeof( StoreKitManager ) );
+		
+			// we ignore the results of this call because our only purpose is to trigger the creation of the required listener on the native side for transaction processing.
+			StoreKitBinding.canMakePayments();
+		}
+	}
 
 
 	public void transactionUpdated( string json )
