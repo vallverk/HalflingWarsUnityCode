@@ -85,9 +85,8 @@ public class mainMenu : MonoBehaviour
 	{
 		facebookIdRequestInProgress = false;
 		Debug.Log ("main menu...");
-		FacebookBinding.init();
-	    _RegisterNew();
-		
+
+		StartCoroutine(FacebookLogin());
 		scr_SfsRemoteInit = GameObject.Find("SmartfoxConnect").GetComponent<SfsRemoteInit>();
 		fbListener = GameObject.Find("FacebookEventListener").GetComponent<FacebookEventListener>();
 		audioListener = GameObject.Find("Main Camera").GetComponent<AudioListener>();
@@ -95,9 +94,32 @@ public class mainMenu : MonoBehaviour
 		loadingScreenObj = GameObject.Find("LoadingScreen") as GameObject;
 		scr_Bg = GameObject.Find("AudioBG").GetComponent<AudioSource>();
 		scr_btnClick = GameObject.Find("AudioButtonClick").GetComponent<AudioSource>();
-		
+	
 		ad = (AchivementsDetails)FindObjectOfType(typeof(AchivementsDetails));
-		
+		FacebookManager.sessionOpenedEvent += () => {
+			isLoggedIn = FacebookBinding.isSessionValid();
+			if(isLoggedIn)
+			{
+				Facebook.instance.getMe( ( error, result ) =>
+				                        {
+					// if we have an error we dont proceed any further
+					if( error != null )
+						return;
+					
+					if( result == null )
+						return;
+					
+					// grab the userId and persist it for later use
+					//var ht = obj as Hashtable;
+					string user_Id = result.id;
+					
+					Debug.Log("FB Result :" + result);
+					
+					PlayerPrefs.SetString("CurrentUserId",user_Id);
+					Debug.Log( "Graph Request finished: "+user_Id);
+				});
+			}
+		};
 		IsClicked = false;
 		IsClickedfriends = false;
 		playMenubool = true;
@@ -153,7 +175,16 @@ public class mainMenu : MonoBehaviour
 		AdBinding.createAdBanner( true );
 	}
 	
-	
+
+	private IEnumerator FacebookLogin()
+	{
+		FacebookBinding.init();
+		_RegisterNew();
+
+
+		yield return new WaitForSeconds(1.5f);
+	}
+
 	public void UpdateFacebookUserId()
 	{
 		if(FacebookBinding.isSessionValid())
@@ -542,10 +573,13 @@ public class mainMenu : MonoBehaviour
 			{
 			//Debug.Log("hi2");
 			     var permissions = new string[] { "user_games_activity" };
+			
 				FacebookBinding.loginWithReadPermissions( permissions );  
+
 			}
 	 }
 	
+
 	  void GetFacebookUserId()		
 	  {
 				if(PlayerPrefs.GetString("CurrentUserId") != "")
