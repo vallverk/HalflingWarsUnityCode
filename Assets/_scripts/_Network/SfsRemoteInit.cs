@@ -428,7 +428,7 @@ void OnConfigLoadFailureHandler(BaseEvent evt) {
 
 		Debug.Log ("ReceiveResponseCMD: "+cmd);
 		Debug.Log ("ReceiveResponseSUBCMD: "+subCmd);
-		
+
 		if (sfsConnectionBeforeFacebookFriends) {
 			//			sfsConnectionBeforeFacebookFriends = false;
 			Debug.Log ("ReceiveResponse return");
@@ -1051,76 +1051,94 @@ void OnConfigLoadFailureHandler(BaseEvent evt) {
 		displayFriendList = true;
 
 	}
-	
-	public void DisplayFacebookFriendList() {
-		//displays facebook friends list
-		//gui
-		
-//				Debug.Log ("DisplayFacebookFriendList: "+halflingFacebookFriendList.Count);
 
-		GUI.DrawTexture (new Rect(Screen.width*0.05f, Screen.height * 0.05f, Screen.width * 0.9f, Screen.height * 0.9f), friendListBasePlate);
+    public void DisplayFacebookFriendList()
+    {
+        //displays facebook friends list
 
-		if(GUI.Button(new Rect(Screen.width * 0.8f, Screen.height * 0.13f, Screen.width * 0.085f, Screen.height * 0.09f), "", cancelStyle)) {
-			Debug.Log("Close");
-			displayFriendList = false;
-		}
+        GUI.DrawTexture(new Rect(Screen.width*0.05f, Screen.height*0.05f, Screen.width*0.9f, Screen.height*0.9f),
+            friendListBasePlate);
+
+        if (GUI.Button(new Rect(Screen.width*0.8f, Screen.height*0.13f, Screen.width*0.085f, Screen.height*0.09f), "",
+            cancelStyle))
+        {
+            Debug.Log("Close");
+            displayFriendList = false;
+        }
+
+        scrollPosition = GUI.BeginScrollView(
+                new Rect(Screen.width*0.06f, Screen.height*0.25f, Screen.width*0.84f, Screen.height*0.57f),
+                scrollPosition,
+                new Rect(Screen.width*0.06f, Screen.height*0.25f, Screen.width*0.8f,
+                    (halflingFacebookFriendList.Count*Screen.height*0.14f)));
+
+        int i = 0;
+        foreach (HalflingWarsFriend ff in halflingFacebookFriendList)
+        {
+
+            if (i%2 == 0)
+            {
+                GUI.DrawTexture(
+                    new Rect(Screen.width*0.15f, (Screen.height*0.25f) + (Screen.height*0.14f*i), Screen.width*0.69f,
+                        Screen.height*0.14f), friendItem1);
+            }
+            else
+            {
+                GUI.DrawTexture(
+                    new Rect(Screen.width*0.15f, (Screen.height*0.25f) + (Screen.height*0.14f*i), Screen.width*0.69f,
+                        Screen.height*0.14f), friendItem2);
+            }
+            if (ff.ProfilePicture != null)
+            {
+                GUI.DrawTexture(
+                    new Rect(Screen.width*0.162f, (Screen.height*0.265f) + (Screen.height*0.14f*i), Screen.width*0.083f,
+                        Screen.height*0.11f), ff.ProfilePicture);
+            }
+
+            GUI.Label(
+                new Rect(Screen.width*0.25f, (Screen.height*0.25f) + (Screen.height*0.14f*i), Screen.width*0.3f,
+                    Screen.height*0.08f), ff.FullName, friendNameStyle);
+
+            switch (ff.UserStatus)
+            {
+                //0-invite,1-playing-,2-waiting
+                case 1:
+
+                    if (GUI.Button(
+                            new Rect(Screen.width*0.625f, (Screen.height*0.275f) + (Screen.height*0.14f*i),
+                                Screen.width*0.175f, Screen.height*0.08f), "", playingButtonStyle))
+                    {
+                        Debug.Log("Invite" + ff.Id);
+                    }
+
+                    break;
+                case 2:
+                    if (GUI.Button(
+                            new Rect(Screen.width*0.625f, (Screen.height*0.275f) + (Screen.height*0.14f*i),
+                                Screen.width*0.175f, Screen.height*0.08f), "", waitingButtonStyle))
+                    {
+                        Debug.Log("Invite" + ff.Id);
+                    }
+                    break;
+                default:
+                    if (GUI.Button(
+                            new Rect(Screen.width*0.625f, (Screen.height*0.275f) + (Screen.height*0.14f*i),
+                                Screen.width*0.175f, Screen.height*0.08f), "", inviteButtonStyle))
+                    {
+                        Debug.Log("Invite" + ff.Id);
+                        OnFacebookFriendInviteClick(ff.Id, ff.FullName);
+                    }
+                    break;
+            }
 
 
-//		scrollPosition = GUI.BeginScrollView (new Rect(halfWidth-scrollWidth/2, halfHeight-scrollHeight/2, scrollWidth, scrollHeight), scrollPosition, new Rect(halfWidth-scrollWidth/2, halfHeight-scrollHeight/2, scrollWidth, halflingFacebookFriendList.Count * (scrollHeight/4)));
-		scrollPosition = GUI.BeginScrollView (new Rect(Screen.width * 0.06f, Screen.height * 0.25f, Screen.width * 0.84f, Screen.height * 0.57f), scrollPosition, new Rect(Screen.width*0.06f, Screen.height * 0.25f, Screen.width * 0.8f, (halflingFacebookFriendList.Count * Screen.height * 0.14f)));
+            i++;
+        }
+        GUI.EndScrollView();
 
-		int i = 0;
-		foreach (HalflingWarsFriend ff in halflingFacebookFriendList) {
+    }
 
-			if(i%2 == 0)
-				GUI.DrawTexture (new Rect(Screen.width*0.15f, (Screen.height * 0.25f) + (Screen.height * 0.14f * i), Screen.width * 0.69f, Screen.height * 0.14f), friendItem1);
-			else
-				GUI.DrawTexture (new Rect(Screen.width*0.15f, (Screen.height * 0.25f) + (Screen.height * 0.14f * i), Screen.width * 0.69f, Screen.height * 0.14f), friendItem2);
-
-//			if(ff.ProfilePicture != null)
-//				GUI.DrawTexture(new Rect(halfWidth-(scrollWidth/2f) + 10f, halfHeight - (scrollHeight/2f) + (i * ((scrollHeight/4f)-10f)) , (scrollHeight/4f), (scrollHeight/4f)), ff.ProfilePicture);
-
-			if(ff.ProfilePicture != null)
-				GUI.DrawTexture(new Rect(Screen.width*0.162f, (Screen.height * 0.265f) + (Screen.height * 0.14f * i), Screen.width * 0.083f, Screen.height * 0.11f), ff.ProfilePicture);
-						
-			GUI.Label(new Rect(Screen.width*0.25f, (Screen.height * 0.25f) + (Screen.height * 0.14f * i), Screen.width * 0.3f, Screen.height * 0.08f), ff.FullName, friendNameStyle);
-
-			switch(ff.UserStatus) {	//0-invite,1-playing-,2-waiting
-//			switch(i) {	//0-invite,1-playing-,2-waiting
-				case 1:
-//				if(GUI.Button(new Rect(halfWidth+(scrollWidth/2f) - (scrollHeight/4) - 10f, halfHeight - (scrollHeight/2) + (i * ((scrollHeight/4)-10f)), (scrollHeight/6f), (scrollHeight/8f)), "", playingButtonStyle)) {
-//					Debug.Log("Invite"+ff.Id);
-//				}
-
-//				if(GUI.Button(new Rect(halfWidth+(scrollWidth/2f) - (scrollHeight/4) - 10f, halfHeight - (scrollHeight/2) + (i * ((scrollHeight/4)-10f)), (scrollHeight/6f), (scrollHeight/8f)), "", playingButtonStyle)) {
-					
-				if(GUI.Button(new Rect(Screen.width*0.625f, (Screen.height * 0.275f) + (Screen.height * 0.14f * i), Screen.width * 0.175f, Screen.height * 0.08f), "", playingButtonStyle)) {
-						Debug.Log("Invite"+ff.Id);
-				}
-
-				break;
-			case 2:
-				if(GUI.Button(new Rect(Screen.width*0.625f, (Screen.height * 0.275f) + (Screen.height * 0.14f * i), Screen.width * 0.175f, Screen.height * 0.08f), "", waitingButtonStyle)) {
-					Debug.Log("Invite"+ff.Id);
-				}
-				break;
-			default:
-				if(GUI.Button(new Rect(Screen.width*0.625f, (Screen.height * 0.275f) + (Screen.height * 0.14f * i), Screen.width * 0.175f, Screen.height * 0.08f), "", inviteButtonStyle)) {
-//				if(GUI.Button(new Rect(halfWidth+(scrollWidth/2f) - (scrollHeight/4) - 10f, halfHeight - (scrollHeight/2) + (i * ((scrollHeight/4)-10f)), (scrollHeight/6f), (scrollHeight/8f)), "", inviteButtonStyle)) {
-					Debug.Log("Invite"+ff.Id);
-					OnFacebookFriendInviteClick(ff.Id, ff.FullName);
-				}
-				break;
-			}
-
-
-			i++;
-		}
-		GUI.EndScrollView ();
-
-	}
-
-	private void OnFacebookFriendInviteConfirm() {
+    private void OnFacebookFriendInviteConfirm() {
 		
 		ISFSObject dataToSend = new SFSObject();
 		

@@ -97,7 +97,7 @@ public class hCharMove : MonoBehaviour
 					//curWaypoint.GetComponent<MeshRenderer>().enabled = true;
 					transform.Translate(Vector3.forward * speed * Time.deltaTime);
 					transform.position = new Vector3(transform.position.x, 0.1f, transform.position.z);
-					hAnimation.transform.position = new Vector3(transform.position.x, (0.0306f -(transform.position.z / GameManager.layerDivVal))+0.00001f, transform.position.z);
+					hAnimation.transform.position = new Vector3(transform.position.x, (0.0306f -(transform.position.z / GameManager.layerDivVal))+0.0001f, transform.position.z);
 				}
 				else
 				{

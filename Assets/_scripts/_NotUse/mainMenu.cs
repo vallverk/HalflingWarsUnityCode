@@ -264,40 +264,18 @@ public class mainMenu : MonoBehaviour
 								}
 			
 								if (playMenubool) {
-										if (GUI.Button (new Rect (Screen.width / 2.7161f, Screen.height / 1.6375f, Screen.width / 3.7925f, Screen.height / 7.68f), GUIContent.none, friend)) {	    
-												if (scr_SfsRemoteInit.displayFriendList)
-														return;
-												Debug.Log ("Friends...");
-												scr_btnClick.Play ();
+								    if (GUI.Button(
+								            new Rect(Screen.width/2.7161f, Screen.height/1.6375f, Screen.width/3.7925f, Screen.height/7.68f),
+								            GUIContent.none, friend))
+								    {
+								        if (scr_SfsRemoteInit.displayFriendList)
+								            return;
+								        Debug.Log("Friends...");
+								        scr_btnClick.Play();
+								        scr_SfsRemoteInit.InviteFriendsManager();
+								    }
 
-						/*
-												mainMenu.disablePlaygame = true;
-
-
-						
-												if (!IsClickedfriends && !optionMenubool && !mainMenu.isalreadyloggedIn) {
-														IsClickedfriends = true;
-														Debug.Log ("play menu bool...");
-														GetFacebookUserId ();
-												} else {
-														var parameters = new Dictionary<string,string> ()
-								{
-									{ "message", "Check out this great app!" }
-								};
-														FacebookBinding.showDialog ("apprequests", parameters);
-								
-														mainMenu.sendRequest = true;
-														IsClickedfriends = false;
-														mainMenu.disablePlaygame = false;
-												}
-					     */
-
-
-						//FacebookFriendListStart
-													scr_SfsRemoteInit.InviteFriendsManager();
-										}
-			
-										if (GUI.Button (new Rect (Screen.width / 2.7527f, Screen.height / 1.3151f, Screen.width / 7.877f, Screen.height / 5.9077f), GUIContent.none, facebook)) {
+								    if (GUI.Button (new Rect (Screen.width / 2.7527f, Screen.height / 1.3151f, Screen.width / 7.877f, Screen.height / 5.9077f), GUIContent.none, facebook)) {
 												if (scr_SfsRemoteInit.displayFriendList)
 														return;
 

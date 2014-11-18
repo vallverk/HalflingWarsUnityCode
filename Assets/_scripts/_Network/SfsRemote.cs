@@ -1940,7 +1940,12 @@ public class SfsRemote : MonoBehaviour {
 
     private IEnumerator AddBuildingTimer(ISFSObject obj)
     {
-        while (!finishedLoadingWorld) yield return null;
+        while (!finishedLoadingWorld)
+        {
+            
+            Debug.Log("Waiting2");
+            yield return null;
+        }
 
         int obj1 = 0;
         int obj2 = 0;
@@ -2011,7 +2016,11 @@ public class SfsRemote : MonoBehaviour {
 
     private IEnumerator AddCaveTime(ISFSObject obj)
     {
-        while (!finishedLoadingWorld) yield return null;
+        while (!finishedLoadingWorld)
+        {
+            Debug.Log("Waiting");
+            yield return null;
+        }
 
         Debug.Log("Recieved Cave Time :" + obj.GetDump());
         bool isThreshold = obj.GetBool("SecondThreshold");
