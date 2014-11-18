@@ -85,7 +85,7 @@ public class dCharMove : MonoBehaviour
 				if (Vector3.Distance(transform.position, curWaypoint.transform.position) > 0.05f)
 				{
 					transform.Translate(Vector3.forward * speed * Time.deltaTime);
-					dAnimation.transform.position = new Vector3(transform.position.x, (0.0306f -(transform.position.z / GameManager.layerDivVal))+0.00001f, transform.position.z);
+					dAnimation.transform.position = new Vector3(transform.position.x, (0.0306f -(transform.position.z / GameManager.layerDivVal))+0.0001f, transform.position.z);
 				}
 				else
 				{
