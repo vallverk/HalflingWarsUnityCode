@@ -3789,12 +3789,18 @@ public class guiControl : MonoBehaviour
 		    scr_remote.SendRequestForGetworld();
 		}
 	}
-	
+
+    public bool fakeCall = false;
 	// object delete
 	public void deleteButton()
 	{
 		Debug.Log ("cur del obj : " + GameManager.curDelObj);
-		// Level 1 //
+        if (fakeCall && GameManager.curDelObj ==null)
+        {
+            fakeCall = false;
+	        return;
+	    }
+	    // Level 1 //
 		if (GameManager.gameLevel == 1)
 		{
 			if (GameManager.taskCount == 1 || GameManager.taskCount == 3 || GameManager.taskCount == 8)
@@ -3932,6 +3938,7 @@ public class guiControl : MonoBehaviour
 			halffirstinst = false;
 			darkfirstinst = false;
 		}
+	    fakeCall = false;
 	}
 	
 	// END OBJECT MENU //
