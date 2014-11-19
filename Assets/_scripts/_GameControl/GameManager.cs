@@ -794,11 +794,13 @@ public	string[] quest_12 = 		{"Greetings young Halfling, what are you doing here
 			else if (gameLevel > 0)
 			{
 				gameLevel++;
-
 				if (gameLevel >= 1)
 					scr_remote.SendCurrentLevelrequest(gameLevel);
-				
-				curLevel++;
+                if (curLevel > 3)
+			    {
+			        guiControl.I.deleteButton();
+			    }
+			    curLevel++;
 				curXP = 0;
 				xp = 0;
 				

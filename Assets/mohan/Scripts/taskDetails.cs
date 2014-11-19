@@ -508,19 +508,6 @@ public class taskDetails : MonoBehaviour
 	public int totalMissionCount;
 	public void mainpanel()
 	{
-//		Debug.Log("Clicked on main panel");
-//		half();
-//		dark();
-//		questLog();
-		//int totalMissionCount;
-		//totalMissionCount = inv.halfLengthCount + inv1.darkLengthCount;
-
-//		Debug.Log("totalMissionCount : "+totalMissionCount);
-		
-		//RedQuestCount.Text = inv2.QuestLengthCount.ToString();
-//		RedQuestCount.Text = storyCount.ToString();				//Remove and add in sfs remote when server sends response
-//		blueQuestCount.Text = totalMissionCount.ToString();		// Remove and add in sfs remote when server sends response 
-		
 		if (GameManager.gameLevel >= 3)
 		{
 			//if(inv2.QuestLengthCount <= 0)

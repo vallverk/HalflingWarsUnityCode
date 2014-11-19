@@ -315,9 +315,10 @@ public class guiControl : MonoBehaviour
 	}
 	
 	private string oldTextCreature = " ";
-	
+    public static guiControl I;
 	void Start()
 	{
+	    I = this;
 		Debug.Log ("start 006...");
 		bmgr = battle.GetComponent<BattleGroundManager>();
 		
@@ -3790,7 +3791,7 @@ public class guiControl : MonoBehaviour
 	}
 	
 	// object delete
-	void deleteButton()
+	public void deleteButton()
 	{
 		Debug.Log ("cur del obj : " + GameManager.curDelObj);
 		// Level 1 //
