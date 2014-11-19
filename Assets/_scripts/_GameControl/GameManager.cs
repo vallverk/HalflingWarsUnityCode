@@ -96,7 +96,6 @@ public class GameManager : MonoBehaviour
         get { return _placeObjectBool; }
         set
         {
-            Debug.Log("NEW " + value);
             _placeObjectBool = value;
         }
     }

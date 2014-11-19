@@ -12,7 +12,6 @@ public class ZeroPositioner : MonoBehaviour {
 	// Update is called once per frame
 	void LateUpdate ()
 	{
-	    Debug.Log("FCukl asdfasdf");
 	    var pos = transform.position;
 	    pos.y = 0;
 	    transform.position = pos;
