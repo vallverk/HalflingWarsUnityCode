@@ -55,7 +55,8 @@ public class OrcAttackTimer : MonoBehaviour
 					//OrcSystem.isCaveCreature = true;
 					Destroy(this.gameObject.GetComponent<OrcAttackTimer>());
 					Destroy(this.gameObject.transform.FindChild("AttackTimer(Clone)").gameObject);
-					cave.transform.FindChild("caveEffect").renderer.enabled = false;
+                    if(cave.transform.FindChild("caveEffect") != null)
+                        cave.transform.FindChild("caveEffect").renderer.enabled = false;
 					cave.transform.FindChild("CoolDown").gameObject.SetActiveRecursively(false);
 					
 					Debug.Log("Time over");

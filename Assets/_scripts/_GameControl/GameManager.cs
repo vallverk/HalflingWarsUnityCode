@@ -89,9 +89,18 @@ public class GameManager : MonoBehaviour
 	private float curXP = 0f;
 	public static int curLevel = 0;
 	private float totalXP = 0;
-	
-	public static bool placeObjectBool = false;
-	public static bool createCreatureBool = false;
+
+
+    private static bool _placeObjectBool;
+    public static bool placeObjectBool {
+        get { return _placeObjectBool; }
+        set
+        {
+            Debug.Log("NEW " + value);
+            _placeObjectBool = value;
+        }
+    }
+    public static bool createCreatureBool = false;
 	public static bool upgradePlotBool = false;
 	public static bool upgradePlotRabbitBool = false;
 	public static bool upgradeTrainingGroundBool = false;
