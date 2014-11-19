@@ -155,8 +155,6 @@ public class GameManager : MonoBehaviour
 		}
 		set
 		{
-			Debug.Log("I am here you piece of " + _bridgeBuild);
-			
 			_bridgeBuild = value;
 		}
 

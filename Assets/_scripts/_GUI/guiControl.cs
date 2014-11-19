@@ -2621,23 +2621,26 @@ public class guiControl : MonoBehaviour
 		
 		if (GameManager.gameLevel >= 4)
 		{
-			if(GameManager.coins >= scr_userWorld.ReturnGoldCostTotal(scr_gameObjsvr.objBridge.objTypeId))
-			{
-				//GameManager.panelAccessBool = false;
-				GameObject bridgeArrowObj = GameObject.Find("bridgeArrow") as GameObject;
-				if (bridgeArrowObj != null)
-					Destroy(bridgeArrowObj);
+		    if (GameManager.coins >= scr_userWorld.ReturnGoldCostTotal(scr_gameObjsvr.objBridge.objTypeId))
+		    {
+		        //GameManager.panelAccessBool = false;
+		        GameObject bridgeArrowObj = GameObject.Find("bridgeArrow") as GameObject;
+		        if (bridgeArrowObj != null)
+		            Destroy(bridgeArrowObj);
 
-				objectSelection.objectSelectionBool = false;
-				popUpInfoScript.taskBuildBridge(1);
-				GameManager.placeObjectBool = false;
-			}
-			else
-			{
-				popUpInfoScript.wall.active = true;
-				popUpInfoScript.defaultPopUpBool = true;
-				popUpInfoScript.defaultPopUp(18, 0);
-			}
+		        objectSelection.objectSelectionBool = false;
+		        popUpInfoScript.taskBuildBridge(1);
+		        GameManager.placeObjectBool = false;
+
+		        guiControl.I.fakeCall = true;
+		        guiControl.I.deleteButton();
+		    }
+		    else
+		    {
+		        popUpInfoScript.wall.active = true;
+		        popUpInfoScript.defaultPopUpBool = true;
+		        popUpInfoScript.defaultPopUp(18, 0);
+		    }
 		}
 	}
 	
@@ -3795,8 +3798,10 @@ public class guiControl : MonoBehaviour
 	public void deleteButton()
 	{
 		Debug.Log ("cur del obj : " + GameManager.curDelObj);
+        Debug.Log("delete");
         if (fakeCall && GameManager.curDelObj ==null)
         {
+            Debug.Log("Nope");
             fakeCall = false;
 	        return;
 	    }
