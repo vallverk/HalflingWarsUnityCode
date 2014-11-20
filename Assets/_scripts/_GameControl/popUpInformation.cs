@@ -451,12 +451,27 @@ public class popUpInformation: MonoBehaviour
 		if (GameManager.popUpCount == popUpCnt)
 		{
 			wall.active = false;
-			if (popUpType[pType] == 1)
-				guiControlInfo.popUpType1.SetActiveRecursively(false);
-			else if (popUpType[pType] == 2)
-				guiControlInfo.popUpType2.SetActiveRecursively(false);
-			else if (popUpType[pType] == 3)
-				guiControlInfo.popUpType3.SetActiveRecursively(false);
+            if (popUpType[pType] == 1)
+            {
+                Debug.Log("Destr 1");
+                guiControlInfo.popUpType1.SetActiveRecursively(false);
+            }
+            else if (popUpType[pType] == 2)
+            {
+                Debug.Log("Destr 2");
+                guiControlInfo.popUpType2.SetActiveRecursively(false);
+            }
+            else if (popUpType[pType] == 3)
+            {
+                Debug.Log("Destr 3");
+                guiControlInfo.popUpType3.SetActiveRecursively(false);
+            }
+            else
+                Debug.Log("NOpe");
+		}
+		else
+		{
+		    Debug.Log("Nope 2");
 		}
 	}
 	
@@ -466,760 +481,14 @@ public class popUpInformation: MonoBehaviour
 	{
 		nextPopUpBool = true;
 		wall.active = false;
-		
+
+        Debug.Log(GameManager.popUpCount);
+        Debug.Log(curPopUpCnt);
+        Debug.Log(nextPopUpBool);
+
 		if (GameManager.popUpCount == curPopUpCnt && nextPopUpBool)
 		{
-			GameManager.popUpCount++;
-			updatePopUpCount();
-			
-			nextPopUpBool = false;
-			
-			if (popUpType[curPopUpType] == 1)
-			{
-				guiControlInfo.popUpType1.SetActiveRecursively(false);
-			}
-			else if (popUpType[curPopUpType] == 2)
-			{
-				guiControlInfo.popUpType2.SetActiveRecursively(false);
-			}
-			else if (popUpType[curPopUpType] == 3)
-			{
-				guiControlInfo.popUpType3.SetActiveRecursively(false);
-			}
-			else if (popUpType[curPopUpType] == 4)
-			{
-				guiControlInfo.popUpType4.SetActiveRecursively(false);
-			}
-			
-			Debug.Log("GameManager.popUpCount : "+GameManager.popUpCount);
-
-			if (GameManager.popUpCount == 1 && GameManager.taskCount == 0)
-			{
-				Debug.Log("task count is 0..............................");
-				GameManager.popUpCount = 1;
-				curPopUpCnt = 1;
-				curPopUpType = 0;
-				generatePopUp(curPopUpCnt, curPopUpType);
-			}
-
-			if (GameManager.popUpCount == 2)
-			{
-				GameManager.taskCount = 1;
-			}
-			// task 1
-			if (GameManager.taskCount == 1)
-			{
-				panelControl.panelMoveOut = true;
-				panelControl.panelMoveIn = false;
-			
-				// market button effect
-				//buttonPulse marketBP = GameObject.Find("button_Market").GetComponent("buttonPulse") as buttonPulse;
-				buttonPulse marketBP = GameObject.Find("button_Market").gameObject.AddComponent("buttonPulse") as buttonPulse;
-				marketBP.minSpeed = 3;
-				marketBP.maxSpeed = 8;
-				marketBP.minVal = 0.05f;
-				marketBP.maxVal = 0.2f;
-				marketBP.scaleAnim = true;
-				
-				// arrow on market button
-				GameObject ms = GameObject.Find("marketSpwan");
-				GameObject temp = Instantiate(guiControlInfo.arrow, ms.transform.position, ms.transform.rotation) as GameObject;
-				guiControlInfo.delArrow = temp;
-			}
-			
-			// pop up 3
-			if (GameManager.popUpCount == 3)
-			{
-				Debug.Log("---> GameManager.popUpCount == 3 <---");
-				curPopUpCnt++;
-				updateCurPopUpCount();
-				
-				curPopUpType = 0;
-				generatePopUp(curPopUpCnt, curPopUpType);
-				guiControl.executeTaskBool = true;
-			
-			}
-			
-			if (curPopUpCnt == 3)
-			{
-				GameObject.Find("ObjectEditPanel").gameObject.transform.FindChild("objUpgrade").gameObject.GetComponent<UIButton>().SetControlState(UIButton.CONTROL_STATE.DISABLED);
-				Debug.Log("---> curPopUpCnt == 3 <---");
-				objPanelControl objEditPanelInfo = GameObject.Find("ObjectEditPanel").GetComponent("objPanelControl") as objPanelControl;
-				
-				objEditPanelInfo.panelMoveIn = false;
-				objEditPanelInfo.panelMoveOut = true;
-		
-				GameObject objInfo_spwan = GameObject.Find("objInfo_spwan") as GameObject;
-				GameObject temp = Instantiate(guiControlInfo.arrow, objInfo_spwan.transform.position, Quaternion.Euler(90, 90,0)) as GameObject;
-				guiControlInfo.delArrow = temp;
-			}
-			
-			// task 2 use rabbit option for hound
-			if (curPopUpCnt == 4)
-			{
-				Debug.Log("---> curPopUpCnt == 4 <---");
-				guiControl.useRabbitBool = false;
-				
-				GameObject go = GameObject.Find("HC_C_Hound_GO(Clone)") as GameObject;
-				GameObject tg = GameObject.Find("HC_TG_TrainingGround_GO(Clone)") as GameObject;
-				//tg.transform.FindChild("Spark").gameObject.SetActiveRecursively(false);
-				tg.transform.FindChild("Spark1").gameObject.GetComponent<MeshRenderer>().enabled = false;
-				tg.transform.FindChild("Spark2").gameObject.GetComponent<MeshRenderer>().enabled = false;
-				Destroy(tg.GetComponent<SparkAnimation>());
-				
-				(go.GetComponent("progressBar") as progressBar).enabled = true;
-				Transform rabbit = go.transform.FindChild("RabbtiButton") as Transform;
-				if (rabbit != null)
-					Destroy(rabbit.gameObject);
-				
-				// find creature "Hound" progress bar and destroy
-				Destroy(go.GetComponent("progressBar"));
-				Destroy(go.transform.FindChild("ProgressBar").gameObject);
-
-				//indra get xp value from server
-//				Debug.Log("hound XP : " + scr_loadUserWorld.ReturnXPcostTotal(scr_GameObjSvr.objHound.objTypeId));
-//				GameObject xpValObj = Instantiate(Resources.Load("xpValue"), grid.curObj.transform.position, Quaternion.Euler(90, 0, 0)) as GameObject;
-
-				go.GetComponent<MeshRenderer>().enabled = true;
-				go.GetComponent<HoundAnimation>().moveAB_Bool = true;
-				
-				// change "Hound" collider tag name
-				go.transform.FindChild("Isometric_Collider").gameObject.tag = "editableObj";
-				
-				GameManager.taskCount = 3;
-				updateTaskCount();
-				
-				taskidSvr = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.objHound.objTypeId);
-		    	scr_sfsRemoteCnt.SendRequestForAccelrateTask(taskidSvr,GameManager.sparks);
-				
-				if(scr_audioController.audio_sparkBirth.isPlaying)
-				{
-					scr_audioController.audio_sparkBirth.Stop();
-				}	
-				guiControlInfo.sparkScoreInfo.Text = GameManager.sparks.ToString();
-				
-				Destroy(go.transform.FindChild("greenPatch").gameObject);
-				Destroy(go.transform.FindChild("redPatch").gameObject);
-			}
-			
-			// pop up 5
-			if (GameManager.popUpCount == 5)
-			{	
-				Debug.Log("---> GameManager.popUpCount == 5 <---");
-				curPopUpCnt = 5;
-				updateCurPopUpCount();
-				
-				curPopUpType = 0;
-				generatePopUp(curPopUpCnt, curPopUpType);
-			}
-			
-			// pop up 6
-			if (GameManager.popUpCount == 6)
-			{
-				Debug.Log("---> GameManager.popUpCount == 6 <---");
-				curPopUpCnt = 6;
-				updateCurPopUpCount();
-				
-				curPopUpType = 0;
-				generatePopUp(curPopUpCnt, curPopUpType);
-			}
-			
-			// task 3
-			if (GameManager.taskCount == 3 && GameManager.popUpCount == 7)
-			{
-				Debug.Log("---> GameManager.taskCount == 3 && GameManager.popupCount == 7 <---");
-				// main menu control
-				panelControl.panelMoveIn = false;
-				panelControl.panelMoveOut = true;
-				
-				// market button effect
-				buttonPulse marketBP = GameObject.Find("button_Market").AddComponent("buttonPulse") as buttonPulse;
-				marketBP.gameObject.transform.localScale = new Vector3(0.55f, 0.55f, 0.55f);
-				marketBP.minSpeed = 3;
-				marketBP.maxSpeed = 8;
-				marketBP.minVal = 0.05f;
-				marketBP.maxVal = 0.2f;
-				marketBP.scaleAnim = true;
-				
-				// arrow on market button
-				GameObject mSpwan = GameObject.Find("marketSpwan");
-				GameObject temp = Instantiate(guiControlInfo.arrow, mSpwan.transform.position, mSpwan.transform.rotation) as GameObject;
-				guiControlInfo.delArrow = temp;
-			}
-			
-//			// pop up 7
-//			if (GameManager.popUpCount == 7)
-//			{
-//				curPopUpCnt = 7;
-//				updateCurPopUpCount();
-//				
-//				curPopUpType = 0;
-//				generatePopUp(curPopUpCnt, curPopUpType);
-//			}
-			
-			if (GameManager.popUpCount == 8)
-			{
-				Debug.Log("farm turnip...");
-				task6(1);
-				//task4(1); *change
-			}
-			
-			// turnip glow complete
-			if (GameManager.popUpCount == 9)
-			{
-				Debug.Log("farm turnip rabbit button...");
-				task6 (6);
-				curPopUpCnt = 9;
-				updateCurPopUpCount();
-				
-				curPopUpType = 0;
-				generatePopUp(curPopUpCnt, curPopUpType);
-				GameManager.taskCount = 5;
-				updateTaskCount();
-			}
-				//task4(4);
-			
-			if (GameManager.popUpCount == 10)
-			{
-				Debug.Log("---> GameManager.popUpCount == 10");
-				task7(1);
-				/*curPopUpCnt = 10;
-				updateCurPopUpCount();
-				
-				curPopUpType = 0;
-				generatePopUp(curPopUpCnt, curPopUpType);
-				GameManager.taskCount = 5;
-				updateTaskCount();*/
-			}
-			
-			// pop up count 13 rename creature tutorial
-			if (GameManager.popUpCount == 13)
-			{
-				Debug.Log("--> GameManager.popUpCount == 13");
-				renameCreatureTutorial(1);
-			}
-			
-			// pop up 19 inn builing complete
-			if (GameManager.popUpCount == 18)
-			{
-				Debug.Log("--> GameManager.popUpCount == 18");
-				//taskDetailsInfo.totalMissionCount = 3;			//Added
-				obeliskTutorial(1);
-				//task9(4);
-			}
-			
-			// pop up 19
-			if (GameManager.popUpCount == 19)
-			{
-				Debug.Log("---> GameManager.popCount == 19 <---");
-				task4(1);
-				//task10(1);
-			}
-			
-			// pop up 20 goblin camp rabbit button
-			if (GameManager.popUpCount == 20)
-			{
-				Debug.Log("---> GameManager.popCount == 20 <---");
-				task4(4);
-			}
-			
-			// pop up 21
-			if (GameManager.popUpCount == 21)
-			{
-				Debug.Log("---> GameManager.popCount == 21 <---");
-				//taskDetailsInfo.totalMissionCount = 3;			//Added
-				GameManager.taskCount = 15;
-				updateTaskCount();
-				
-				// log tutorial
-				panelControl.panelMoveOut = true;
-				panelControl.panelMoveIn = false;
-
-				// destroy market button effect
-				buttonPulse marketBP1 = GameObject.Find("button_Market").GetComponent("buttonPulse") as buttonPulse;
-				if (marketBP1 != null)
-					Destroy(marketBP1);
-
-				// market button effect
-				buttonPulse market_BP = GameObject.Find("button_Task").AddComponent("buttonPulse") as buttonPulse;
-				market_BP.gameObject.transform.localScale = new Vector3(0.55f, 0.55f, 0.55f);
-				market_BP.minSpeed = 3;
-				market_BP.maxSpeed = 8;
-				market_BP.minVal = 0.05f;
-				market_BP.maxVal = 0.2f;
-				market_BP.scaleAnim = true;
-
-				// destroy market button effect
-				buttonPulse marketBP2 = GameObject.Find("button_Market").GetComponent("buttonPulse") as buttonPulse;
-				if (marketBP2 != null)
-					Destroy(marketBP2);
-
-				// destroy market button effect
-				buttonPulse marketBP3 = GameObject.Find("button_Market").GetComponent("buttonPulse") as buttonPulse;
-				if (marketBP3 != null)
-					Destroy(marketBP3);
-
-
-				GameObject temp = Instantiate(guiControlInfo.arrow, new Vector3(-49, 10, 84), Quaternion.Euler(90, 180,0)) as GameObject;
-				guiControlInfo.delArrow = temp;
-				
-				taskDetailsInfo.RedQuestCount.Text = "1";
-				taskDetailsInfo.blueQuestCount.Text = "3";
-			}
-			
-			// pop up 23
-			if (GameManager.popUpCount == 22)
-			{
-				Debug.Log("---> GameManager.popCount == 22 <---");
-				GameManager.xp = GameManager.xp + 3;
-			
-				GameManager.taskCount = 16;
-				updateTaskCount();
-				
-//				GameManager.popUpCount = 23;
-//				curPopUpCnt = 23;
-//				curPopUpType = 0;
-//				generatePopUp(curPopUpCnt, curPopUpType);
-			}
-			
-			// pop up 26 quest 1 dialog C
-			if (GameManager.popUpCount == 27)
-			{
-				//gameManagerInfo.LookIntoQuest();
-			}
-			
-			// pop up 27 quest 1 dialog D
-			if (GameManager.popUpCount == 24)
-			{
-				if (GameManager.questActivateBool)
-				{
-					GameManager.questActivateBool = false;
-					GameManager.questRunningBool = true;
-					
-					wall.active = true;
-					guiControlInfo.popUpType4.SetActiveRecursively(true);
-					guiControlInfo.popUpType_Dig2_spText.Text = "";
-					
-					guiControlInfo.popUpType_Dig1_spText.Text = gameManagerInfo.level3Dialog[0];
-					gameManagerInfo.message = gameManagerInfo.level3Dialog[0];
-					gameManagerInfo.WriteText1();
-					gameManagerInfo.dialogCnt = 1;
-					
-					if(!gameManagerInfo.enableQuest)
-					{
-						gameManagerInfo.PlayQuestSounds();
-					}
-				}
-			}
-			
-			// pop up 28 build second training ground
-			if (GameManager.popUpCount == 28)
-			{
-				curPopUpCnt = 28;
-				updateCurPopUpCount();
-				
-				GameObject go = GameObject.Find("HC_TG_Plant_GO(Clone)") as GameObject;
-				if (go == null)
-				{
-					curPopUpType = 0;
-					generatePopUp(curPopUpCnt, curPopUpType);
-				}
-			}
-			
-			// pop up 30 arrow pulsing on bridge
-			if (GameManager.popUpCount == 30)
-			{
-				GameManager.popUpCount = 69;
-				curPopUpCnt = 69;
-				curPopUpType = 0;
-				generatePopUp(curPopUpCnt,curPopUpType);
-			}
-			
-//			// pop up 31 play quest 2
-//			if (GameManager.popUpCount == 31)
-//			{
-//				Debug.Log("-------------------------------------------------");
-//				
-//				// open market and builing section
-//				wall.active = true;
-//				guiControlInfo.buildingUI.SetActiveRecursively(true);
-//				Destroy(guiControlInfo.delArrow);
-//				curPopUpCnt = 31;
-//				updateCurPopUpCount();
-//			}
-//			
-//			if (GameManager.popUpCount == 32)
-//			{
-//				Destroy(guiControlInfo.delArrow);
-//				curPopUpCnt = 32;
-//				updateCurPopUpCount();
-//				
-//				curPopUpType = 2;
-//				generatePopUp(curPopUpCnt, curPopUpType);
-//			}
-			
-			// pop up 31 play quest 2
-			if (GameManager.popUpCount == 31)
-			{
-				Debug.Log("-------------------- 31 -----------------------------");
-				
-				// open market and builing section
-				//wall.active = true;
-				//guiControlInfo.buildingUI.SetActiveRecursively(true);
-				Destroy(guiControlInfo.delArrow);
-				curPopUpCnt = 31;
-				curPopUpType = 0;
-				updateCurPopUpCount();
-				generatePopUp(curPopUpCnt, curPopUpType);
-				taskArrowOnBrokenBridge();
-			}
-			
-			if (GameManager.popUpCount == 32)
-			{
-				Debug.Log(" -------- 32 ------- ");
-				wall.active = true;
-				guiControlInfo.buildingUI.SetActiveRecursively(true);
-				Destroy(guiControlInfo.delArrow);
-				curPopUpCnt = 32;
-				updateCurPopUpCount();
-				
-//				curPopUpType = 2;
-//				generatePopUp(curPopUpCnt, curPopUpType);
-				GameObject buildingScroll = GameObject.Find("buildingScroll") as GameObject;
-				buildingScroll.transform.localPosition = new Vector3(7.5f, buildingScroll.transform.localPosition.y, buildingScroll.transform.localPosition.z);
-
-				if (GameManager.unlockDarklingBool == false)
-				{
-					guiControlInfo.buildingUI.transform.FindChild("buildingScroll").gameObject.transform.FindChild("03_Bridge").gameObject.transform.FindChild("block").gameObject.SetActive(false);
-				}
-			}
-			
-			if (GameManager.popUpCount == 33)// && GameManager.readyToUnlockDarklingBool)
-			{
-				curPopUpCnt = 33;
-				updateCurPopUpCount();
-				
-				curPopUpType = 0;
-				generatePopUp(curPopUpCnt, curPopUpType);
-				taskUnlockDarklingSide(1);
-			}
-			
-			if (GameManager.popUpCount == 34)
-			{
-//				updateCurPopUpCount();
-//				
-//				wall.active = true;
-//				guiControlInfo.popUpType5.SetActiveRecursively(true);
-//				gameManagerInfo.scr_QuestTexControl.questSingleMat.mainTexture = gameManagerInfo.scr_QuestTexControl.quest02a_tex;
-//				guiControlInfo.popUpType_Dig5_spText.Text = gameManagerInfo.quest_2B[0];
-//				gameManagerInfo.message = gameManagerInfo.quest_2B[0];
-//				gameManagerInfo.WriteText3();
-//				gameManagerInfo.dialogCnt = 1;
-//				gameManagerInfo.questA = true;
-//				
-//				if(!gameManagerInfo.enableQuest)
-//				{
-//					gameManagerInfo.PlayQuestSounds();
-//				}
-			}
-			
-			
-//			if (GameManager.popUpCount == 36)
-//			{
-//				if (!GameManager.questRunningBool)
-//					taskArrowOnBrokenBridge();
-//			}
-			
-			
-			if (GameManager.popUpCount == 37)
-			{
-				
-			}
-			
-			// Quest 3
-			if (GameManager.popUpCount == 38)
-			{
-				if (GameManager.questActivateBool && GameManager.quest == 2)
-				{
-					GameObject qCeeature = GameObject.Find("DL_C_Leech_GO(Clone)") as GameObject;
-					if(qCeeature != null)
-					{
-						GameObject.Find("DL_C_Leech_GO(Clone)").gameObject.GetComponent<MeshRenderer>().enabled = false;
-						GameManager.questActivateBool = false;
-						scr_sfsRemoteCnt.SendPlayQuestCount((int)GameObjectsSvr.QuestNo.Quest3); //Quest Activation 3
-						TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
-					}
-					else
-					{
-						GameManager.questRunningBool = false;
-						GameManager.questActivateBool = false;
-						GameManager.popUpCount = 70;
-						curPopUpCnt = 70;
-						curPopUpType = 0;
-						generatePopUp(curPopUpCnt,curPopUpType);
-					}
-				}
-			}
-			
-			// quest 4 story
-			if (GameManager.popUpCount == 40)
-			{
-				if (GameManager.questActivateBool && GameManager.quest == 3)
-				{
-					scr_sfsRemoteCnt.SendPlayQuestCount((int)GameObjectsSvr.QuestNo.Quest4); //Quest Activation 4
-					TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
-					
-					GameManager.questActivateBool = false;
-					GameManager.questRunningBool = true;
-					wall.active = true;
-					guiControlInfo.popUpType4.SetActiveRecursively(true);
-					guiControlInfo.popUpType_Dig1_spText.Text = "";
-					guiControlInfo.popUpType_Dig2_spText.Text = "";
-				}
-			}
-			// quest 4
-			if (GameManager.popUpCount == 41)
-			{
-				if (GameManager.questActivateBool && GameManager.quest == 3)
-				{
-					GameObject.Find("DL_C_Leech_GO(Clone)").gameObject.GetComponent<MeshRenderer>().enabled = false;
-					gameManagerInfo.dChar.SetActiveRecursively(false);
-					GameManager.questActivateBool = false;
-					scr_sfsRemoteCnt.SendPlayQuestCount((int)GameObjectsSvr.QuestNo.Quest4);
-					TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
-				}
-			}
-			
-			// quest 5
-			if (GameManager.popUpCount == 43)
-			{
-				if (GameManager.questActivateBool && GameManager.quest == 4)
-				{
-					if(GameManager.sparks >= 5)
-					{
-					GameManager.questActivateBool = false;
-						scr_sfsRemoteCnt.SendPlayQuestCount((int)GameObjectsSvr.QuestNo.Quest5);
-						TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
-				}
-					else
-					{
-						GameManager.questRunningBool = false;
-						GameManager.questActivateBool = false;
-						GameManager.popUpCount = 75;
-						curPopUpCnt = 75;
-						curPopUpType = 0;
-						generatePopUp(curPopUpCnt,curPopUpType);
-					}
-				}
-			}
-			
-			if(GameManager.popUpCount == 44)
-			{
-				AssignQuestNo((int)GameObjectsSvr.QuestNo.Quest5);
-			}
-			
-			// quest 6
-			if (GameManager.popUpCount == 49)
-			{
-				if (GameManager.questActivateBool && GameManager.quest == 5)
-				{
-					if(scr_loadUserWorld.ReturnHerbandPlantsCount(scr_GameObjSvr.objDarklingPumpkin.objTypeId) > 0)
-					{
-					GameManager.questActivateBool = false;
-						scr_sfsRemoteCnt.SendPlayQuestCount((int)GameObjectsSvr.QuestNo.Quest6);
-						TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
-					}
-					else
-					{
-						GameManager.questRunningBool = false;
-						GameManager.questActivateBool = false;
-						GameManager.popUpCount = 71;
-						curPopUpCnt = 71;
-						curPopUpType = 0;
-						generatePopUp(curPopUpCnt,curPopUpType);
-					}
-				}
-			}
-			if(GameManager.popUpCount == 50)
-			{
-				AssignQuestNo((int)GameObjectsSvr.QuestNo.Quest6);
-			}
-			
-			// quest 7
-			if (GameManager.popUpCount == 52)
-			{
-				if (GameManager.questActivateBool && GameManager.quest == 6)
-				{
-					GameObject halfTarven = GameObject.Find("HC_B_Tavern_GO(Clone)") as GameObject;
-					if(halfTarven != null)
-					{
-					GameManager.questActivateBool = false;
-						scr_sfsRemoteCnt.SendPlayQuestCount((int)GameObjectsSvr.QuestNo.Quest7);
-						TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
-				}
-					else
-					{
-						GameManager.questRunningBool = false;
-						GameManager.questActivateBool = false;
-						GameManager.popUpCount = 72;
-						curPopUpCnt = 72;
-						curPopUpType = 0;
-						generatePopUp(curPopUpCnt,curPopUpType);
-					}
-				}
-			}
-			if(GameManager.popUpCount == 53)
-			{
-				AssignQuestNo((int)GameObjectsSvr.QuestNo.Quest7);
-			}
-			// quest 8
-			if (GameManager.popUpCount == 55)
-			{
-				if (GameManager.questActivateBool && GameManager.quest == 7)
-				{
-					GameObject darkApoth = GameObject.Find("DL_B_Apothecary_GO(Clone)") as GameObject;
-					if(darkApoth != null && scr_loadUserWorld.ReturnHerbandPlantsCount(scr_GameObjSvr.objDarklingAvenHerb.objTypeId) >= 10)
-					{
-					GameManager.questActivateBool = false;
-						scr_sfsRemoteCnt.SendPlayQuestCount((int)GameObjectsSvr.QuestNo.Quest8);
-						TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
-				}
-					else
-					{
-						GameManager.questRunningBool = false;
-						GameManager.questActivateBool = false;
-						GameManager.popUpCount = 73;
-						curPopUpCnt = 73;
-						curPopUpType = 0;
-						generatePopUp(curPopUpCnt,curPopUpType);
-					}
-				}
-			}
-			if(GameManager.popUpCount == 56)
-			{
-				AssignQuestNo((int)GameObjectsSvr.QuestNo.Quest8);
-			}
-			
-			// quest 9
-			if (GameManager.popUpCount == 58)
-			{
-				if (GameManager.questActivateBool && GameManager.quest == 8)
-				{
-					GameManager.questActivateBool = false;
-				scr_sfsRemoteCnt.SendPlayQuestCount((int)GameObjectsSvr.QuestNo.Quest9);
-				TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
-			}
-			}
-			if(GameManager.popUpCount == 59)
-			{
-				AssignQuestNo((int)GameObjectsSvr.QuestNo.Quest9);
-			}
-			
-			// quest 10
-			if (GameManager.popUpCount == 61)
-			{
-				if (GameManager.questActivateBool && GameManager.quest == 9)
-				{
-					GameObject moonshine = GameObject.Find("DL_B_MoonShrine_GO(Clone)") as GameObject;
-					GameObject sunshine = GameObject.Find("HC_B_SunShrine_GO(Clone)") as GameObject;
-					if(moonshine != null && sunshine != null)
-					{
-					GameManager.questActivateBool = false;
-						scr_sfsRemoteCnt.SendPlayQuestCount((int)GameObjectsSvr.QuestNo.Quest10);
-						TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
-				}
-					else
-					{
-						GameManager.questRunningBool = false;
-						GameManager.questActivateBool = false;
-						GameManager.popUpCount = 74;
-						curPopUpCnt = 74;
-						curPopUpType = 0;
-						generatePopUp(curPopUpCnt,curPopUpType);
-					}
-				}
-			}
-			if(GameManager.popUpCount == 62)
-			{
-				AssignQuestNo((int)GameObjectsSvr.QuestNo.Quest10);
-			}
-			
-			//quest 11
-			if(GameManager.popUpCount == 64)
-			{
-				if(GameManager.questActivateBool && GameManager.quest == 10)
-				{
-					if(scr_loadUserWorld.ReturnHerbandPlantsCount(scr_GameObjSvr.objPipeweed.objTypeId) >= 20)
-					{
-						GameManager.questActivateBool = false;
-						scr_sfsRemoteCnt.SendPlayQuestCount((int)GameObjectsSvr.QuestNo.Quest11);
-						TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
-					}
-					else
-					{
-						GameManager.questRunningBool = false;
-						GameManager.questActivateBool = false;
-						GameManager.popUpCount = 76;
-						curPopUpCnt = 76;
-						curPopUpType = 0;
-						generatePopUp(curPopUpCnt,curPopUpType);
-					}
-				}
-			}
-			
-			if(GameManager.popUpCount == 65)
-			{
-				AssignQuestNo((int)GameObjectsSvr.QuestNo.Quest11);
-			}
-			
-		    //quest 12
-		
-			if (GameManager.popUpCount == 67)
-			{
-				if (GameManager.questActivateBool && GameManager.quest == 11)
-				{
-					GameObject halfCusith = GameObject.Find("HC_C_Cusith_GO(Clone)") as GameObject;
-					GameObject halfDryad = GameObject.Find("HC_C_Dryad_GO(Clone)") as GameObject;
-					GameObject halfDragon = GameObject.Find("HC_C_Dragon_GO(Clone)") as GameObject;
-					
-					if(halfCusith != null && halfDryad != null && halfDragon != null)
-					{
-					GameManager.questActivateBool = false;
-					scr_sfsRemoteCnt.SendPlayQuestCount((int)GameObjectsSvr.QuestNo.Quest12);
-				    TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
-				}
-					else
-					{
-						GameManager.questRunningBool = false;
-						GameManager.questActivateBool = false;
-						GameManager.popUpCount = 77;
-						curPopUpCnt = 77;
-						curPopUpType = 0;
-						generatePopUp(curPopUpCnt,curPopUpType);
-					}
-				}
-			}
-
-			// purchase first earth obelisk
-			if (GameManager.popUpCount == 79)
-			{
-				Debug.Log("------> <-------");
-				//buttonPulse trainingGroundBP = GameObject.Find("storeDefenceButt").GetComponent("buttonPulse") as buttonPulse;
-				//trainingGroundBP.scaleAnim = false;
-				
-				guiControlInfo.storeUI.SetActiveRecursively(false);
-				wall.active = true;
-				guiControlInfo.defenceUI.SetActiveRecursively(true);
-				
-				if (guiControlInfo.delArrow != null)
-					Destroy(guiControlInfo.delArrow);
-				
-				GameObject ms = GameObject.Find("earthDefence_Spwan");
-				GameObject temp = Instantiate(guiControlInfo.arrow, ms.transform.position, Quaternion.Inverse(ms.transform.rotation)) as GameObject;
-				guiControlInfo.delArrow = temp;
-				temp.transform.parent = ms.transform;
-
-			}
+			NextPopup();
 		}
 		else if (popUpType[curPopUpType] == 2)
 				guiControlInfo.popUpType2.SetActiveRecursively(false);
@@ -1354,832 +623,1640 @@ public class popUpInformation: MonoBehaviour
 		// default popup
 		if (defaultPopUpBool)
 		{
-			Debug.Log("---> default popup bool : " + houndRabbitInfoBool + " <---");
-			destroyPopUp(GameManager.popUpCount, 0);
-			destroyPopUp(GameManager.popUpCount, 2);
-			defaultPopUpBool = false;
-			
-		    if(GameManager.miniGamesaccelerateBool)
-			{
-				Debug.Log("---> 1 <---");
-				GameManager.miniGamesaccelerateBool = false;
-				
-				if(guiControlInfo.GetAccelerateMiniGameItem() == "TavernMiniGame")
-				{
-					scr_sfsRemoteCnt.SendRequestForAccelerateMinigames("TavernMiniGame");
-				}
-				else if(guiControlInfo.GetAccelerateMiniGameItem() == "ApothecaryMiniGame")
-				{
-					scr_sfsRemoteCnt.SendRequestForAccelerateMinigames("ApothecaryMiniGame");
-				}
-			    guiControlInfo.popUpType2.transform.FindChild("InfoProgressBar").gameObject.SetActiveRecursively(false);
-				
-			}
-			
-			if (houndRabbitInfoBool)
-			{
-				Debug.Log("---> 2 <---");
-				Debug.Log("---> hound rabbit info bool <---");
-				houndRabbitInfoBool = false;
-				gameManagerInfo.bubbleObj.SetActiveRecursively(true);
-				gameManagerInfo.speakTextObj.active = true;
-				GameObject.Find("FightingTutorial").gameObject.GetComponent<AutoSpeak>().callToWriteText("If you'd like to speed it up, simply add more sparks.  You can do this by clicking on the rabbit speed icon.");
-			}
-			
-		
-			if (GameManager.burrySparkBool)
-			{
-				Debug.Log("---> 3 <---");
-				if (GameManager.curTG.tag == "TrainingGround")
-				{
-					//Debug.Log("current creature is HOUND........");
-					guiControlInfo.creaturePlate01Button();
-				}
-				else if (GameManager.curTG.tag == "PlantTG")
-				{
-					//Debug.Log("current creature is Sprout........");
-					guiControlInfo.creaturePlate04Button();
-				}
-				else if (GameManager.curTG.tag == "WaterTG")
-				{
-					//Debug.Log("current creature is Nix........");
-					guiControlInfo.creaturePlate07Button();
-				}
-				else if (GameManager.curTG.tag == "Swamp")
-				{
-					//Debug.Log("current creature is Leech........");
-					guiControlInfo.darklingCreature01Button();
-				}
-				else if (GameManager.curTG.tag == "DEarthTG")
-				{
-					//Debug.Log("current creature is Dark Hound........");
-					guiControlInfo.darklingCreature04Button();
-				}
-				else if (GameManager.curTG.tag == "DFireTG")
-				{
-					//Debug.Log("current creature is Sprite........");
-					guiControlInfo.darklingCreature07Button();
-				}
-				GameManager.burrySparkBool = false;
-			}
-			
-			if (bridgeRabbitBool)
-			{
-				Debug.Log("---> 4 <---");
-				bridgeRabbitBool = false;
-				taskBuildBridge(3);
-			}
-		
-			if (GameManager.quest == 0 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
-			{
-				Debug.Log("---> 5 <---");
-				Destroy(guiControlInfo.qGO);
-				
-				GameObject hGC_Creature = GameObject.Find("HC_C_Hound_GO(Clone)") as GameObject;
-				hGC_Creature.GetComponent<MeshRenderer>().enabled = true;
-				hGC_Creature.transform.FindChild("shadow").gameObject.GetComponent<MeshRenderer>().enabled = true;
-				
-				//GameManager.questRunningBool = false;
-				GameManager.destroyQuestPbBool = false;
-				string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
-				scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
-				 				ad.percentComplete6 = 100;
-			}
-		
-			if (GameManager.quest == 2 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
-			{
-				Debug.Log("---> 6 <---");
-				Destroy(guiControlInfo.qGO);
-				
-				GameObject leech = GameObject.Find("DL_C_Leech_GO(Clone)") as GameObject;
-				leech.GetComponent<MeshRenderer>().enabled = true;
-				
-				GameManager.questRunningBool = false;
-				GameManager.destroyQuestPbBool = false;
-				string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
-				scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
-			}
-			
-			if (GameManager.quest == 3 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
-			{
-				Debug.Log("---> 7 <---");
-				Destroy(guiControlInfo.qGO);
-				
-				GameObject leech = GameObject.Find("DL_C_Leech_GO(Clone)") as GameObject;
-				leech.GetComponent<MeshRenderer>().enabled = true;
-				gameManagerInfo.dChar.SetActiveRecursively(true);
-				
-				GameManager.questRunningBool = false;
-				GameManager.destroyQuestPbBool = false;
-				string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
-				scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
-			}	
-			if (GameManager.quest == 4 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
-			{
-				Debug.Log("---> 8 <---");
-				Destroy(guiControlInfo.qGO);
-				
-				GameManager.destroyQuestPbBool = false;
-				string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
-				scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
-			}	
-			if (GameManager.quest == 5 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
-			{
-				Debug.Log("---> 9 <---");
-				Destroy(guiControlInfo.qGO);
-				
-				GameManager.destroyQuestPbBool = false;
-				string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
-				scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
-				 				ad.percentComplete19 = 100;
-			}	
-			if (GameManager.quest == 6 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
-			{
-				Debug.Log("---> 10 <---");
-				Destroy(guiControlInfo.qGO);
-				
-				GameManager.destroyQuestPbBool = false;
-				string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
-				scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
-			}	
-			if (GameManager.quest == 7 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
-			{
-				Debug.Log("---> 11 <---");
-				Destroy(guiControlInfo.qGO);
-				
-				GameManager.destroyQuestPbBool = false;
-				string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
-				scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
-			}	
-			if (GameManager.quest == 8 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
-			{
-				Debug.Log("---> 12 <---");
-				Destroy(guiControlInfo.qGO);
-				
-				GameManager.destroyQuestPbBool = false;
-				string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
-				scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
-			}	
-			if (GameManager.quest == 9 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
-			{
-				Debug.Log("---> 13 <---");
-				Destroy(guiControlInfo.qGO);
-				
-				GameManager.destroyQuestPbBool = false;
-				string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
-				scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
-			}	
-			if (GameManager.quest == 10 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
-			{
-				Debug.Log("---> 14 <---");
-				Destroy(guiControlInfo.qGO);
-				
-				GameManager.destroyQuestPbBool = false;
-				string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
-				scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
-			}	
-			if (GameManager.quest == 11 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
-			{
-				Debug.Log("---> 15 <---");
-				Destroy(guiControlInfo.qGO);
-				
-				GameManager.destroyQuestPbBool = false;
-				string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
-				scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
-				 				ad.percentComplete42 = 100;
-			}
-		
-			if (GameManager.quest == 2 && GameManager.questActivateBool && GameManager.questRunningBool == false)
-			{
-				Debug.Log("---> 16 <---");
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Turnip")
-			{
-				Debug.Log("---> 17 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskFarming(3, "Turnip");
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "PipeWeed")
-			{
-				Debug.Log("---> 18 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskFarming(3, "PipeWeed");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Pumpkin")
-			{
-				Debug.Log("---> 19 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskFarming(3, "Pumpkin");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Costmary")
-			{
-				Debug.Log("---> 20 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskFarming(3, "Costmary");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "FairyLily")
-			{
-				Debug.Log("---> 21 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskFarming(3, "FairyLily");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Potato")
-			{
-				Debug.Log("---> 22 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskFarming(3, "Potatoes");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Watercress")
-			{
-				Debug.Log("---> 23 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskFarming(3, "Watercress");
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Mandrake")
-			{
-				Debug.Log("---> 24 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskFarming(3, "Mandrake");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Vervain")
-			{
-				Debug.Log("---> 25 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskFarming(3, "Vervain");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "SunFlower")
-			{
-				Debug.Log("---> 26 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskFarming(3, "SunFlower");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DPumpkin")
-			{
-				Debug.Log("---> 27 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskDarklingFarming(3, "DPumpkin");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DFirePepper")
-			{
-				Debug.Log("---> 28 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskDarklingFarming(3, "DFirePepper");
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DColumbine")
-			{
-				Debug.Log("---> 29 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskDarklingFarming(3, "DColumbine");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DBlackBerry")
-			{
-				Debug.Log("---> 30 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskDarklingFarming(3, "DBlackBerry");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DAven")
-			{
-				Debug.Log("---> 31 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskDarklingFarming(3, "DAven");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "BitterBrush")
-			{
-				Debug.Log("---> 32 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskDarklingFarming(3, "BitterBrush");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "BogBean")
-			{
-				Debug.Log("---> 33 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskDarklingFarming(3, "BogBean");
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Wolfsbane")
-			{
-				Debug.Log("---> 34 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskDarklingFarming(3, "Wolfsbane");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "MoonFlower")
-			{
-				Debug.Log("---> 35 <---");
-				GameManager.currentPlant = guiControlInfo.currentRabbitButton;
-				taskDarklingFarming(3, "MoonFlower");
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Hound")
-			{
-				Debug.Log("---> 36 <---");
-				taskCreature(3, "Hound");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Barg")
-			{
-				Debug.Log("---> 37 <---");
-				taskCreature(3, "Barg");
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Cusith")
-			{
-				taskCreature(3, "Cusith");
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Sprout")
-			{
-				taskCreature(3, "Sprout");
-				guiControlInfo.currentRabbitButton = null;
-			}
-				
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Nymph")
-			{
-				taskCreature(3, "Nymph");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Dryad")
-			{
-				taskCreature(3, "Dryad");
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Nix")
-			{
-				taskCreature(3, "Nix");
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Draug")
-			{
-				taskCreature(3, "Draug");
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Dragon")
-			{
-				taskCreature(3, "Dragon");
-				guiControlInfo.currentRabbitButton = null;
-			}
-				
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Leech")
-			{
-				taskCreature(3, "Leech");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Leshy")
-			{
-				taskCreature(3, "Leshy");
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Lurker")
-			{
-				taskCreature(3, "Lurker");
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DHound")
-			{
-				taskCreature(3, "DHound");
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Fenrir")
-			{
-				taskCreature(3, "Fenrir");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "HellHound")
-			{
-				taskCreature(3, "HellHound");
-				guiControlInfo.currentRabbitButton = null;
-			}
-				
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Sprite")
-			{
-				taskCreature(3, "Sprite");
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Imp")
-			{
-				taskCreature(3, "Imp");
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Djinn")
-			{
-				taskCreature(3, "Djinn");
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && (guiControlInfo.currentRabbitButton.tag == "goblinCamp" || guiControlInfo.currentRabbitButton.tag == "TrollHouse"))
-			{
-				taskGoblinCave(5);
-				guiControlInfo.currentRabbitButton = null;
-			}
-				
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Inn" && GameManager.upgradeInnRabbit == false)
-			{
-				taskBuildInn(4);
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Inn" && GameManager.upgradeInnRabbit == true)
-			{
-				taskUpgradeInn(2);
-				GameManager.upgradeInnRabbit = false;
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "HHouse" && GameManager.upgradeHHouseRabbit == true)
-			{
-				taskUpgradeHHouse(2);
-				GameManager.upgradeHHouseRabbit = false;
-				guiControlInfo.currentRabbitButton = null;
-			}
-				
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DHouse" && GameManager.upgradeDHouseRabbit == true)
-			{
-				taskUpgradeDHouse(2);
-				GameManager.upgradeDHouseRabbit = false;
-				guiControlInfo.currentRabbitButton = null;
-			}	
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Stable" && GameManager.upgradeStableRabbit == true)
-			{
-				taskUpgradeStable(2);
-				GameManager.upgradeStableRabbit = false;
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "BlackSmith" && GameManager.upgradeBlackSmithRabbit == true)
-			{
-				taskUpgradeBlackSmith(2);
-				GameManager.upgradeBlackSmithRabbit = false;
-				guiControlInfo.currentRabbitButton = null;
-			}	
-				
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DInn" && GameManager.upgradeDInnRabbit == true)
-			{
-				taskUpgradeDarklingInn(2);
-				GameManager.upgradeDInnRabbit = false;
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "EarthObelisk" && GameManager.upgradeEarthObeliskRabbit == true)
-			{
-				Debug.Log("task upgrade earth obelisk 2...");
-				taskUpgradeEarthObelisk(2);
-				GameManager.upgradeEarthObeliskRabbit = false;
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "PlantObelisk" && GameManager.upgradePlantObeliskRabbit == true)
-			{
-				Debug.Log("task upgrade plant obelisk 2...");
-				taskUpgradePlantObelisk (2);
-				GameManager.upgradePlantObeliskRabbit = false;
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "WaterObelisk" && GameManager.upgradeWaterObeliskRabbit == true)
-			{
-				Debug.Log("task upgrade water obelisk 2...");
-				taskUpgradeWaterObelisk (2);
-				GameManager.upgradeWaterObeliskRabbit = false;
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "SwampObelisk" && GameManager.upgradeSwampObeliskRabbit == true)
-			{
-				Debug.Log("task upgrade swamp obelisk 2...");
-				taskUpgradeSwampObelisk (2);
-				GameManager.upgradeSwampObeliskRabbit = false;
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DEarthObelisk" && GameManager.upgradeDEarthObeliskRabbit == true)
-			{
-				Debug.Log("task upgrade d earth obelisk 2...");
-				taskUpgradeDEarthObelisk (2);
-				GameManager.upgradeDEarthObeliskRabbit = false;
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "FireObelisk" && GameManager.upgradeFireObeliskRabbit == true)
-			{
-				Debug.Log("task upgrade fire obelisk 2...");
-				taskUpgradeFireObelisk (2);
-				GameManager.upgradeFireObeliskRabbit = false;
-				guiControlInfo.currentRabbitButton = null;
-			}
-				
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DStable" && GameManager.upgradeDStableRabbit == true)
-			{
-				taskUpgradeDarklingStable(2);
-				GameManager.upgradeDStableRabbit = false;
-				guiControlInfo.currentRabbitButton = null;
-			}	
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DBlackSmith" && GameManager.upgradeDBlackSmithRabbit == true)
-			{
-				taskUpgradeDarklingBlackSmith(2);
-				GameManager.upgradeDBlackSmithRabbit = false;
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Stable" && GameManager.upgradeStableRabbit == false)
-			{
-				taskBuildStable(4);
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "BlackSmith")
-			{
-				taskBuildBlackSmith(4);
-				guiControlInfo.currentRabbitButton = null;
-			}
-				
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Apothecary")
-			{
-				taskBuildApothecary(4);
-				guiControlInfo.currentRabbitButton = null;
-			}	
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Tavern")
-			{
-				taskBuildTavern(4);
-				guiControlInfo.currentRabbitButton = null;
-			}	
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DBlackSmith")
-			{
-				taskDarklingBlackSmith(4);
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "EarthObelisk")
-			{
-				taskBuildEarthObelisk(4);
-				guiControlInfo.currentRabbitButton = null;
-				
-				if (GameManager.taskCount == 10)
-				{
-					obeliskTutorial(6);
-				}
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "PlantObelisk")
-			{
-				taskBuildPlantObelisk(4);
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "WaterObelisk")
-			{
-				taskBuildWaterObelisk(4);
-				guiControlInfo.currentRabbitButton = null;
-			}
-				
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "SunShrine")
-			{
-				taskBuildSunShrine(4);
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DInn" && GameManager.upgradeDInnRabbit == false)
-			{
-				taskDarklingInn(4);
-				guiControlInfo.currentRabbitButton = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DStable")
-			{
-				taskDarklingStable(4);
-				guiControlInfo.currentRabbitButton = null;
-			}
-				
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DTavern")
-			{
-				taskDarklingTavern(4);
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DApothecary")
-			{
-				taskDarklingApothecary(4);
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DEarthObelisk")
-			{
-				taskDarklingEarthObelisk(4);
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DSwampObelisk")
-			{
-				taskDarklingSwampObelisk(4);
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DFireObelisk")
-			{
-				taskDarklingFireObelisk(4);
-				guiControlInfo.currentRabbitButton = null;
-			}
-				
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "MoonShrine")
-			{
-				taskDarklingMoonShrine(4);
-				guiControlInfo.currentRabbitButton = null;
-			}	
-			
-			if (GameManager.curBuilding != null && GameManager.upgradeInn == true && GameManager.curBuilding.tag == "Inn")
-			{
-				//Debug.Log("taskUpgradeInn(1) is ready...");
-				taskUpgradeInn(1);
-				GameManager.curBuilding = null;
-			}
-				
-			if (GameManager.curBuilding != null && GameManager.upgradeHHouse == true && GameManager.curBuilding.tag == "HHouse")
-			{
-				Debug.Log("taskUpgradeHouse(1) is ready...");
-				taskUpgradeHHouse(1);
-				GameManager.curBuilding = null;
-			}	
-		
-			if (GameManager.curBuilding != null && GameManager.upgradeDHouse == true && GameManager.curBuilding.tag == "DHouse")
-			{
-				//Debug.Log("taskUpgrade D House(1) is ready...");
-				taskUpgradeDHouse(1);
-				GameManager.curBuilding = null;
-			}		
-				
-			if (GameManager.curBuilding != null && GameManager.upgradeStable == true && GameManager.curBuilding.tag == "Stable")
-			{
-				//Debug.Log("taskUpgradeStable(1) is ready...");
-				taskUpgradeStable(1);
-				GameManager.curBuilding = null;
-			}
-				
-			if (GameManager.curBuilding != null && GameManager.upgradeBlackSmith == true && GameManager.curBuilding.tag == "BlackSmith")
-			{
-				//Debug.Log("taskUpgradeBlackSmith(1) is ready...");
-				taskUpgradeBlackSmith(1);
-				GameManager.curBuilding = null;
-			}	
-			
-			if (GameManager.curBuilding != null && GameManager.upgradeDInn == true && GameManager.curBuilding.tag == "DInn")
-			{
-				//Debug.Log("taskUpgradeDarklingInn(1) is ready...");
-				taskUpgradeDarklingInn(1);
-				GameManager.curBuilding = null;
-			}
-				
-			if (GameManager.curBuilding != null && GameManager.upgradeDStable == true && GameManager.curBuilding.tag == "DStable")
-			{
-				//Debug.Log("taskUpgradeDarklingStable(1) is ready...");
-				taskUpgradeDarklingStable(1);
-				GameManager.curBuilding = null;
-			}	
-			
-			if (GameManager.curBuilding != null && GameManager.upgradeDBlackSmith == true && GameManager.curBuilding.tag == "DBlackSmith")
-			{
-				//Debug.Log("taskUpgradeDarkling BlackSmith(1) is ready...");
-				taskUpgradeDarklingBlackSmith(1);
-				GameManager.curBuilding = null;
-			}	
-				
-			if (GameManager.curBuilding != null && GameManager.upgradeEarthObelisk == true && GameManager.curBuilding.tag == "EarthObelisk")
-			{
-				GameManager.upgradeEarthObelisk = false;
-				Debug.Log("earth obelisk upgrade 1...");
-				taskUpgradeEarthObelisk(1);
-				//GameManager.curBuilding == null;	
-			}
-			
-			if (GameManager.curBuilding != null && GameManager.upgradePlantObelisk == true && GameManager.curBuilding.tag == "PlantObelisk")
-			{
-				GameManager.upgradePlantObelisk = false;
-				Debug.Log("plant obelisk upgrade 1...");
-				taskUpgradePlantObelisk(1);
-			}
-			
-			if (GameManager.curBuilding != null && GameManager.upgradeWaterObelisk == true && GameManager.curBuilding.tag == "PlantObelisk")
-			{
-				GameManager.upgradeWaterObelisk = false;
-				Debug.Log("water obelisk upgrade 1...");
-				taskUpgradeWaterObelisk (1);
-			}
-			
-			if (GameManager.curBuilding != null && GameManager.upgradeSwampObelisk == true && GameManager.curBuilding.tag == "PlantObelisk")
-			{
-				GameManager.upgradeSwampObelisk = false;
-				Debug.Log("swamp obelisk upgrade 1...");
-				taskUpgradeSwampObelisk (1);
-			}
-			
-			if (GameManager.curBuilding != null && GameManager.upgradeDEarthObelisk == true && GameManager.curBuilding.tag == "PlantObelisk")
-			{
-				GameManager.upgradeDEarthObelisk = false;
-				Debug.Log("d earth obelisk upgrade 1...");
-				taskUpgradeDEarthObelisk (1);
-			}
-			
-			if (GameManager.curBuilding != null && GameManager.upgradeFireObelisk == true && GameManager.curBuilding.tag == "PlantObelisk")
-			{
-				GameManager.upgradeFireObelisk = false;
-				Debug.Log("fire obelisk upgrade 1...");
-				taskUpgradeFireObelisk (1);
-			}
-			
-			if (GameManager.curTG != null && GameManager.upgradeTrainingGroundBool == true && (GameManager.curTG.tag == "TrainingGround" || GameManager.curTG.tag == "PlantTG" || GameManager.curTG.tag == "WaterTG" ||
-												GameManager.curTG.tag == "Swamp" || GameManager.curTG.tag == "DFireTG" || GameManager.curTG.tag == "DEarthTG"))
-			{
-				taskUpgradeTrainingGround(1);
-				GameManager.curTG = null;
-				//Debug.Log("dussed " + GameManager.earthTG_lvl);
-			}
-				
-			if (GameManager.curPlot != null && GameManager.upgradePlotBool == true && (GameManager.curPlot.tag == "Plot" || GameManager.curPlot.tag == "DPlot"))
-			{
-				Debug.Log("taskUpgradePlot(1)...");
-				GameManager.upgradePlotBool = false;
-				taskUpgradePlot(1);
-				GameManager.curPlot = null;
-			}
-		
-			if (guiControlInfo.currentRabbitButton != null && (guiControlInfo.currentRabbitButton.tag == "TrainingGround" || guiControlInfo.currentRabbitButton.tag == "PlantTG" || guiControlInfo.currentRabbitButton.tag == "WaterTG" ||
-																guiControlInfo.currentRabbitButton.tag == "Swamp" || guiControlInfo.currentRabbitButton.tag == "DFireTG" || guiControlInfo.currentRabbitButton.tag == "DEarthTG"))
-			{
-				//Debug.Log("dussed------> " + GameManager.earthTG_lvl);
-				GameManager.upgradeTrainingGroundBool = true;
-				taskUpgradeTrainingGround(2);
-				guiControlInfo.currentRabbitButton = null;
-			}
-			
-			if (guiControlInfo.currentRabbitButton != null && GameManager.upgradePlotRabbitBool && (guiControlInfo.currentRabbitButton.tag == "Plot" || guiControlInfo.currentRabbitButton.tag == "DPlot"))
-			{
-				GameManager.upgradePlotRabbitBool = false;
-				taskUpgradePlot(2);
-				guiControlInfo.currentRabbitButton = null;
-			}
-				
-			if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DPumpkin")
-			{
-				taskFarming(3, "DPumpkin");
-				guiControlInfo.currentRabbitButton = null;
-			}
+			DefaultPoppup();
 		}
 	}
-		
-			
-	
+
+    private void DefaultPoppup()
+    {
+        Debug.Log("---> default popup bool : " + houndRabbitInfoBool + " <---");
+        destroyPopUp(GameManager.popUpCount, 0);
+        destroyPopUp(GameManager.popUpCount, 2);
+        defaultPopUpBool = false;
+
+        if (GameManager.miniGamesaccelerateBool)
+        {
+            Debug.Log("---> 1 <---");
+            GameManager.miniGamesaccelerateBool = false;
+
+            if (guiControlInfo.GetAccelerateMiniGameItem() == "TavernMiniGame")
+            {
+                scr_sfsRemoteCnt.SendRequestForAccelerateMinigames("TavernMiniGame");
+            }
+            else if (guiControlInfo.GetAccelerateMiniGameItem() == "ApothecaryMiniGame")
+            {
+                scr_sfsRemoteCnt.SendRequestForAccelerateMinigames("ApothecaryMiniGame");
+            }
+            guiControlInfo.popUpType2.transform.FindChild("InfoProgressBar").gameObject.SetActiveRecursively(false);
+        }
+
+        if (houndRabbitInfoBool)
+        {
+            Debug.Log("---> 2 <---");
+            Debug.Log("---> hound rabbit info bool <---");
+            houndRabbitInfoBool = false;
+            gameManagerInfo.bubbleObj.SetActiveRecursively(true);
+            gameManagerInfo.speakTextObj.active = true;
+            GameObject.Find("FightingTutorial")
+                .gameObject.GetComponent<AutoSpeak>()
+                .callToWriteText(
+                    "If you'd like to speed it up, simply add more sparks.  You can do this by clicking on the rabbit speed icon.");
+        }
+
+
+        if (GameManager.burrySparkBool)
+        {
+            Debug.Log("---> 3 <---");
+            if (GameManager.curTG.tag == "TrainingGround")
+            {
+                //Debug.Log("current creature is HOUND........");
+                guiControlInfo.creaturePlate01Button();
+            }
+            else if (GameManager.curTG.tag == "PlantTG")
+            {
+                //Debug.Log("current creature is Sprout........");
+                guiControlInfo.creaturePlate04Button();
+            }
+            else if (GameManager.curTG.tag == "WaterTG")
+            {
+                //Debug.Log("current creature is Nix........");
+                guiControlInfo.creaturePlate07Button();
+            }
+            else if (GameManager.curTG.tag == "Swamp")
+            {
+                //Debug.Log("current creature is Leech........");
+                guiControlInfo.darklingCreature01Button();
+            }
+            else if (GameManager.curTG.tag == "DEarthTG")
+            {
+                //Debug.Log("current creature is Dark Hound........");
+                guiControlInfo.darklingCreature04Button();
+            }
+            else if (GameManager.curTG.tag == "DFireTG")
+            {
+                //Debug.Log("current creature is Sprite........");
+                guiControlInfo.darklingCreature07Button();
+            }
+            GameManager.burrySparkBool = false;
+        }
+
+        if (bridgeRabbitBool)
+        {
+            Debug.Log("---> 4 <---");
+            bridgeRabbitBool = false;
+            taskBuildBridge(3);
+        }
+
+        if (GameManager.quest == 0 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
+        {
+            Debug.Log("---> 5 <---");
+            Destroy(guiControlInfo.questProgressBarGO);
+
+            GameObject hGC_Creature = GameObject.Find("HC_C_Hound_GO(Clone)") as GameObject;
+            hGC_Creature.GetComponent<MeshRenderer>().enabled = true;
+            hGC_Creature.transform.FindChild("shadow").gameObject.GetComponent<MeshRenderer>().enabled = true;
+
+            //GameManager.questRunningBool = false;
+            GameManager.destroyQuestPbBool = false;
+            string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
+            scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
+            ad.percentComplete6 = 100;
+        }
+
+        if (GameManager.quest == 2 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
+        {
+            Debug.Log("---> 6 <---");
+            Destroy(guiControlInfo.questProgressBarGO);
+
+            GameObject leech = GameObject.Find("DL_C_Leech_GO(Clone)") as GameObject;
+            leech.GetComponent<MeshRenderer>().enabled = true;
+
+            GameManager.questRunningBool = false;
+            GameManager.destroyQuestPbBool = false;
+            string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
+            scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
+        }
+
+        if (GameManager.quest == 3 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
+        {
+            Debug.Log("---> 7 <---");
+            Destroy(guiControlInfo.questProgressBarGO);
+
+            GameObject leech = GameObject.Find("DL_C_Leech_GO(Clone)") as GameObject;
+            leech.GetComponent<MeshRenderer>().enabled = true;
+            gameManagerInfo.dChar.SetActiveRecursively(true);
+
+            GameManager.questRunningBool = false;
+            GameManager.destroyQuestPbBool = false;
+            string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
+            scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
+        }
+        if (GameManager.quest == 4 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
+        {
+            Debug.Log("---> 8 <---");
+            Destroy(guiControlInfo.questProgressBarGO);
+
+            GameManager.destroyQuestPbBool = false;
+            string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
+            scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
+        }
+        if (GameManager.quest == 5 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
+        {
+            Debug.Log("---> 9 <---");
+            Destroy(guiControlInfo.questProgressBarGO);
+
+            GameManager.destroyQuestPbBool = false;
+            string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
+            scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
+            ad.percentComplete19 = 100;
+        }
+        if (GameManager.quest == 6 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
+        {
+            Debug.Log("---> 10 <---");
+            Destroy(guiControlInfo.questProgressBarGO);
+
+            GameManager.destroyQuestPbBool = false;
+            string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
+            scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
+        }
+        if (GameManager.quest == 7 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
+        {
+            Debug.Log("---> 11 <---");
+            Destroy(guiControlInfo.questProgressBarGO);
+
+            GameManager.destroyQuestPbBool = false;
+            string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
+            scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
+        }
+        if (GameManager.quest == 8 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
+        {
+            Debug.Log("---> 12 <---");
+            Destroy(guiControlInfo.questProgressBarGO);
+
+            GameManager.destroyQuestPbBool = false;
+            string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
+            scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
+        }
+        if (GameManager.quest == 9 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
+        {
+            Debug.Log("---> 13 <---");
+            Destroy(guiControlInfo.questProgressBarGO);
+
+            GameManager.destroyQuestPbBool = false;
+            string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
+            scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
+        }
+        if (GameManager.quest == 10 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
+        {
+            Debug.Log("---> 14 <---");
+            Destroy(guiControlInfo.questProgressBarGO);
+
+            GameManager.destroyQuestPbBool = false;
+            string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
+            scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
+        }
+        if (GameManager.quest == 11 && GameManager.questRunningBool && GameManager.destroyQuestPbBool)
+        {
+            Debug.Log("---> 15 <---");
+            Destroy(guiControlInfo.questProgressBarGO);
+
+            GameManager.destroyQuestPbBool = false;
+            string questTaskid = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.QuestCreation.objTypeId);
+            scr_sfsRemoteCnt.SendRequestForQuestAccelrateTask(questTaskid);
+            ad.percentComplete42 = 100;
+        }
+
+        if (GameManager.quest == 2 && GameManager.questActivateBool && GameManager.questRunningBool == false)
+        {
+            Debug.Log("---> 16 <---");
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Turnip")
+        {
+            Debug.Log("---> 17 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskFarming(3, "Turnip");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "PipeWeed")
+        {
+            Debug.Log("---> 18 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskFarming(3, "PipeWeed");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Pumpkin")
+        {
+            Debug.Log("---> 19 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskFarming(3, "Pumpkin");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Costmary")
+        {
+            Debug.Log("---> 20 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskFarming(3, "Costmary");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "FairyLily")
+        {
+            Debug.Log("---> 21 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskFarming(3, "FairyLily");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Potato")
+        {
+            Debug.Log("---> 22 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskFarming(3, "Potatoes");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Watercress")
+        {
+            Debug.Log("---> 23 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskFarming(3, "Watercress");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Mandrake")
+        {
+            Debug.Log("---> 24 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskFarming(3, "Mandrake");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Vervain")
+        {
+            Debug.Log("---> 25 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskFarming(3, "Vervain");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "SunFlower")
+        {
+            Debug.Log("---> 26 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskFarming(3, "SunFlower");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DPumpkin")
+        {
+            Debug.Log("---> 27 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskDarklingFarming(3, "DPumpkin");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DFirePepper")
+        {
+            Debug.Log("---> 28 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskDarklingFarming(3, "DFirePepper");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DColumbine")
+        {
+            Debug.Log("---> 29 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskDarklingFarming(3, "DColumbine");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DBlackBerry")
+        {
+            Debug.Log("---> 30 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskDarklingFarming(3, "DBlackBerry");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DAven")
+        {
+            Debug.Log("---> 31 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskDarklingFarming(3, "DAven");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "BitterBrush")
+        {
+            Debug.Log("---> 32 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskDarklingFarming(3, "BitterBrush");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "BogBean")
+        {
+            Debug.Log("---> 33 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskDarklingFarming(3, "BogBean");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Wolfsbane")
+        {
+            Debug.Log("---> 34 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskDarklingFarming(3, "Wolfsbane");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "MoonFlower")
+        {
+            Debug.Log("---> 35 <---");
+            GameManager.currentPlant = guiControlInfo.currentRabbitButton;
+            taskDarklingFarming(3, "MoonFlower");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Hound")
+        {
+            Debug.Log("---> 36 <---");
+            taskCreature(3, "Hound");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Barg")
+        {
+            Debug.Log("---> 37 <---");
+            taskCreature(3, "Barg");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Cusith")
+        {
+            taskCreature(3, "Cusith");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Sprout")
+        {
+            taskCreature(3, "Sprout");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Nymph")
+        {
+            taskCreature(3, "Nymph");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Dryad")
+        {
+            taskCreature(3, "Dryad");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Nix")
+        {
+            taskCreature(3, "Nix");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Draug")
+        {
+            taskCreature(3, "Draug");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Dragon")
+        {
+            taskCreature(3, "Dragon");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Leech")
+        {
+            taskCreature(3, "Leech");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Leshy")
+        {
+            taskCreature(3, "Leshy");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Lurker")
+        {
+            taskCreature(3, "Lurker");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DHound")
+        {
+            taskCreature(3, "DHound");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Fenrir")
+        {
+            taskCreature(3, "Fenrir");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "HellHound")
+        {
+            taskCreature(3, "HellHound");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Sprite")
+        {
+            taskCreature(3, "Sprite");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Imp")
+        {
+            taskCreature(3, "Imp");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Djinn")
+        {
+            taskCreature(3, "Djinn");
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null &&
+            (guiControlInfo.currentRabbitButton.tag == "goblinCamp" ||
+             guiControlInfo.currentRabbitButton.tag == "TrollHouse"))
+        {
+            taskGoblinCave(5);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Inn" &&
+            GameManager.upgradeInnRabbit == false)
+        {
+            taskBuildInn(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Inn" &&
+            GameManager.upgradeInnRabbit == true)
+        {
+            taskUpgradeInn(2);
+            GameManager.upgradeInnRabbit = false;
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "HHouse" &&
+            GameManager.upgradeHHouseRabbit == true)
+        {
+            taskUpgradeHHouse(2);
+            GameManager.upgradeHHouseRabbit = false;
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DHouse" &&
+            GameManager.upgradeDHouseRabbit == true)
+        {
+            taskUpgradeDHouse(2);
+            GameManager.upgradeDHouseRabbit = false;
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Stable" &&
+            GameManager.upgradeStableRabbit == true)
+        {
+            taskUpgradeStable(2);
+            GameManager.upgradeStableRabbit = false;
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "BlackSmith" &&
+            GameManager.upgradeBlackSmithRabbit == true)
+        {
+            taskUpgradeBlackSmith(2);
+            GameManager.upgradeBlackSmithRabbit = false;
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DInn" &&
+            GameManager.upgradeDInnRabbit == true)
+        {
+            taskUpgradeDarklingInn(2);
+            GameManager.upgradeDInnRabbit = false;
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "EarthObelisk" &&
+            GameManager.upgradeEarthObeliskRabbit == true)
+        {
+            Debug.Log("task upgrade earth obelisk 2...");
+            taskUpgradeEarthObelisk(2);
+            GameManager.upgradeEarthObeliskRabbit = false;
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "PlantObelisk" &&
+            GameManager.upgradePlantObeliskRabbit == true)
+        {
+            Debug.Log("task upgrade plant obelisk 2...");
+            taskUpgradePlantObelisk(2);
+            GameManager.upgradePlantObeliskRabbit = false;
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "WaterObelisk" &&
+            GameManager.upgradeWaterObeliskRabbit == true)
+        {
+            Debug.Log("task upgrade water obelisk 2...");
+            taskUpgradeWaterObelisk(2);
+            GameManager.upgradeWaterObeliskRabbit = false;
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "SwampObelisk" &&
+            GameManager.upgradeSwampObeliskRabbit == true)
+        {
+            Debug.Log("task upgrade swamp obelisk 2...");
+            taskUpgradeSwampObelisk(2);
+            GameManager.upgradeSwampObeliskRabbit = false;
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DEarthObelisk" &&
+            GameManager.upgradeDEarthObeliskRabbit == true)
+        {
+            Debug.Log("task upgrade d earth obelisk 2...");
+            taskUpgradeDEarthObelisk(2);
+            GameManager.upgradeDEarthObeliskRabbit = false;
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "FireObelisk" &&
+            GameManager.upgradeFireObeliskRabbit == true)
+        {
+            Debug.Log("task upgrade fire obelisk 2...");
+            taskUpgradeFireObelisk(2);
+            GameManager.upgradeFireObeliskRabbit = false;
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DStable" &&
+            GameManager.upgradeDStableRabbit == true)
+        {
+            taskUpgradeDarklingStable(2);
+            GameManager.upgradeDStableRabbit = false;
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DBlackSmith" &&
+            GameManager.upgradeDBlackSmithRabbit == true)
+        {
+            taskUpgradeDarklingBlackSmith(2);
+            GameManager.upgradeDBlackSmithRabbit = false;
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Stable" &&
+            GameManager.upgradeStableRabbit == false)
+        {
+            taskBuildStable(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "BlackSmith")
+        {
+            taskBuildBlackSmith(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Apothecary")
+        {
+            taskBuildApothecary(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "Tavern")
+        {
+            taskBuildTavern(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DBlackSmith")
+        {
+            taskDarklingBlackSmith(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "EarthObelisk")
+        {
+            taskBuildEarthObelisk(4);
+            guiControlInfo.currentRabbitButton = null;
+
+            if (GameManager.taskCount == 10)
+            {
+                obeliskTutorial(6);
+            }
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "PlantObelisk")
+        {
+            taskBuildPlantObelisk(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "WaterObelisk")
+        {
+            taskBuildWaterObelisk(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "SunShrine")
+        {
+            taskBuildSunShrine(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DInn" &&
+            GameManager.upgradeDInnRabbit == false)
+        {
+            taskDarklingInn(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DStable")
+        {
+            taskDarklingStable(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DTavern")
+        {
+            taskDarklingTavern(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DApothecary")
+        {
+            taskDarklingApothecary(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DEarthObelisk")
+        {
+            taskDarklingEarthObelisk(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DSwampObelisk")
+        {
+            taskDarklingSwampObelisk(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DFireObelisk")
+        {
+            taskDarklingFireObelisk(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "MoonShrine")
+        {
+            taskDarklingMoonShrine(4);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (GameManager.curBuilding != null && GameManager.upgradeInn == true && GameManager.curBuilding.tag == "Inn")
+        {
+            //Debug.Log("taskUpgradeInn(1) is ready...");
+            taskUpgradeInn(1);
+            GameManager.curBuilding = null;
+        }
+
+        if (GameManager.curBuilding != null && GameManager.upgradeHHouse == true && GameManager.curBuilding.tag == "HHouse")
+        {
+            Debug.Log("taskUpgradeHouse(1) is ready...");
+            taskUpgradeHHouse(1);
+            GameManager.curBuilding = null;
+        }
+
+        if (GameManager.curBuilding != null && GameManager.upgradeDHouse == true && GameManager.curBuilding.tag == "DHouse")
+        {
+            //Debug.Log("taskUpgrade D House(1) is ready...");
+            taskUpgradeDHouse(1);
+            GameManager.curBuilding = null;
+        }
+
+        if (GameManager.curBuilding != null && GameManager.upgradeStable == true && GameManager.curBuilding.tag == "Stable")
+        {
+            //Debug.Log("taskUpgradeStable(1) is ready...");
+            taskUpgradeStable(1);
+            GameManager.curBuilding = null;
+        }
+
+        if (GameManager.curBuilding != null && GameManager.upgradeBlackSmith == true &&
+            GameManager.curBuilding.tag == "BlackSmith")
+        {
+            //Debug.Log("taskUpgradeBlackSmith(1) is ready...");
+            taskUpgradeBlackSmith(1);
+            GameManager.curBuilding = null;
+        }
+
+        if (GameManager.curBuilding != null && GameManager.upgradeDInn == true && GameManager.curBuilding.tag == "DInn")
+        {
+            //Debug.Log("taskUpgradeDarklingInn(1) is ready...");
+            taskUpgradeDarklingInn(1);
+            GameManager.curBuilding = null;
+        }
+
+        if (GameManager.curBuilding != null && GameManager.upgradeDStable == true &&
+            GameManager.curBuilding.tag == "DStable")
+        {
+            //Debug.Log("taskUpgradeDarklingStable(1) is ready...");
+            taskUpgradeDarklingStable(1);
+            GameManager.curBuilding = null;
+        }
+
+        if (GameManager.curBuilding != null && GameManager.upgradeDBlackSmith == true &&
+            GameManager.curBuilding.tag == "DBlackSmith")
+        {
+            //Debug.Log("taskUpgradeDarkling BlackSmith(1) is ready...");
+            taskUpgradeDarklingBlackSmith(1);
+            GameManager.curBuilding = null;
+        }
+
+        if (GameManager.curBuilding != null && GameManager.upgradeEarthObelisk == true &&
+            GameManager.curBuilding.tag == "EarthObelisk")
+        {
+            GameManager.upgradeEarthObelisk = false;
+            Debug.Log("earth obelisk upgrade 1...");
+            taskUpgradeEarthObelisk(1);
+            //GameManager.curBuilding == null;	
+        }
+
+        if (GameManager.curBuilding != null && GameManager.upgradePlantObelisk == true &&
+            GameManager.curBuilding.tag == "PlantObelisk")
+        {
+            GameManager.upgradePlantObelisk = false;
+            Debug.Log("plant obelisk upgrade 1...");
+            taskUpgradePlantObelisk(1);
+        }
+
+        if (GameManager.curBuilding != null && GameManager.upgradeWaterObelisk == true &&
+            GameManager.curBuilding.tag == "PlantObelisk")
+        {
+            GameManager.upgradeWaterObelisk = false;
+            Debug.Log("water obelisk upgrade 1...");
+            taskUpgradeWaterObelisk(1);
+        }
+
+        if (GameManager.curBuilding != null && GameManager.upgradeSwampObelisk == true &&
+            GameManager.curBuilding.tag == "PlantObelisk")
+        {
+            GameManager.upgradeSwampObelisk = false;
+            Debug.Log("swamp obelisk upgrade 1...");
+            taskUpgradeSwampObelisk(1);
+        }
+
+        if (GameManager.curBuilding != null && GameManager.upgradeDEarthObelisk == true &&
+            GameManager.curBuilding.tag == "PlantObelisk")
+        {
+            GameManager.upgradeDEarthObelisk = false;
+            Debug.Log("d earth obelisk upgrade 1...");
+            taskUpgradeDEarthObelisk(1);
+        }
+
+        if (GameManager.curBuilding != null && GameManager.upgradeFireObelisk == true &&
+            GameManager.curBuilding.tag == "PlantObelisk")
+        {
+            GameManager.upgradeFireObelisk = false;
+            Debug.Log("fire obelisk upgrade 1...");
+            taskUpgradeFireObelisk(1);
+        }
+
+        if (GameManager.curTG != null && GameManager.upgradeTrainingGroundBool == true &&
+            (GameManager.curTG.tag == "TrainingGround" || GameManager.curTG.tag == "PlantTG" ||
+             GameManager.curTG.tag == "WaterTG" ||
+             GameManager.curTG.tag == "Swamp" || GameManager.curTG.tag == "DFireTG" || GameManager.curTG.tag == "DEarthTG"))
+        {
+            taskUpgradeTrainingGround(1);
+            GameManager.curTG = null;
+            //Debug.Log("dussed " + GameManager.earthTG_lvl);
+        }
+
+        if (GameManager.curPlot != null && GameManager.upgradePlotBool == true &&
+            (GameManager.curPlot.tag == "Plot" || GameManager.curPlot.tag == "DPlot"))
+        {
+            Debug.Log("taskUpgradePlot(1)...");
+            GameManager.upgradePlotBool = false;
+            taskUpgradePlot(1);
+            GameManager.curPlot = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null &&
+            (guiControlInfo.currentRabbitButton.tag == "TrainingGround" ||
+             guiControlInfo.currentRabbitButton.tag == "PlantTG" || guiControlInfo.currentRabbitButton.tag == "WaterTG" ||
+             guiControlInfo.currentRabbitButton.tag == "Swamp" || guiControlInfo.currentRabbitButton.tag == "DFireTG" ||
+             guiControlInfo.currentRabbitButton.tag == "DEarthTG"))
+        {
+            //Debug.Log("dussed------> " + GameManager.earthTG_lvl);
+            GameManager.upgradeTrainingGroundBool = true;
+            taskUpgradeTrainingGround(2);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && GameManager.upgradePlotRabbitBool &&
+            (guiControlInfo.currentRabbitButton.tag == "Plot" || guiControlInfo.currentRabbitButton.tag == "DPlot"))
+        {
+            GameManager.upgradePlotRabbitBool = false;
+            taskUpgradePlot(2);
+            guiControlInfo.currentRabbitButton = null;
+        }
+
+        if (guiControlInfo.currentRabbitButton != null && guiControlInfo.currentRabbitButton.tag == "DPumpkin")
+        {
+            taskFarming(3, "DPumpkin");
+            guiControlInfo.currentRabbitButton = null;
+        }
+    }
+
+    private void NextPopup()
+    {
+        GameManager.popUpCount++;
+        updatePopUpCount();
+
+        nextPopUpBool = false;
+
+        if (popUpType[curPopUpType] == 1)
+        {
+            guiControlInfo.popUpType1.SetActiveRecursively(false);
+        }
+        else if (popUpType[curPopUpType] == 2)
+        {
+            guiControlInfo.popUpType2.SetActiveRecursively(false);
+        }
+        else if (popUpType[curPopUpType] == 3)
+        {
+            guiControlInfo.popUpType3.SetActiveRecursively(false);
+        }
+        else if (popUpType[curPopUpType] == 4)
+        {
+            guiControlInfo.popUpType4.SetActiveRecursively(false);
+        }
+
+        Debug.Log("GameManager.popUpCount : " + GameManager.popUpCount);
+
+        if (GameManager.popUpCount == 1 && GameManager.taskCount == 0)
+        {
+            Debug.Log("task count is 0..............................");
+            GameManager.popUpCount = 1;
+            curPopUpCnt = 1;
+            curPopUpType = 0;
+            generatePopUp(curPopUpCnt, curPopUpType);
+        }
+
+        if (GameManager.popUpCount == 2)
+        {
+            GameManager.taskCount = 1;
+        }
+        // task 1
+        if (GameManager.taskCount == 1)
+        {
+            panelControl.panelMoveOut = true;
+            panelControl.panelMoveIn = false;
+
+            // market button effect
+            //buttonPulse marketBP = GameObject.Find("button_Market").GetComponent("buttonPulse") as buttonPulse;
+            buttonPulse marketBP = GameObject.Find("button_Market").gameObject.AddComponent("buttonPulse") as buttonPulse;
+            marketBP.minSpeed = 3;
+            marketBP.maxSpeed = 8;
+            marketBP.minVal = 0.05f;
+            marketBP.maxVal = 0.2f;
+            marketBP.scaleAnim = true;
+
+            // arrow on market button
+            GameObject ms = GameObject.Find("marketSpwan");
+            GameObject temp = Instantiate(guiControlInfo.arrow, ms.transform.position, ms.transform.rotation) as GameObject;
+            guiControlInfo.delArrow = temp;
+        }
+
+        // pop up 3
+        if (GameManager.popUpCount == 3)
+        {
+            Debug.Log("---> GameManager.popUpCount == 3 <---");
+            curPopUpCnt++;
+            updateCurPopUpCount();
+
+            curPopUpType = 0;
+            generatePopUp(curPopUpCnt, curPopUpType);
+            guiControl.executeTaskBool = true;
+        }
+
+        if (curPopUpCnt == 3)
+        {
+            GameObject.Find("ObjectEditPanel")
+                .gameObject.transform.FindChild("objUpgrade")
+                .gameObject.GetComponent<UIButton>()
+                .SetControlState(UIButton.CONTROL_STATE.DISABLED);
+            Debug.Log("---> curPopUpCnt == 3 <---");
+            objPanelControl objEditPanelInfo =
+                GameObject.Find("ObjectEditPanel").GetComponent("objPanelControl") as objPanelControl;
+
+            objEditPanelInfo.panelMoveIn = false;
+            objEditPanelInfo.panelMoveOut = true;
+
+            GameObject objInfo_spwan = GameObject.Find("objInfo_spwan") as GameObject;
+            GameObject temp =
+                Instantiate(guiControlInfo.arrow, objInfo_spwan.transform.position, Quaternion.Euler(90, 90, 0)) as
+                    GameObject;
+            guiControlInfo.delArrow = temp;
+        }
+
+        // task 2 use rabbit option for hound
+        if (curPopUpCnt == 4)
+        {
+            Debug.Log("---> curPopUpCnt == 4 <---");
+            guiControl.useRabbitBool = false;
+
+            GameObject go = GameObject.Find("HC_C_Hound_GO(Clone)") as GameObject;
+            GameObject tg = GameObject.Find("HC_TG_TrainingGround_GO(Clone)") as GameObject;
+            //tg.transform.FindChild("Spark").gameObject.SetActiveRecursively(false);
+            tg.transform.FindChild("Spark1").gameObject.GetComponent<MeshRenderer>().enabled = false;
+            tg.transform.FindChild("Spark2").gameObject.GetComponent<MeshRenderer>().enabled = false;
+            Destroy(tg.GetComponent<SparkAnimation>());
+
+            (go.GetComponent("progressBar") as progressBar).enabled = true;
+            Transform rabbit = go.transform.FindChild("RabbtiButton") as Transform;
+            if (rabbit != null)
+                Destroy(rabbit.gameObject);
+
+            // find creature "Hound" progress bar and destroy
+            Destroy(go.GetComponent("progressBar"));
+            Destroy(go.transform.FindChild("ProgressBar").gameObject);
+
+            //indra get xp value from server
+//				Debug.Log("hound XP : " + scr_loadUserWorld.ReturnXPcostTotal(scr_GameObjSvr.objHound.objTypeId));
+//				GameObject xpValObj = Instantiate(Resources.Load("xpValue"), grid.curObj.transform.position, Quaternion.Euler(90, 0, 0)) as GameObject;
+
+            go.GetComponent<MeshRenderer>().enabled = true;
+            go.GetComponent<HoundAnimation>().moveAB_Bool = true;
+
+            // change "Hound" collider tag name
+            go.transform.FindChild("Isometric_Collider").gameObject.tag = "editableObj";
+
+            GameManager.taskCount = 3;
+            updateTaskCount();
+
+            taskidSvr = scr_loadUserWorld.ReturnTaskId(scr_GameObjSvr.objHound.objTypeId);
+            scr_sfsRemoteCnt.SendRequestForAccelrateTask(taskidSvr, GameManager.sparks);
+
+            if (scr_audioController.audio_sparkBirth.isPlaying)
+            {
+                scr_audioController.audio_sparkBirth.Stop();
+            }
+            guiControlInfo.sparkScoreInfo.Text = GameManager.sparks.ToString();
+
+            Destroy(go.transform.FindChild("greenPatch").gameObject);
+            Destroy(go.transform.FindChild("redPatch").gameObject);
+        }
+
+        // pop up 5
+        if (GameManager.popUpCount == 5)
+        {
+            Debug.Log("---> GameManager.popUpCount == 5 <---");
+            curPopUpCnt = 5;
+            updateCurPopUpCount();
+
+            curPopUpType = 0;
+            generatePopUp(curPopUpCnt, curPopUpType);
+        }
+
+        // pop up 6
+        if (GameManager.popUpCount == 6)
+        {
+            Debug.Log("---> GameManager.popUpCount == 6 <---");
+            curPopUpCnt = 6;
+            updateCurPopUpCount();
+
+            curPopUpType = 0;
+            generatePopUp(curPopUpCnt, curPopUpType);
+        }
+
+        // task 3
+        if (GameManager.taskCount == 3 && GameManager.popUpCount == 7)
+        {
+            Debug.Log("---> GameManager.taskCount == 3 && GameManager.popupCount == 7 <---");
+            // main menu control
+            panelControl.panelMoveIn = false;
+            panelControl.panelMoveOut = true;
+
+            // market button effect
+            buttonPulse marketBP = GameObject.Find("button_Market").AddComponent("buttonPulse") as buttonPulse;
+            marketBP.gameObject.transform.localScale = new Vector3(0.55f, 0.55f, 0.55f);
+            marketBP.minSpeed = 3;
+            marketBP.maxSpeed = 8;
+            marketBP.minVal = 0.05f;
+            marketBP.maxVal = 0.2f;
+            marketBP.scaleAnim = true;
+
+            // arrow on market button
+            GameObject mSpwan = GameObject.Find("marketSpwan");
+            GameObject temp =
+                Instantiate(guiControlInfo.arrow, mSpwan.transform.position, mSpwan.transform.rotation) as GameObject;
+            guiControlInfo.delArrow = temp;
+        }
+
+//			// pop up 7
+//			if (GameManager.popUpCount == 7)
+//			{
+//				curPopUpCnt = 7;
+//				updateCurPopUpCount();
+//				
+//				curPopUpType = 0;
+//				generatePopUp(curPopUpCnt, curPopUpType);
+//			}
+
+        if (GameManager.popUpCount == 8)
+        {
+            Debug.Log("farm turnip...");
+            task6(1);
+            //task4(1); *change
+        }
+
+        // turnip glow complete
+        if (GameManager.popUpCount == 9)
+        {
+            Debug.Log("farm turnip rabbit button...");
+            task6(6);
+            curPopUpCnt = 9;
+            updateCurPopUpCount();
+
+            curPopUpType = 0;
+            generatePopUp(curPopUpCnt, curPopUpType);
+            GameManager.taskCount = 5;
+            updateTaskCount();
+        }
+        //task4(4);
+
+        if (GameManager.popUpCount == 10)
+        {
+            Debug.Log("---> GameManager.popUpCount == 10");
+            task7(1);
+            /*curPopUpCnt = 10;
+				updateCurPopUpCount();
+				
+				curPopUpType = 0;
+				generatePopUp(curPopUpCnt, curPopUpType);
+				GameManager.taskCount = 5;
+				updateTaskCount();*/
+        }
+
+        // pop up count 13 rename creature tutorial
+        if (GameManager.popUpCount == 13)
+        {
+            Debug.Log("--> GameManager.popUpCount == 13");
+            renameCreatureTutorial(1);
+        }
+
+        // pop up 19 inn builing complete
+        if (GameManager.popUpCount == 18)
+        {
+            Debug.Log("--> GameManager.popUpCount == 18");
+            //taskDetailsInfo.totalMissionCount = 3;			//Added
+            obeliskTutorial(1);
+            //task9(4);
+        }
+
+        // pop up 19
+        if (GameManager.popUpCount == 19)
+        {
+            Debug.Log("---> GameManager.popCount == 19 <---");
+            task4(1);
+            //task10(1);
+        }
+
+        // pop up 20 goblin camp rabbit button
+        if (GameManager.popUpCount == 20)
+        {
+            Debug.Log("---> GameManager.popCount == 20 <---");
+            task4(4);
+        }
+
+        // pop up 21
+        if (GameManager.popUpCount == 21)
+        {
+            Debug.Log("---> GameManager.popCount == 21 <---");
+            //taskDetailsInfo.totalMissionCount = 3;			//Added
+            GameManager.taskCount = 15;
+            updateTaskCount();
+
+            // log tutorial
+            panelControl.panelMoveOut = true;
+            panelControl.panelMoveIn = false;
+
+            // destroy market button effect
+            buttonPulse marketBP1 = GameObject.Find("button_Market").GetComponent("buttonPulse") as buttonPulse;
+            if (marketBP1 != null)
+                Destroy(marketBP1);
+
+            // market button effect
+            buttonPulse market_BP = GameObject.Find("button_Task").AddComponent("buttonPulse") as buttonPulse;
+            market_BP.gameObject.transform.localScale = new Vector3(0.55f, 0.55f, 0.55f);
+            market_BP.minSpeed = 3;
+            market_BP.maxSpeed = 8;
+            market_BP.minVal = 0.05f;
+            market_BP.maxVal = 0.2f;
+            market_BP.scaleAnim = true;
+
+            // destroy market button effect
+            buttonPulse marketBP2 = GameObject.Find("button_Market").GetComponent("buttonPulse") as buttonPulse;
+            if (marketBP2 != null)
+                Destroy(marketBP2);
+
+            // destroy market button effect
+            buttonPulse marketBP3 = GameObject.Find("button_Market").GetComponent("buttonPulse") as buttonPulse;
+            if (marketBP3 != null)
+                Destroy(marketBP3);
+
+
+            GameObject temp =
+                Instantiate(guiControlInfo.arrow, new Vector3(-49, 10, 84), Quaternion.Euler(90, 180, 0)) as GameObject;
+            guiControlInfo.delArrow = temp;
+
+            taskDetailsInfo.RedQuestCount.Text = "1";
+            taskDetailsInfo.blueQuestCount.Text = "3";
+        }
+
+        // pop up 23
+        if (GameManager.popUpCount == 22)
+        {
+            Debug.Log("---> GameManager.popCount == 22 <---");
+            GameManager.xp = GameManager.xp + 3;
+
+            GameManager.taskCount = 16;
+            updateTaskCount();
+
+//				GameManager.popUpCount = 23;
+//				curPopUpCnt = 23;
+//				curPopUpType = 0;
+//				generatePopUp(curPopUpCnt, curPopUpType);
+        }
+
+        // pop up 26 quest 1 dialog C
+        if (GameManager.popUpCount == 27)
+        {
+            //gameManagerInfo.LookIntoQuest();
+        }
+
+        // pop up 27 quest 1 dialog D
+        if (GameManager.popUpCount == 24)
+        {
+            if (GameManager.questActivateBool)
+            {
+                GameManager.questActivateBool = false;
+                GameManager.questRunningBool = true;
+
+                wall.active = true;
+                guiControlInfo.popUpType4.SetActiveRecursively(true);
+                guiControlInfo.popUpType_Dig2_spText.Text = "";
+
+                guiControlInfo.popUpType_Dig1_spText.Text = gameManagerInfo.level3Dialog[0];
+                gameManagerInfo.message = gameManagerInfo.level3Dialog[0];
+                gameManagerInfo.WriteText1();
+                gameManagerInfo.dialogCnt = 1;
+
+                if (!gameManagerInfo.enableQuest)
+                {
+                    gameManagerInfo.PlayQuestSounds();
+                }
+            }
+        }
+
+        // pop up 28 build second training ground
+        if (GameManager.popUpCount == 28)
+        {
+            curPopUpCnt = 28;
+            updateCurPopUpCount();
+
+            GameObject go = GameObject.Find("HC_TG_Plant_GO(Clone)") as GameObject;
+            if (go == null)
+            {
+                curPopUpType = 0;
+                generatePopUp(curPopUpCnt, curPopUpType);
+            }
+        }
+
+        // pop up 30 arrow pulsing on bridge
+        if (GameManager.popUpCount == 30)
+        {
+            GameManager.popUpCount = 69;
+            curPopUpCnt = 69;
+            curPopUpType = 0;
+            generatePopUp(curPopUpCnt, curPopUpType);
+        }
+
+//			// pop up 31 play quest 2
+//			if (GameManager.popUpCount == 31)
+//			{
+//				Debug.Log("-------------------------------------------------");
+//				
+//				// open market and builing section
+//				wall.active = true;
+//				guiControlInfo.buildingUI.SetActiveRecursively(true);
+//				Destroy(guiControlInfo.delArrow);
+//				curPopUpCnt = 31;
+//				updateCurPopUpCount();
+//			}
+//			
+//			if (GameManager.popUpCount == 32)
+//			{
+//				Destroy(guiControlInfo.delArrow);
+//				curPopUpCnt = 32;
+//				updateCurPopUpCount();
+//				
+//				curPopUpType = 2;
+//				generatePopUp(curPopUpCnt, curPopUpType);
+//			}
+
+        // pop up 31 play quest 2
+        if (GameManager.popUpCount == 31)
+        {
+            Debug.Log("-------------------- 31 -----------------------------");
+
+            // open market and builing section
+            //wall.active = true;
+            //guiControlInfo.buildingUI.SetActiveRecursively(true);
+            Destroy(guiControlInfo.delArrow);
+            curPopUpCnt = 31;
+            curPopUpType = 0;
+            updateCurPopUpCount();
+            generatePopUp(curPopUpCnt, curPopUpType);
+            taskArrowOnBrokenBridge();
+        }
+
+        if (GameManager.popUpCount == 32)
+        {
+            Debug.Log(" -------- 32 ------- ");
+            wall.active = true;
+            guiControlInfo.buildingUI.SetActiveRecursively(true);
+            Destroy(guiControlInfo.delArrow);
+            curPopUpCnt = 32;
+            updateCurPopUpCount();
+
+//				curPopUpType = 2;
+//				generatePopUp(curPopUpCnt, curPopUpType);
+            GameObject buildingScroll = GameObject.Find("buildingScroll") as GameObject;
+            buildingScroll.transform.localPosition = new Vector3(7.5f, buildingScroll.transform.localPosition.y,
+                buildingScroll.transform.localPosition.z);
+
+            if (GameManager.unlockDarklingBool == false)
+            {
+                guiControlInfo.buildingUI.transform.FindChild("buildingScroll")
+                    .gameObject.transform.FindChild("03_Bridge")
+                    .gameObject.transform.FindChild("block")
+                    .gameObject.SetActive(false);
+            }
+        }
+
+        if (GameManager.popUpCount == 33) // && GameManager.readyToUnlockDarklingBool)
+        {
+            curPopUpCnt = 33;
+            updateCurPopUpCount();
+
+            curPopUpType = 0;
+            generatePopUp(curPopUpCnt, curPopUpType);
+            taskUnlockDarklingSide(1);
+        }
+
+        if (GameManager.popUpCount == 34)
+        {
+//				updateCurPopUpCount();
+//				
+//				wall.active = true;
+//				guiControlInfo.popUpType5.SetActiveRecursively(true);
+//				gameManagerInfo.scr_QuestTexControl.questSingleMat.mainTexture = gameManagerInfo.scr_QuestTexControl.quest02a_tex;
+//				guiControlInfo.popUpType_Dig5_spText.Text = gameManagerInfo.quest_2B[0];
+//				gameManagerInfo.message = gameManagerInfo.quest_2B[0];
+//				gameManagerInfo.WriteText3();
+//				gameManagerInfo.dialogCnt = 1;
+//				gameManagerInfo.questA = true;
+//				
+//				if(!gameManagerInfo.enableQuest)
+//				{
+//					gameManagerInfo.PlayQuestSounds();
+//				}
+        }
+
+
+//			if (GameManager.popUpCount == 36)
+//			{
+//				if (!GameManager.questRunningBool)
+//					taskArrowOnBrokenBridge();
+//			}
+
+
+        if (GameManager.popUpCount == 37)
+        {
+        }
+
+        // Quest 3
+        if (GameManager.popUpCount == 38)
+        {
+            if (GameManager.questActivateBool && GameManager.quest == 2)
+            {
+                GameObject qCeeature = GameObject.Find("DL_C_Leech_GO(Clone)") as GameObject;
+                if (qCeeature != null)
+                {
+                    GameObject.Find("DL_C_Leech_GO(Clone)").gameObject.GetComponent<MeshRenderer>().enabled = false;
+                    GameManager.questActivateBool = false;
+                    scr_sfsRemoteCnt.SendPlayQuestCount((int) GameObjectsSvr.QuestNo.Quest3); //Quest Activation 3
+                    TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
+                }
+                else
+                {
+                    GameManager.questRunningBool = false;
+                    GameManager.questActivateBool = false;
+                    GameManager.popUpCount = 70;
+                    curPopUpCnt = 70;
+                    curPopUpType = 0;
+                    generatePopUp(curPopUpCnt, curPopUpType);
+                }
+            }
+        }
+
+        // quest 4 story
+        if (GameManager.popUpCount == 40)
+        {
+            if (GameManager.questActivateBool && GameManager.quest == 3)
+            {
+                scr_sfsRemoteCnt.SendPlayQuestCount((int) GameObjectsSvr.QuestNo.Quest4); //Quest Activation 4
+                TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
+
+                GameManager.questActivateBool = false;
+                GameManager.questRunningBool = true;
+                wall.active = true;
+                guiControlInfo.popUpType4.SetActiveRecursively(true);
+                guiControlInfo.popUpType_Dig1_spText.Text = "";
+                guiControlInfo.popUpType_Dig2_spText.Text = "";
+            }
+        }
+        // quest 4
+        if (GameManager.popUpCount == 41)
+        {
+            if (GameManager.questActivateBool && GameManager.quest == 3)
+            {
+                GameObject.Find("DL_C_Leech_GO(Clone)").gameObject.GetComponent<MeshRenderer>().enabled = false;
+                gameManagerInfo.dChar.SetActiveRecursively(false);
+                GameManager.questActivateBool = false;
+                scr_sfsRemoteCnt.SendPlayQuestCount((int) GameObjectsSvr.QuestNo.Quest4);
+                TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
+            }
+        }
+
+        // quest 5
+        if (GameManager.popUpCount == 43)
+        {
+            if (GameManager.questActivateBool && GameManager.quest == 4)
+            {
+                if (GameManager.sparks >= 5)
+                {
+                    GameManager.questActivateBool = false;
+                    scr_sfsRemoteCnt.SendPlayQuestCount((int) GameObjectsSvr.QuestNo.Quest5);
+                    TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
+                }
+                else
+                {
+                    GameManager.questRunningBool = false;
+                    GameManager.questActivateBool = false;
+                    GameManager.popUpCount = 75;
+                    curPopUpCnt = 75;
+                    curPopUpType = 0;
+                    generatePopUp(curPopUpCnt, curPopUpType);
+                }
+            }
+        }
+
+        if (GameManager.popUpCount == 44)
+        {
+            AssignQuestNo((int) GameObjectsSvr.QuestNo.Quest5);
+        }
+
+        // quest 6
+        if (GameManager.popUpCount == 49)
+        {
+            if (GameManager.questActivateBool && GameManager.quest == 5)
+            {
+                if (scr_loadUserWorld.ReturnHerbandPlantsCount(scr_GameObjSvr.objDarklingPumpkin.objTypeId) > 0)
+                {
+                    GameManager.questActivateBool = false;
+                    scr_sfsRemoteCnt.SendPlayQuestCount((int) GameObjectsSvr.QuestNo.Quest6);
+                    TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
+                }
+                else
+                {
+                    GameManager.questRunningBool = false;
+                    GameManager.questActivateBool = false;
+                    GameManager.popUpCount = 71;
+                    curPopUpCnt = 71;
+                    curPopUpType = 0;
+                    generatePopUp(curPopUpCnt, curPopUpType);
+                }
+            }
+        }
+        if (GameManager.popUpCount == 50)
+        {
+            AssignQuestNo((int) GameObjectsSvr.QuestNo.Quest6);
+        }
+
+        // quest 7
+        if (GameManager.popUpCount == 52)
+        {
+            if (GameManager.questActivateBool && GameManager.quest == 6)
+            {
+                GameObject halfTarven = GameObject.Find("HC_B_Tavern_GO(Clone)") as GameObject;
+                if (halfTarven != null)
+                {
+                    GameManager.questActivateBool = false;
+                    scr_sfsRemoteCnt.SendPlayQuestCount((int) GameObjectsSvr.QuestNo.Quest7);
+                    TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
+                }
+                else
+                {
+                    GameManager.questRunningBool = false;
+                    GameManager.questActivateBool = false;
+                    GameManager.popUpCount = 72;
+                    curPopUpCnt = 72;
+                    curPopUpType = 0;
+                    generatePopUp(curPopUpCnt, curPopUpType);
+                }
+            }
+        }
+        if (GameManager.popUpCount == 53)
+        {
+            AssignQuestNo((int) GameObjectsSvr.QuestNo.Quest7);
+        }
+        // quest 8
+        if (GameManager.popUpCount == 55)
+        {
+            if (GameManager.questActivateBool && GameManager.quest == 7)
+            {
+                GameObject darkApoth = GameObject.Find("DL_B_Apothecary_GO(Clone)") as GameObject;
+                if (darkApoth != null &&
+                    scr_loadUserWorld.ReturnHerbandPlantsCount(scr_GameObjSvr.objDarklingAvenHerb.objTypeId) >= 10)
+                {
+                    GameManager.questActivateBool = false;
+                    scr_sfsRemoteCnt.SendPlayQuestCount((int) GameObjectsSvr.QuestNo.Quest8);
+                    TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
+                }
+                else
+                {
+                    GameManager.questRunningBool = false;
+                    GameManager.questActivateBool = false;
+                    GameManager.popUpCount = 73;
+                    curPopUpCnt = 73;
+                    curPopUpType = 0;
+                    generatePopUp(curPopUpCnt, curPopUpType);
+                }
+            }
+        }
+        if (GameManager.popUpCount == 56)
+        {
+            AssignQuestNo((int) GameObjectsSvr.QuestNo.Quest8);
+        }
+
+        // quest 9
+        if (GameManager.popUpCount == 58)
+        {
+            if (GameManager.questActivateBool && GameManager.quest == 8)
+            {
+                GameManager.questActivateBool = false;
+                scr_sfsRemoteCnt.SendPlayQuestCount((int) GameObjectsSvr.QuestNo.Quest9);
+                TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
+            }
+        }
+        if (GameManager.popUpCount == 59)
+        {
+            AssignQuestNo((int) GameObjectsSvr.QuestNo.Quest9);
+        }
+
+        // quest 10
+        if (GameManager.popUpCount == 61)
+        {
+            if (GameManager.questActivateBool && GameManager.quest == 9)
+            {
+                GameObject moonshine = GameObject.Find("DL_B_MoonShrine_GO(Clone)") as GameObject;
+                GameObject sunshine = GameObject.Find("HC_B_SunShrine_GO(Clone)") as GameObject;
+                if (moonshine != null && sunshine != null)
+                {
+                    GameManager.questActivateBool = false;
+                    scr_sfsRemoteCnt.SendPlayQuestCount((int) GameObjectsSvr.QuestNo.Quest10);
+                    TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
+                }
+                else
+                {
+                    GameManager.questRunningBool = false;
+                    GameManager.questActivateBool = false;
+                    GameManager.popUpCount = 74;
+                    curPopUpCnt = 74;
+                    curPopUpType = 0;
+                    generatePopUp(curPopUpCnt, curPopUpType);
+                }
+            }
+        }
+        if (GameManager.popUpCount == 62)
+        {
+            AssignQuestNo((int) GameObjectsSvr.QuestNo.Quest10);
+        }
+
+        //quest 11
+        if (GameManager.popUpCount == 64)
+        {
+            if (GameManager.questActivateBool && GameManager.quest == 10)
+            {
+                if (scr_loadUserWorld.ReturnHerbandPlantsCount(scr_GameObjSvr.objPipeweed.objTypeId) >= 20)
+                {
+                    GameManager.questActivateBool = false;
+                    scr_sfsRemoteCnt.SendPlayQuestCount((int) GameObjectsSvr.QuestNo.Quest11);
+                    TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
+                }
+                else
+                {
+                    GameManager.questRunningBool = false;
+                    GameManager.questActivateBool = false;
+                    GameManager.popUpCount = 76;
+                    curPopUpCnt = 76;
+                    curPopUpType = 0;
+                    generatePopUp(curPopUpCnt, curPopUpType);
+                }
+            }
+        }
+
+        if (GameManager.popUpCount == 65)
+        {
+            AssignQuestNo((int) GameObjectsSvr.QuestNo.Quest11);
+        }
+
+        //quest 12
+
+        if (GameManager.popUpCount == 67)
+        {
+            if (GameManager.questActivateBool && GameManager.quest == 11)
+            {
+                GameObject halfCusith = GameObject.Find("HC_C_Cusith_GO(Clone)") as GameObject;
+                GameObject halfDryad = GameObject.Find("HC_C_Dryad_GO(Clone)") as GameObject;
+                GameObject halfDragon = GameObject.Find("HC_C_Dragon_GO(Clone)") as GameObject;
+
+                if (halfCusith != null && halfDryad != null && halfDragon != null)
+                {
+                    GameManager.questActivateBool = false;
+                    scr_sfsRemoteCnt.SendPlayQuestCount((int) GameObjectsSvr.QuestNo.Quest12);
+                    TempTypeId = scr_GameObjSvr.QuestCreation.objTypeId;
+                }
+                else
+                {
+                    GameManager.questRunningBool = false;
+                    GameManager.questActivateBool = false;
+                    GameManager.popUpCount = 77;
+                    curPopUpCnt = 77;
+                    curPopUpType = 0;
+                    generatePopUp(curPopUpCnt, curPopUpType);
+                }
+            }
+        }
+
+        // purchase first earth obelisk
+        if (GameManager.popUpCount == 79)
+        {
+            Debug.Log("------> <-------");
+            //buttonPulse trainingGroundBP = GameObject.Find("storeDefenceButt").GetComponent("buttonPulse") as buttonPulse;
+            //trainingGroundBP.scaleAnim = false;
+
+            guiControlInfo.storeUI.SetActiveRecursively(false);
+            wall.active = true;
+            guiControlInfo.defenceUI.SetActiveRecursively(true);
+
+            if (guiControlInfo.delArrow != null)
+                Destroy(guiControlInfo.delArrow);
+
+            GameObject ms = GameObject.Find("earthDefence_Spwan");
+            GameObject temp =
+                Instantiate(guiControlInfo.arrow, ms.transform.position, Quaternion.Inverse(ms.transform.rotation)) as
+                    GameObject;
+            guiControlInfo.delArrow = temp;
+            temp.transform.parent = ms.transform;
+        }
+    }
+
+
 //=======================================================================================================================================
 	
 	public void storyTutorial(int currentStep)

@@ -793,11 +793,7 @@ public	string[] quest_12 = 		{"Greetings young Halfling, what are you doing here
 				gameLevel++;
 				if (gameLevel >= 1)
 					scr_remote.SendCurrentLevelrequest(gameLevel);
-                if (curLevel > 3)
-                {
-                    guiControl.I.fakeCall = true;
-			        guiControl.I.deleteButton();
-			    }
+
 			    curLevel++;
 				curXP = 0;
 				xp = 0;

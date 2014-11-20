@@ -1898,6 +1898,7 @@ public class guiControl : MonoBehaviour
 		if (plantBut != null)
 		{
 			buttonPulse plantsBP = plantBut.GetComponent("buttonPulse") as buttonPulse;
+            if (plantsBP)
 			plantsBP.scaleAnim = false;
 		}
 		// LEVEL 2
@@ -1999,7 +2000,9 @@ public class guiControl : MonoBehaviour
 			popUpInfoScript.wall.active = false;
 			inventoryUI.SetActiveRecursively(false);
 			GameObject plotGO = GameObject.Find("HC_B_Plot_GO(Clone)") as GameObject;
-			plotGO.transform.FindChild("Isometric_Collider").gameObject.tag = "editableObj";
+            if (plotGO != null)
+                if (plotGO.transform.FindChild("Isometric_Collider"))
+                    plotGO.transform.FindChild("Isometric_Collider").gameObject.tag = "editableObj";
 		}
 	}
 	
@@ -10249,14 +10252,14 @@ public class guiControl : MonoBehaviour
 	
 	
 //===============================================================================================================================================================================
-	public GameObject qGO = null;
+	public GameObject questProgressBarGO = null;
 	
 	void questRabbitButton()
 	{
 		scr_audioController.audio_buttonClick.Play();
 		PlayAudioforRabbitBtn();
 		
-		qGO = GameObject.Find("QuestProgressBar(Clone)") as GameObject;
+		questProgressBarGO = GameObject.Find("QuestProgressBar(Clone)") as GameObject;
 		
 		if (GameManager.quest == 0)
 		{
