@@ -3132,9 +3132,9 @@ public class popUpInformation: MonoBehaviour
 			
 			gameManagerInfo.bubbleObj.SetActiveRecursively(true);
 			gameManagerInfo.speakTextObj.active = true;
-			GameObject.Find("FightingTutorial").gameObject.GetComponent<AutoSpeak>().callToWriteText("Nice job you fed your creature well.");	
-	
-			
+			GameObject.Find("FightingTutorial").gameObject.GetComponent<AutoSpeak>().callToWriteText("Nice job you fed your creature well.");
+            guiControlInfo.FeedMorphPopUp.transform.FindChild("MorphButt").gameObject.GetComponent<UIButton>().SetControlState(UIButton.CONTROL_STATE.ACTIVE);
+            guiControlInfo.FeedMorphPopUp.transform.FindChild("FeedButt").gameObject.GetComponent<UIButton>().SetControlState(UIButton.CONTROL_STATE.ACTIVE);
 			//GameObject gStory = GameObject.Find("FightingTutorial");
 			//gStory.GetComponent<AutoSpeak>().callToWriteText("Nice job you fed your creature well.");
 		
@@ -3147,6 +3147,10 @@ public class popUpInformation: MonoBehaviour
 	{
 		if (currentStep == 1)
 		{
+
+            guiControlInfo.FeedMorphPopUp.transform.FindChild("FeedButt").gameObject.GetComponent<UIButton>().SetControlState(UIButton.CONTROL_STATE.ACTIVE);
+            guiControlInfo.FeedMorphPopUp.transform.FindChild("MorphButt").gameObject.GetComponent<UIButton>().SetControlState(UIButton.CONTROL_STATE.ACTIVE);
+
 			Debug.Log("Arrow on main menu panel...");
 			
 			panelControl.panelMoveIn = false;
@@ -3419,7 +3423,8 @@ public class popUpInformation: MonoBehaviour
 		if (currentStep == 5)
 		{
 			Debug.Log("press confirm button");
-			
+
+
 			GameObject arrowDel = GameObject.Find("ArrowPF(Clone)") as GameObject;
 			if (arrowDel != null)
 			{
