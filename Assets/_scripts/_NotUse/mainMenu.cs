@@ -300,7 +300,10 @@ public class mainMenu : MonoBehaviour
 								            GUIContent.none, friend))
 								    {
 								        if (scr_SfsRemoteInit.displayFriendList)
+						{
+							Debug.Log("No friends for you");
 								            return;
+						}
 								        Debug.Log("Friends...");
 								        scr_btnClick.Play();
 								        scr_SfsRemoteInit.InviteFriendsManager();

@@ -906,7 +906,7 @@ void OnConfigLoadFailureHandler(BaseEvent evt) {
 				
 				StartCoroutine(DownloadFriendProfilePicture());
 
-
+				displayFriendList = true;
 				SendFriendIdToServer();
 
 			} else {
