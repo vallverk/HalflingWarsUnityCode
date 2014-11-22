@@ -879,7 +879,43 @@ void OnConfigLoadFailureHandler(BaseEvent evt) {
 						SendFriendIdToServer ();
 						return;
 				}
-		
+	//	Facebook.instance.graphRequest(@"me/invitable_friends",(error, obj) => {
+//			// if we have an error we dont proceed any further
+//			if( error != null )
+//			{
+//				Debug.Log("Request error");
+//				Debug.Log(error);
+//				return;
+//			}
+//			if( obj == null )
+//				return;
+//			
+//			// grab the userId and persist it for later use
+//			//			var ht = obj as Dictionary<string, object>;
+//			
+//			Debug.Log("Fb Success");
+//			
+//			var ht = obj as FacebookFriendsResult;
+//			
+//			if(ht != null) {
+//				Debug.Log("ht");
+//				List<FacebookFriend> fbFriendList = ht.data;
+//				Debug.Log("Count: "+fbFriendList.Count);
+//				
+//				halflingFacebookFriendList = new List<HalflingWarsFriend>();
+//				foreach(FacebookFriend ff in fbFriendList) {
+//					halflingFacebookFriendList.Add(new HalflingWarsFriend(ff.id, ff.name));
+//				}
+//				
+//				StartCoroutine(DownloadFriendProfilePicture());
+//				
+//				displayFriendList = true;
+//				SendFriendIdToServer();
+//				
+//			} else {
+//				Debug.Log("ht null");
+//			}
+//		});
 		Facebook.instance.getFriends((error, obj) => {
 			// if we have an error we dont proceed any further
 			if( error != null )
@@ -901,6 +937,7 @@ void OnConfigLoadFailureHandler(BaseEvent evt) {
 
 				halflingFacebookFriendList = new List<HalflingWarsFriend>();
 				foreach(FacebookFriend ff in fbFriendList) {
+					Debug.Log(ff.id);
 					halflingFacebookFriendList.Add(new HalflingWarsFriend(ff.id, ff.name));
 				}
 				
@@ -1141,7 +1178,7 @@ void OnConfigLoadFailureHandler(BaseEvent evt) {
     private void OnFacebookFriendInviteConfirm() {
 		
 		ISFSObject dataToSend = new SFSObject();
-		
+
 		try
 		{
 			string cmd = "11";
@@ -1156,7 +1193,19 @@ void OnConfigLoadFailureHandler(BaseEvent evt) {
 
 			ExtensionRequest r = new ExtensionRequest(cmd, dataToSend);
 			sfs.Send(r);
-			
+
+			FacebookBinding.showDialog("apprequests", new Dictionary<string, string>(){
+				{ "method", "apprequests" },
+				{"to", theFriendId},
+				{"title", "My own invie"},
+				{"message", "Please play this game witgh ne"}
+			});
+
+//			FacebookBinding.showDialog("apprequests", new Dictionary<string, string>(){
+//				{ "method", "apprequests" },
+//				{ "message", "My text"},
+//				{ "to", ""}
+//			});
 		}
 		catch(Exception ex)
 		{
@@ -1277,6 +1326,7 @@ void OnConfigLoadFailureHandler(BaseEvent evt) {
 		case 1:
 			switch(buttonId) {
 			case 1:
+				Debug.Log("COnfirm");
 				OnFacebookFriendInviteConfirm();
 				break;
 			default:
